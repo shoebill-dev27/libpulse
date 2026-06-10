@@ -13,6 +13,7 @@ from pathlib import Path
 from .models import MigrationCase, Verdict
 from .store import Store
 from .verifier import Verifier
+from .watcher import NewRelease, default_fetcher, discover_new_releases
 
 
 def _ingest(store: Store, cases_dir: Path) -> int:
@@ -72,6 +73,23 @@ def cmd_cycle(args: argparse.Namespace) -> int:
     return 0
 
 
+def _watch(store: Store, packages_file: Path, fetch=default_fetcher) -> list[NewRelease]:
+    """Run release discovery and print one JSON line per new release.
+
+    Returns the discovered releases so cmd_cycle can reuse this later (T10).
+    """
+    releases = discover_new_releases(store, packages_file, fetch=fetch)
+    for release in releases:
+        print(json.dumps(release.to_dict()))
+    return releases
+
+
+def cmd_watch(args: argparse.Namespace) -> int:
+    store = Store(args.db)
+    _watch(store, Path(args.packages_file))
+    return 0
+
+
 def cmd_export(args: argparse.Namespace) -> int:
     written = Store(args.db).export_corpus(args.corpus_dir)
     print("\n".join(str(p) for p in written) or "(corpus empty)")
@@ -84,6 +102,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--cases-dir", default="data/cases")
     parser.add_argument("--corpus-dir", default="data/corpus")
     parser.add_argument("--reports-dir", default="reports")
+    parser.add_argument("--packages-file", default="data/packages.txt")
     sub = parser.add_subparsers(dest="command", required=True)
 
     p = sub.add_parser("verify-case", help="verify a single case JSON file")
@@ -94,6 +113,11 @@ def main(argv: list[str] | None = None) -> int:
         "cycle", help="unattended loop: ingest queue, verify pending, export, report"
     )
     p.set_defaults(func=cmd_cycle)
+
+    p = sub.add_parser(
+        "watch", help="poll PyPI for new final releases of tracked packages (one JSON line each)"
+    )
+    p.set_defaults(func=cmd_watch)
 
     p = sub.add_parser("export", help="re-export the verified corpus")
     p.set_defaults(func=cmd_export)

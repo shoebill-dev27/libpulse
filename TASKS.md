@@ -11,11 +11,11 @@ Granularity: each task is 1–3 hours for a Claude Code session. Dependencies no
 - [x] T05 CLI with crash-proof `cycle` (ingest → verify → export → report)
 - [x] T06 Tests: 11 unit + 2 integration (real numpy 2.0 case VERIFIED end-to-end)
 - [x] T07 Doc pack: PRD, MVP, ADR-001..005, RISKS, OPERATIONS, ROADMAP-12M
+- [x] T08 Watcher: poll PyPI JSON API for tracked packages (packages.txt, curated 20),
+      detect new final releases since last cycle, persist watermarks in store. No API keys.
 
 ## Next (MVP)
 
-- [ ] T08 Watcher: poll PyPI JSON API for tracked packages (packages.txt, top ~50),
-      detect new releases since last cycle, persist watermarks in store. No API keys.
 - [ ] T09 Analyzer: for a new release, fetch release notes/changelog (PyPI metadata,
       GitHub releases via public API), LLM-generate candidate cases → data/cases/.
       Anthropic API, LIBPULSE_MODEL env, optional (skip cleanly when no key).

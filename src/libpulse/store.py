@@ -36,6 +36,11 @@ CREATE TABLE IF NOT EXISTS results (
     harness_version TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_cases_package ON cases(package);
+CREATE TABLE IF NOT EXISTS watermarks (
+    package TEXT PRIMARY KEY,
+    last_seen_version TEXT NOT NULL,
+    updated_at REAL NOT NULL
+);
 """
 
 
@@ -104,6 +109,24 @@ class Store:
             "SELECT verdict, COUNT(*) n FROM results GROUP BY verdict"
         ).fetchall()
         return {r["verdict"]: r["n"] for r in rows}
+
+    def get_watermark(self, package: str) -> str | None:
+        """Return the last-seen final version for a package, or None if unseen."""
+        row = self.conn.execute(
+            "SELECT last_seen_version FROM watermarks WHERE package=?", (package,)
+        ).fetchone()
+        return None if row is None else row["last_seen_version"]
+
+    def set_watermark(self, package: str, version: str) -> None:
+        """Record the latest final version seen for a package."""
+        self.conn.execute(
+            """INSERT INTO watermarks VALUES (?,?,?)
+               ON CONFLICT(package) DO UPDATE SET
+                 last_seen_version=excluded.last_seen_version,
+                 updated_at=excluded.updated_at""",
+            (package, version, time.time()),
+        )
+        self.conn.commit()
 
     def export_corpus(self, out_dir: str | Path = "data/corpus") -> list[Path]:
         """Write VERIFIED entries as deterministic per-package JSON files."""

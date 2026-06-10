@@ -1,0 +1,22 @@
+# Tracked PyPI packages for the release watcher (one name per line).
+# Lines starting with '#' and blank lines are ignored.
+numpy
+pandas
+requests
+urllib3
+pydantic
+sqlalchemy
+flask
+django
+click
+pytest
+httpx
+fastapi
+scikit-learn
+matplotlib
+pillow
+cryptography
+boto3
+redis
+celery
+jinja2
