@@ -1,0 +1,15 @@
+{
+  "ran_at": 1781110167,
+  "duration_s": 0.9,
+  "ingested": 1,
+  "verified_this_cycle": 1,
+  "outcomes": {
+    "17ddb5a0330fb40c": "verified"
+  },
+  "corpus_files": [
+    "data/corpus/numpy.json"
+  ],
+  "totals": {
+    "verified": 1
+  }
+}

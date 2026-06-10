@@ -1,0 +1,9 @@
+{
+  "package": "numpy",
+  "old_version": "1.26.4",
+  "new_version": "2.0.2",
+  "title": "np.float_ alias removed in NumPy 2.0",
+  "before_snippet": "import numpy as np\nx = np.float_(1.5)\nassert x == 1.5\n",
+  "after_snippet": "import numpy as np\nx = np.float64(1.5)\nassert x == 1.5\n",
+  "source": "https://numpy.org/doc/stable/numpy_2_0_migration_guide.html"
+}
