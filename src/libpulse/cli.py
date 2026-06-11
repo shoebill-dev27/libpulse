@@ -14,7 +14,7 @@ from .analyzer import Analyzer
 from .models import MigrationCase, Verdict
 from .store import Store
 from .verifier import Verifier
-from .watcher import NewRelease, default_fetcher, discover_new_releases
+from .watcher import NewRelease, default_fetcher, discover_new_releases, historical_pairs
 
 
 def _ingest(store: Store, cases_dir: Path) -> int:
@@ -136,6 +136,29 @@ def cmd_analyze(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_backfill(args: argparse.Namespace) -> int:
+    """Seed candidates from release history (T12). Generation only; run `cycle` to verify."""
+    analyzer = Analyzer()
+    if not analyzer.enabled:
+        print("ANTHROPIC_API_KEY not set; backfill needs the analyzer", file=sys.stderr)
+        return 1
+    releases: list[NewRelease] = []
+    for package in args.packages:
+        try:
+            data = default_fetcher(package)
+        except Exception as exc:  # one bad package must not kill the backfill
+            print(f"[backfill] {package}: fetch error: {exc}", file=sys.stderr)
+            continue
+        pairs = historical_pairs(
+            package, data, months=args.months, include_patch=args.include_patch
+        )[: args.max_pairs]
+        print(f"[backfill] {package}: {len(pairs)} release pair(s) in window")
+        releases.extend(pairs)
+    generated = _analyze(releases, Path(args.cases_dir), analyzer=analyzer)
+    print(f"[backfill] {generated} candidate case(s) queued; run `libpulse cycle` to verify")
+    return 0
+
+
 def cmd_export(args: argparse.Namespace) -> int:
     written = Store(args.db).export_corpus(args.corpus_dir)
     print("\n".join(str(p) for p in written) or "(corpus empty)")
@@ -171,6 +194,15 @@ def main(argv: list[str] | None = None) -> int:
         "watch", help="poll PyPI for new final releases of tracked packages (one JSON line each)"
     )
     p.set_defaults(func=cmd_watch)
+
+    p = sub.add_parser("backfill", help="seed candidates from the last N months of release history")
+    p.add_argument("packages", nargs="+")
+    p.add_argument("--months", type=int, default=12)
+    p.add_argument("--max-pairs", type=int, default=10, help="newest-first cap per package")
+    p.add_argument(
+        "--include-patch", action="store_true", help="also analyze patch-only version bumps"
+    )
+    p.set_defaults(func=cmd_backfill)
 
     p = sub.add_parser("export", help="re-export the verified corpus")
     p.set_defaults(func=cmd_export)

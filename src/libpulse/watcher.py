@@ -17,6 +17,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+import time
 import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
@@ -99,6 +100,43 @@ def _final_releases(data: dict) -> list[tuple[str, str]]:
         out.append((version, released_at))
     out.sort(key=lambda vt: _version_key(vt[0]))
     return out
+
+
+def _is_significant_bump(prev: str, new: str) -> bool:
+    """True when the major or minor component changes (patch-only bumps rarely break)."""
+    p, n = _version_key(prev), _version_key(new)
+    return p[:2] != n[:2]
+
+
+def historical_pairs(
+    package: str,
+    data: dict,
+    months: int = 12,
+    include_patch: bool = False,
+    now: float | None = None,
+) -> list[NewRelease]:
+    """Consecutive (prev -> new) final-release pairs whose new side falls in the window.
+
+    Used by `backfill` to seed the corpus from release history. The oldest in-window
+    release is still paired with its (possibly out-of-window) predecessor. Pairs where
+    only the patch component changes are skipped unless include_patch is set. Releases
+    without an upload time are treated as out of window. Returned newest-first.
+    """
+    finals = _final_releases(data)
+    cutoff = time.strftime(
+        "%Y-%m-%dT%H:%M:%S", time.gmtime((now or time.time()) - months * 30.44 * 86400)
+    )
+    pairs: list[NewRelease] = []
+    for i in range(1, len(finals)):
+        new_version, released_at = finals[i]
+        if not released_at or released_at < cutoff:
+            continue
+        prev_version = finals[i - 1][0]
+        if not include_patch and not _is_significant_bump(prev_version, new_version):
+            continue
+        pairs.append(NewRelease(package, prev_version, new_version, released_at))
+    pairs.reverse()
+    return pairs
 
 
 def discover_new_releases(
