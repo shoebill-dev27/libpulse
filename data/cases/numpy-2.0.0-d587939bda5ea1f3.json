@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import numpy as np\n\na = np.array([1, 2, 0])\nb = np.array([3, 4, 0])\nresult = np.cross(a, b)\nassert result is not None",
+  "before_snippet": "import numpy as np\n\na = np.array([1, 2])\nb = np.array([3, 4])\nresult = np.cross(a, b)\nassert result is not None",
+  "case_id": "d587939bda5ea1f3",
+  "extra_requires": [],
+  "new_version": "2.0.0",
+  "old_version": "1.26.4",
+  "package": "numpy",
+  "source": "pypi:numpy==2.0.0",
+  "title": "numpy.cross no longer supports 2-dimensional vectors"
+}

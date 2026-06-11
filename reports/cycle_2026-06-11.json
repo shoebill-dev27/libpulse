@@ -1,15 +1,25 @@
 {
-  "ran_at": 1781110167,
-  "duration_s": 0.9,
-  "ingested": 1,
-  "verified_this_cycle": 1,
+  "ran_at": 1781142179,
+  "duration_s": 5.1,
+  "releases_found": 0,
+  "cases_generated": 0,
+  "ingested": 13,
+  "verified_this_cycle": 3,
   "outcomes": {
-    "17ddb5a0330fb40c": "verified"
+    "282315d30cfa3369": "not_breaking",
+    "405b0c21a21a87e3": "verified",
+    "ab9ece923efac07d": "not_breaking",
+    "ca538c375b0c19b1": "not_breaking",
+    "e24973a9fe03f0c6": "verified",
+    "f0c7da96ef50feed": "not_breaking",
+    "ffaf8985f1a0b507": "verified"
   },
   "corpus_files": [
     "data/corpus/numpy.json"
   ],
   "totals": {
-    "verified": 1
+    "not_breaking": 7,
+    "unverifiable": 2,
+    "verified": 4
   }
 }

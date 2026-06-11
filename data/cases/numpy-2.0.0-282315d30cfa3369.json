@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import numpy as np\narr = np.vstack([[1, 2], [3, 4]])\n",
+  "before_snippet": "import numpy as np\narr = np.row_stack([[1, 2], [3, 4]])\n",
+  "case_id": "282315d30cfa3369",
+  "extra_requires": [],
+  "new_version": "2.0.0",
+  "old_version": "1.26.4",
+  "package": "numpy",
+  "source": "pypi:numpy==2.0.0",
+  "title": "numpy.row_stack removed in favor of numpy.vstack"
+}

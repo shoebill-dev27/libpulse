@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import numpy as np\n\ncond = np.array([True, False, True])\nx = np.array([2**100, 0, 0], dtype=object)\ny = np.array([1, 2, 3])\nresult = np.where(cond, x, y)\nassert result is not None",
+  "before_snippet": "import numpy as np\n\ncond = np.array([True, False, True])\nx = 2**100\ny = np.array([1, 2, 3])\nresult = np.where(cond, x, y)\nassert result is not None",
+  "case_id": "e24973a9fe03f0c6",
+  "extra_requires": [],
+  "new_version": "2.0.0",
+  "old_version": "1.26.4",
+  "package": "numpy",
+  "source": "pypi:numpy==2.0.0",
+  "title": "numpy.where no longer truncates Python integers"
+}

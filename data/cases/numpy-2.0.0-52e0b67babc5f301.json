@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import numpy as np\n\n# In 2.0.0+, use vstack instead of row_stack\na = np.array([1, 2, 3])\nb = np.array([4, 5, 6])\nresult = np.vstack([a, b])\nassert result.shape == (2, 3)",
+  "before_snippet": "import numpy as np\n\n# In 1.26.4, row_stack was available\na = np.array([1, 2, 3])\nb = np.array([4, 5, 6])\nresult = np.row_stack([a, b])\nassert result.shape == (2, 3)",
+  "case_id": "52e0b67babc5f301",
+  "extra_requires": [],
+  "new_version": "2.0.0",
+  "old_version": "1.26.4",
+  "package": "numpy",
+  "source": "pypi:numpy==2.0.0",
+  "title": "numpy.row_stack has been removed"
+}

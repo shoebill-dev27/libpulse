@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import numpy as np\nresult = np.cumprod([1, 2, 3, 4])\n",
+  "before_snippet": "import numpy as np\nresult = np.cumproduct([1, 2, 3, 4])\n",
+  "case_id": "405b0c21a21a87e3",
+  "extra_requires": [],
+  "new_version": "2.0.0",
+  "old_version": "1.26.4",
+  "package": "numpy",
+  "source": "pypi:numpy==2.0.0",
+  "title": "numpy.cumproduct removed in favor of numpy.cumprod"
+}

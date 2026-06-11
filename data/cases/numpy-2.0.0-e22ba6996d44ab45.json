@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import numpy as np\n\n# In 2.0.0+, out-of-range Python integers raise OverflowError\ntry:\n    result = np.where(True, 300, 0, dtype=np.uint8)\n    # Should raise OverflowError, so reaching here means test fails\n    raise AssertionError(\"Expected OverflowError\")\nexcept OverflowError:\n    pass  # Expected behavior",
+  "before_snippet": "import numpy as np\n\n# In 1.26.4, large Python integers were silently truncated\nresult = np.where(True, 300, 0, dtype=np.uint8)\nassert result == 44  # 300 & 0xFF = 44",
+  "case_id": "e22ba6996d44ab45",
+  "extra_requires": [],
+  "new_version": "2.0.0",
+  "old_version": "1.26.4",
+  "package": "numpy",
+  "source": "pypi:numpy==2.0.0",
+  "title": "numpy.where no longer truncates Python integers to output dtype"
+}

@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import numpy as np\n\nresult = np.bincount(np.array([1, 2, 3], dtype=int))\nassert result is not None",
+  "before_snippet": "import numpy as np\n\nresult = np.bincount([1.5, 2.5, 3.5])\nassert result is not None",
+  "case_id": "ab9ece923efac07d",
+  "extra_requires": [],
+  "new_version": "2.0.0",
+  "old_version": "1.26.4",
+  "package": "numpy",
+  "source": "pypi:numpy==2.0.0",
+  "title": "numpy.bincount raises TypeError for non-integer inputs"
+}

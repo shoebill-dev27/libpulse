@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import numpy as np\n\n# In 2.0.0+, use numpy.char.chararray or create ndarray with string dtype\nresult = np.char.chararray((2, 2))\nassert result is not None",
+  "before_snippet": "import numpy as np\n\n# In 1.26.4, chararray was accessible from numpy directly\nresult = np.chararray((2, 2))\nassert result is not None",
+  "case_id": "247df117005ef8a2",
+  "extra_requires": [],
+  "new_version": "2.0.0",
+  "old_version": "1.26.4",
+  "package": "numpy",
+  "source": "pypi:numpy==2.0.0",
+  "title": "numpy.chararray re-export has been removed"
+}

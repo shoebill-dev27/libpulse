@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import numpy as np\narr = np.array([b'hello'], dtype='S5')\n",
+  "before_snippet": "import numpy as np\narr = np.array([b'hello'], dtype='a5')\n",
+  "case_id": "f0c7da96ef50feed",
+  "extra_requires": [],
+  "new_version": "2.0.0",
+  "old_version": "1.26.4",
+  "package": "numpy",
+  "source": "pypi:numpy==2.0.0",
+  "title": "numpy.string_ dtype alias 'a' removed in favor of 'S'"
+}

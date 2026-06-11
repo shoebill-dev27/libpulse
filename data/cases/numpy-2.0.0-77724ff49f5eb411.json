@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import numpy as np\n\nA = np.array([[1, 0], [0, 1]], dtype=float)\nw, v = np.linalg.eig(A)\nassert np.iscomplexobj(w)",
+  "before_snippet": "import numpy as np\n\nA = np.array([[1, 0], [0, 1]], dtype=float)\nw, v = np.linalg.eig(A)\nassert w.dtype in (np.float32, np.float64)",
+  "case_id": "77724ff49f5eb411",
+  "extra_requires": [],
+  "new_version": "2.0.0",
+  "old_version": "1.26.4",
+  "package": "numpy",
+  "source": "pypi:numpy==2.0.0",
+  "title": "linalg.eig and linalg.eigvals now always return complex arrays"
+}

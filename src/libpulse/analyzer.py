@@ -78,6 +78,17 @@ Propose at most {max_cases} migration cases. Each case is one claimed breaking c
 - Use assertions or let exceptions propagate to signal failure; print nothing on success.
 - title: one line naming the removed/changed API.
 
+Precision rules (cases failing these are rejected by an execution harness, so be strict):
+- Only claim changes you are CERTAIN take effect exactly in {new_version}. A deprecation
+  is NOT a breaking change: if the old API still runs (even with a warning) in
+  {new_version}, do not include it.
+- The before_snippet's failure on {new_version} must come from the changed API itself
+  (AttributeError/TypeError/etc.), not from your own assertions. Call the old API in the
+  simplest documented way; do not assert on return types, dtypes, or values unless the
+  documented change is about them.
+- Never invent keyword arguments or behaviors; if unsure how an API behaved in
+  {old_version}, drop the case.
+
 Only claim changes supported by the context above. If the release contains no
 verifiable breaking change (pure bugfix/feature release), return an empty list.
 """
