@@ -119,6 +119,62 @@ def test_matching_release_notes_prefers_exact_tag():
     assert _matching_release_notes(releases, "9.9.9") == ["## v3.0.0\nthree", "## v2.0.0\ntwo"]
 
 
+def test_escalates_to_fallback_model_on_significant_bump(tmp_path):
+    models_called = []
+
+    def http(url, headers, payload=None, timeout=0):
+        if url != API_URL:
+            return []
+        models_called.append(payload["model"])
+        if len(models_called) == 1:
+            return _llm_response([])  # cheap model finds nothing
+        return _llm_response(
+            [
+                {
+                    "title": "demo.foo removed",
+                    "before_snippet": "import demo\ndemo.foo()\n",
+                    "after_snippet": "import demo\ndemo.bar()\n",
+                    "extra_requires": [],
+                }
+            ]
+        )
+
+    analyzer = Analyzer(
+        api_key="k",
+        model="cheap-model",
+        fallback_model="strong-model",
+        http=http,
+        pypi_fetch=_pypi_stub,
+    )
+    written = analyzer.analyze(REL, tmp_path / "cases")  # 1.0.0 -> 2.0.0: major bump
+    assert models_called == ["cheap-model", "strong-model"]
+    assert len(written) == 1
+
+
+def test_no_escalation_on_patch_bump_or_when_disabled(tmp_path):
+    calls = []
+
+    def http(url, headers, payload=None, timeout=0):
+        if url != API_URL:
+            return []
+        calls.append(payload["model"])
+        return _llm_response([])
+
+    patch_release = NewRelease("demo", "1.0.0", "1.0.1", "")
+    analyzer = Analyzer(
+        api_key="k", model="m", fallback_model="strong", http=http, pypi_fetch=_pypi_stub
+    )
+    assert analyzer.analyze(patch_release, tmp_path / "cases") == []
+    assert calls == ["m"]  # patch bump: no retry
+
+    calls.clear()
+    same_model = Analyzer(
+        api_key="k", model="m", fallback_model="m", http=http, pypi_fetch=_pypi_stub
+    )
+    assert same_model.analyze(REL, tmp_path / "cases") == []
+    assert calls == ["m"]  # fallback == primary: disabled
+
+
 def test_cycle_analyze_catches_per_release_errors(tmp_path, capsys):
     def http(url, headers, payload=None, timeout=0):
         raise RuntimeError("boom")

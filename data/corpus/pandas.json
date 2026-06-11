@@ -1,0 +1,19 @@
+{
+  "entries": [
+    {
+      "after": "import pandas as pd\nimport numpy as np\n\n# In pandas 3.0, strings default to pd.StringDtype; convert explicitly\ns = pd.Series(['a','b','c'], dtype=object)\nassert s.values.dtype == np.dtype('O')\n",
+      "after_works_on_old": true,
+      "before": "import pandas as pd\nimport numpy as np\n\n# In pandas 2.x, object dtype Series.values returns numpy array of objects\ns = pd.Series(['a','b','c'])\n# Check the old object dtype is returned\nassert s.values.dtype == np.dtype('O'), f'Expected object dtype, got {s.values.dtype}'\n",
+      "case_id": "76d247406208d7ab",
+      "extra_requires": [],
+      "new_version": "3.0.0",
+      "old_version": "2.3.3",
+      "package": "pandas",
+      "source": "pypi:pandas==3.0.0",
+      "title": "DataFrame.to_numpy with dtype parameter: object dtype inference changed for string-typed DataFrames",
+      "verdict": "verified",
+      "verified_at": 1781159614
+    }
+  ],
+  "package": "pandas"
+}

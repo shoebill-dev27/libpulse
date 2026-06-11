@@ -24,11 +24,15 @@ from pathlib import Path
 from typing import Callable
 
 from .models import MigrationCase
-from .watcher import NewRelease, default_fetcher
+from .watcher import NewRelease, _is_significant_bump, default_fetcher, is_final_version
 
 API_URL = "https://api.anthropic.com/v1/messages"
 ANTHROPIC_VERSION = "2023-06-01"
 DEFAULT_MODEL = "claude-haiku-4-5"
+# When the cheap model yields zero candidates on a major/minor bump, retry once
+# with this model (observed: post-cutoff releases need the stronger model's
+# knowledge). Set LIBPULSE_FALLBACK_MODEL equal to LIBPULSE_MODEL to disable.
+DEFAULT_FALLBACK_MODEL = "claude-sonnet-4-6"
 USER_AGENT = "libpulse/0.1 (analyzer)"
 GITHUB_RELEASES_URL = "https://api.github.com/repos/{repo}/releases?per_page=20"
 TIMEOUT_S = 90
@@ -89,8 +93,12 @@ Precision rules (cases failing these are rejected by an execution harness, so be
 - Never invent keyword arguments or behaviors; if unsure how an API behaved in
   {old_version}, drop the case.
 
-Only claim changes supported by the context above. If the release contains no
-verifiable breaking change (pure bugfix/feature release), return an empty list.
+Ground claims in the context when possible. When the context only announces a major
+release without listing concrete API changes, you may also propose breaking changes you
+confidently KNOW land exactly in {new_version} of {package} from your own knowledge —
+every case is execution-verified downstream, so a wrong claim is cheap, but do not pad
+the list with guesses. If you know of no verifiable breaking change (pure bugfix/feature
+release), return an empty list.
 """
 
 
@@ -140,9 +148,15 @@ class Analyzer:
         http: Callable[..., dict] = _http_json,
         pypi_fetch: Callable[[str], dict] = default_fetcher,
         max_cases: int = MAX_CASES_PER_RELEASE,
+        fallback_model: str | None = None,
     ) -> None:
         self.api_key = api_key if api_key is not None else os.getenv("ANTHROPIC_API_KEY", "")
         self.model = model or os.getenv("LIBPULSE_MODEL", DEFAULT_MODEL)
+        self.fallback_model = (
+            fallback_model
+            if fallback_model is not None
+            else os.getenv("LIBPULSE_FALLBACK_MODEL", DEFAULT_FALLBACK_MODEL)
+        )
         self.http = http
         self.pypi_fetch = pypi_fetch
         self.max_cases = max_cases
@@ -150,6 +164,13 @@ class Analyzer:
     @property
     def enabled(self) -> bool:
         return bool(self.api_key)
+
+    def _should_escalate(self, release: NewRelease) -> bool:
+        if not self.fallback_model or self.fallback_model == self.model:
+            return False
+        if not (is_final_version(release.prev_version) and is_final_version(release.new_version)):
+            return False
+        return _is_significant_bump(release.prev_version, release.new_version)
 
     def fetch_context(self, release: NewRelease) -> str:
         """Best-effort public context for a release; failures degrade to less context."""
@@ -177,7 +198,9 @@ class Analyzer:
                 print(f"[analyze] {release.package}: github context error: {exc}", file=sys.stderr)
         return "\n\n".join(parts)[:MAX_CONTEXT_CHARS] or "(no release notes found)"
 
-    def generate_cases(self, release: NewRelease, context: str) -> list[MigrationCase]:
+    def generate_cases(
+        self, release: NewRelease, context: str, model: str | None = None
+    ) -> list[MigrationCase]:
         prompt = _PROMPT_TEMPLATE.format(
             package=release.package,
             old_version=release.prev_version,
@@ -194,7 +217,7 @@ class Analyzer:
                 "User-Agent": USER_AGENT,
             },
             payload={
-                "model": self.model,
+                "model": model or self.model,
                 "max_tokens": 4096,
                 "output_config": {"format": {"type": "json_schema", "schema": _CASES_SCHEMA}},
                 "messages": [{"role": "user", "content": prompt}],
@@ -231,6 +254,13 @@ class Analyzer:
             return []
         context = self.fetch_context(release)
         cases = self.generate_cases(release, context)
+        if not cases and self._should_escalate(release):
+            print(
+                f"[analyze] {release.package} {release.new_version}: "
+                f"0 candidates from {self.model}, retrying with {self.fallback_model}",
+                file=sys.stderr,
+            )
+            cases = self.generate_cases(release, context, model=self.fallback_model)
         out_dir = Path(cases_dir)
         out_dir.mkdir(parents=True, exist_ok=True)
         written: list[Path] = []

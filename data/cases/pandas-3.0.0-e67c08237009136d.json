@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import pandas as pd\n\ndf = pd.DataFrame({'a': [1,2], 'b': [3,4]}, index=pd.MultiIndex.from_tuples([(0,'x'),(1,'y')]))\n# In 3.0 just call stack() without future_stack\nresult = df.stack()\n",
+  "before_snippet": "import pandas as pd\n\ndf = pd.DataFrame({'a': [1,2], 'b': [3,4]}, index=pd.MultiIndex.from_tuples([(0,'x'),(1,'y')]))\n# future_stack was a transitional kwarg in 2.x, removed in 3.0\nresult = df.stack(future_stack=True)\n",
+  "case_id": "e67c08237009136d",
+  "extra_requires": [],
+  "new_version": "3.0.0",
+  "old_version": "2.3.3",
+  "package": "pandas",
+  "source": "pypi:pandas==3.0.0",
+  "title": "DataFrame.stack with future_stack parameter removed (future_stack no longer accepted)"
+}

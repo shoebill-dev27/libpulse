@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import pandas as pd\n# SettingWithCopyWarning is no longer raised; CoW is always on\n# Access it from the top-level if needed (it no longer exists as com attribute)\ndf = pd.DataFrame({'a': [1,2,3]})\nview = df[df['a'] > 1].copy()\nview['a'] = 99\n",
+  "before_snippet": "import pandas.core.common as com\n# SettingWithCopyWarning was moved/removed in 3.0\n_ = com.SettingWithCopyWarning\n",
+  "case_id": "5cbfa9cac3ff1c75",
+  "extra_requires": [],
+  "new_version": "3.0.0",
+  "old_version": "2.3.3",
+  "package": "pandas",
+  "source": "pypi:pandas==3.0.0",
+  "title": "pandas.core.common.SettingWithCopyWarning removed"
+}

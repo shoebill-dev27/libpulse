@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import pandas as pd\n\ndf = pd.DataFrame({'a': [1,2,3]})\ndf.columns = pd.MultiIndex.from_tuples([('x','a')])\n# axis parameter removed; use the column method directly\nresult = df.columns.swaplevel(0, 1)\ndf.columns = result\n",
+  "before_snippet": "import pandas as pd\n\ndf = pd.DataFrame({'a': [1,2,3]})\ndf.columns = pd.MultiIndex.from_tuples([('x','a')])\n# axis parameter was deprecated and removed in 3.0\nresult = df.swaplevel(0, 1, axis=1)\n",
+  "case_id": "8868c63013849060",
+  "extra_requires": [],
+  "new_version": "3.0.0",
+  "old_version": "2.3.3",
+  "package": "pandas",
+  "source": "pypi:pandas==3.0.0",
+  "title": "DataFrame.swaplevel axis parameter removed"
+}

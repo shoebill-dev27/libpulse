@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import pandas as pd\n\ndf = pd.DataFrame({'cat': pd.Categorical(['a','b','a']), 'val': [1,2,3]})\n# In pandas 3.0, observed=True is the default\nresult = df.groupby('cat', observed=True).sum()\nassert len(result) == 2\n",
+  "before_snippet": "import pandas as pd\nimport warnings\n\ndf = pd.DataFrame({'cat': pd.Categorical(['a','b','a']), 'val': [1,2,3]})\n# In pandas 2.x, not passing observed raises FutureWarning but works\nwith warnings.catch_warnings():\n    warnings.simplefilter('ignore', FutureWarning)\n    result = df.groupby('cat').sum()\nassert len(result) == 2\n",
+  "case_id": "8739a7f3a4a3ab4d",
+  "extra_requires": [],
+  "new_version": "3.0.0",
+  "old_version": "2.3.3",
+  "package": "pandas",
+  "source": "pypi:pandas==3.0.0",
+  "title": "DataFrame.groupby with observed=False no longer defaults to True for categorical groupers"
+}

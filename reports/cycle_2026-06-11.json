@@ -1,25 +1,24 @@
 {
-  "ran_at": 1781142179,
-  "duration_s": 5.1,
+  "ran_at": 1781159608,
+  "duration_s": 9.4,
   "releases_found": 0,
   "cases_generated": 0,
-  "ingested": 13,
-  "verified_this_cycle": 3,
+  "ingested": 18,
+  "verified_this_cycle": 1,
   "outcomes": {
-    "282315d30cfa3369": "not_breaking",
-    "405b0c21a21a87e3": "verified",
-    "ab9ece923efac07d": "not_breaking",
-    "ca538c375b0c19b1": "not_breaking",
-    "e24973a9fe03f0c6": "verified",
-    "f0c7da96ef50feed": "not_breaking",
-    "ffaf8985f1a0b507": "verified"
+    "5cbfa9cac3ff1c75": "unverifiable",
+    "76d247406208d7ab": "verified",
+    "8739a7f3a4a3ab4d": "not_breaking",
+    "8868c63013849060": "not_breaking",
+    "e67c08237009136d": "not_breaking"
   },
   "corpus_files": [
-    "data/corpus/numpy.json"
+    "data/corpus/numpy.json",
+    "data/corpus/pandas.json"
   ],
   "totals": {
-    "not_breaking": 7,
-    "unverifiable": 2,
-    "verified": 4
+    "not_breaking": 10,
+    "unverifiable": 3,
+    "verified": 5
   }
 }
