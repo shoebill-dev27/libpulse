@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Unattended cadence (T13). Install with `crontab -e` (owner action — incurs
+# daily LLM cost when ANTHROPIC_API_KEY is set in .env):
+#
+#   17 6 * * *  /home/shinobu/claude-dev/libpulse/scripts/cron.sh.example cycle
+#   23 7 * * 1  /home/shinobu/claude-dev/libpulse/scripts/cron.sh.example report
+#
+set -euo pipefail
+cd "$(dirname "$0")/.."
+set -a; [ -f .env ] && source .env; set +a
+case "${1:-cycle}" in
+  cycle)
+    .venv/bin/libpulse cycle
+    .venv/bin/libpulse prune-venvs --keep-days 30
+    git add data/corpus reports && git commit -q -m "cron: cycle $(date +%F)" || true
+    ;;
+  report)
+    .venv/bin/libpulse report
+    git add reports && git commit -q -m "cron: weekly report $(date +%F)" || true
+    ;;
+esac

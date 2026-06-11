@@ -165,6 +165,30 @@ def cmd_export(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_report(args: argparse.Namespace) -> int:
+    from .report import write_report
+
+    path = write_report(Store(args.db), args.reports_dir)
+    print(path)
+    return 0
+
+
+def cmd_prune_venvs(args: argparse.Namespace) -> int:
+    """Remove verifier venvs untouched for N days (disk hygiene for the cron loop)."""
+    import shutil
+
+    cutoff = time.time() - args.keep_days * 86400
+    removed = 0
+    root = Path(args.venvs_dir)
+    if root.exists():
+        for venv in root.iterdir():
+            if venv.is_dir() and venv.stat().st_mtime < cutoff:
+                shutil.rmtree(venv, ignore_errors=True)
+                removed += 1
+    print(f"pruned {removed} venv(s) older than {args.keep_days}d")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="libpulse")
     parser.add_argument("--db", default="data/libpulse.db")
@@ -206,6 +230,14 @@ def main(argv: list[str] | None = None) -> int:
 
     p = sub.add_parser("export", help="re-export the verified corpus")
     p.set_defaults(func=cmd_export)
+
+    p = sub.add_parser("report", help="write the weekly markdown report")
+    p.set_defaults(func=cmd_report)
+
+    p = sub.add_parser("prune-venvs", help="remove verifier venvs untouched for N days")
+    p.add_argument("--keep-days", type=int, default=30)
+    p.add_argument("--venvs-dir", default="venvs")
+    p.set_defaults(func=cmd_prune_venvs)
 
     args = parser.parse_args(argv)
     return args.func(args)

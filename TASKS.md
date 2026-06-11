@@ -32,8 +32,11 @@ Granularity: each task is 1–3 hours for a Claude Code session. Dependencies no
       often announce-only (pandas) or absent; follow project_urls Changelog links
       (raw .md/.rst on GitHub; docs HTML stripped via html.parser) to feed the
       analyzer concrete API changes. Raises yield without model escalation.
-- [ ] T13 Weekly markdown report generator (corpus growth, freshness lag, verdict
-      mix) + cron/scheduled-agent setup for the post-window unattended cadence.
+- [x] T13 Weekly report generator (`libpulse report`: corpus growth, yield,
+      per-package table, flagged packages) + `prune-venvs` disk hygiene +
+      scripts/cron.sh.example (crontab install = owner action, incurs daily cost).
+- [ ] T13a Persist release timestamps so the report can measure freshness lag
+      (release -> published). Discovered 2026-06-11.
 - [ ] T14 SECURITY_REVIEW.md (threat model: LLM-generated code execution, supply
       chain via pip installs of watched packages) — before any public publication.
 - [ ] T15 HuggingFace dataset export format + publish dry-run (publication itself =
