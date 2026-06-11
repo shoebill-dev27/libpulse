@@ -16,3 +16,4 @@ dist/
 .claude/
 *:Zone.Identifier
 data/*.db
+.codegraph/
