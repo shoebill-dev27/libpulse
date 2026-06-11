@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from scipy.special import comb\n\n# In 1.16.0, exact=True with non-integral arguments raises\ntry:\n    result = comb(5.5, 2, exact=True)\n    # If we reach here, the test should fail\n    raise AssertionError(\"Expected TypeError but none was raised\")\nexcept TypeError:\n    # This is expected\n    pass",
+  "before_snippet": "from scipy.special import comb, perm\n\n# In 1.15.3, this would not raise even with non-integral arguments\nresult = comb(5.5, 2, exact=True)\nassert result is not None",
+  "case_id": "1f711c5802543a52",
+  "extra_requires": [],
+  "new_version": "1.16.0",
+  "old_version": "1.15.3",
+  "package": "scipy",
+  "source": "pypi:scipy==1.16.0",
+  "title": "scipy.special.comb and perm raise on exact=True with non-integral arguments"
+}

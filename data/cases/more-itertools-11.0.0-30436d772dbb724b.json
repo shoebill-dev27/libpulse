@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from more_itertools import unique_everseen\ntry:\n    list(unique_everseen([[1], [2], [1]]))\n    raise AssertionError('Should have raised TypeError')\nexcept TypeError:\n    pass",
+  "before_snippet": "from more_itertools import unique_everseen\nresult = list(unique_everseen([[1], [2], [1]]))\nassert len(result) == 2",
+  "case_id": "30436d772dbb724b",
+  "extra_requires": [],
+  "new_version": "11.0.0",
+  "old_version": "10.8.0",
+  "package": "more-itertools",
+  "source": "pypi:more-itertools==11.0.0",
+  "title": "unique_everseen raises TypeError for unhashable inputs instead of falling back silently"
+}

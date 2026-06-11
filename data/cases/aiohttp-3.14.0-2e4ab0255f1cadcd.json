@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import sys\n# In 3.14.0, Python 3.10+ is required\nassert sys.version_info >= (3, 10), \"Python 3.10+ required\"\n\nfrom aiohttp import web\napp = web.Application()",
+  "before_snippet": "import sys\n# In 3.13.5, aiohttp supported Python 3.9\nassert sys.version_info >= (3, 9), \"Python 3.9+ required\"\n\nfrom aiohttp import web\napp = web.Application()",
+  "case_id": "2e4ab0255f1cadcd",
+  "extra_requires": [],
+  "new_version": "3.14.0",
+  "old_version": "3.13.5",
+  "package": "aiohttp",
+  "source": "pypi:aiohttp==3.14.0",
+  "title": "Python 3.9 support dropped"
+}

@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import asyncio\nfrom aiohttp import web\nimport socket\n\nasync def test():\n    # In 3.14.0, no fallback to socket.getfqdn()\n    # Use the local socket address or empty string instead\n    app = web.Application()\n    \n    async def handler(request):\n        # Now returns transport sockname or empty string, never FQDN\n        host = request.host\n        # host will be the local socket address or empty string\n        # If you need FQDN, call socket.getfqdn() off the event loop\n        return web.Response()\n    \n    app.router.add_get('/', handler)\n    runner = web.AppRunner(app)\n    await runner.setup()\n    site = web.TCPSite(runner, '127.0.0.1', 8080)\n    await site.start()\n    \n    await runner.cleanup()\n\nasyncio.run(test())",
+  "before_snippet": "import asyncio\nfrom aiohttp import web\n\nasync def test():\n    # In 3.13.5, a request without Host header would fall back to socket.getfqdn()\n    app = web.Application()\n    \n    async def handler(request):\n        # This would return FQDN in 3.13.5 when no Host header present\n        host = request.host\n        assert host is not None\n        return web.Response()\n    \n    app.router.add_get('/', handler)\n    runner = web.AppRunner(app)\n    await runner.setup()\n    site = web.TCPSite(runner, '127.0.0.1', 8080)\n    await site.start()\n    \n    # Make HTTP/1.0 request without Host header\n    from aiohttp import ClientSession\n    async with ClientSession() as session:\n        # Raw socket request without Host header to trigger old fallback\n        pass\n    \n    await runner.cleanup()\n\nasyncio.run(test())",
+  "case_id": "70bb16962e7ba0be",
+  "extra_requires": [],
+  "new_version": "3.14.0",
+  "old_version": "3.13.5",
+  "package": "aiohttp",
+  "source": "pypi:aiohttp==3.14.0",
+  "title": "socket.getfqdn() fallback removed from BaseRequest.host"
+}

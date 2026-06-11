@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from packaging.markers import Marker\n# In 26.0, Version parsing is only attempted on specific marker keys\nm = Marker(\"extra == 'dev'\")\nresult = m.evaluate({'extra': 'dev'})\nassert result is True",
+  "before_snippet": "from packaging.markers import Marker\n# In 25.0, markers would try to parse arbitrary strings as Version for comparison\nm = Marker(\"extra == 'dev'\")\nresult = m.evaluate({'extra': 'dev'})\nassert result is True",
+  "case_id": "069481220a6ad53e",
+  "extra_requires": [],
+  "new_version": "26.0",
+  "old_version": "25.0",
+  "package": "packaging",
+  "source": "pypi:packaging==26.0",
+  "title": "Marker comparison now only parses Version on specific marker keys"
+}

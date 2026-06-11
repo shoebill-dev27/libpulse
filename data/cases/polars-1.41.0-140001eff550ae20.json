@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import polars as pl\nimport tempfile\nimport os\n\nwith tempfile.TemporaryDirectory() as tmpdir:\n    path = os.path.join(tmpdir, 'test.parquet')\n    df = pl.DataFrame({'a': [1, 2], 'b': [3, 4]})\n    df.write_parquet(path)\n    pl.read_parquet(path)",
+  "before_snippet": "import polars as pl\nimport tempfile\nimport os\n\nwith tempfile.TemporaryDirectory() as tmpdir:\n    path = os.path.join(tmpdir, 'test.parquet')\n    df = pl.DataFrame({'a': [1, 2], 'b': [3, 4]})\n    df.write_parquet(path)\n    try:\n        pl.read_parquet(path)\n    except pl.exceptions.DuplicateError:\n        raise AssertionError('Should not raise DuplicateError on valid file')",
+  "case_id": "140001eff550ae20",
+  "extra_requires": [],
+  "new_version": "1.41.0",
+  "old_version": "1.40.1",
+  "package": "polars",
+  "source": "pypi:polars==1.41.0",
+  "title": "DuplicateError raised on parquet files with duplicate column names"
+}

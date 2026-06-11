@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from aiohttp import web\n\n# In 3.14.0, all ASCII control characters (0x00-0x08, 0x0A-0x1F, 0x7F) are rejected\napp = web.Application()\n\nasync def handler(request):\n    # This will now raise ValueError instead of being allowed\n    response = web.Response()\n    try:\n        response.headers['X-Custom'] = 'value\\x01test'\n        # If you need such data, encode it properly (e.g., base64)\n        response.headers['X-Custom'] = 'value_encoded_data'\n    except ValueError:\n        pass\n    return response\n\napp.router.add_get('/', handler)\nweb.run_app(app, print=lambda *args: None)",
+  "before_snippet": "from aiohttp import web\n\n# In 3.13.5, only CR, LF, and NUL were rejected in header values\napp = web.Application()\n\nasync def handler(request):\n    # Attempt to set a header with control character (e.g., 0x01)\n    response = web.Response()\n    response.headers['X-Custom'] = 'value\\x01test'\n    return response\n\napp.router.add_get('/', handler)\nweb.run_app(app, print=lambda *args: None)",
+  "case_id": "e88d03fdb271b82f",
+  "extra_requires": [],
+  "new_version": "3.14.0",
+  "old_version": "3.13.5",
+  "package": "aiohttp",
+  "source": "pypi:aiohttp==3.14.0",
+  "title": "ASCII control characters rejected in outbound headers"
+}

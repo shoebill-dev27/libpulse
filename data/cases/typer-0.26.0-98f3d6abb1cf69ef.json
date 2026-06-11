@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import typer\n\napp = typer.Typer()\n\n@app.command()\ndef main(name: str = typer.Option(\"World\", help=\"Name to greet\")):\n    print(f\"Hello {name}\")\n\n# In 0.26.0, Click is vendored and not exposed as an external dependency\n# Users should not rely on external click imports\n# Typer now handles Click internally",
+  "before_snippet": "import click\nimport typer\n\napp = typer.Typer()\n\n@app.command()\ndef main(name: str = typer.Option(\"World\", help=\"Name to greet\")):\n    print(f\"Hello {name}\")\n\n# In 0.25.1, users could import and use click directly\nif click.__version__:\n    pass",
+  "case_id": "98f3d6abb1cf69ef",
+  "extra_requires": [],
+  "new_version": "0.26.0",
+  "old_version": "0.25.1",
+  "package": "typer",
+  "source": "pypi:typer==0.26.0",
+  "title": "Direct Click dependency removal - Click as vendored code"
+}

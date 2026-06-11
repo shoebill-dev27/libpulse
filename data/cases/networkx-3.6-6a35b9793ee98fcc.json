@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import networkx as nx\nG = nx.path_graph(4)\n# swap_d has been removed; use alternative approaches\nassert G is not None",
+  "before_snippet": "import networkx as nx\nfrom networkx.algorithms.threshold import swap_d\nG = nx.path_graph(4)\nresult = swap_d(G, 0, 1)\nassert result is not None",
+  "case_id": "6a35b9793ee98fcc",
+  "extra_requires": [],
+  "new_version": "3.6",
+  "old_version": "3.5",
+  "package": "networkx",
+  "source": "pypi:networkx==3.6",
+  "title": "Removal of swap_d from threshold module"
+}

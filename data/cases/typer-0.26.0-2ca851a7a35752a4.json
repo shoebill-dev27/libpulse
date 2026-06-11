@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import typer\n\napp = typer.Typer()\n\n# In 0.26.0, Click plugins are not supported\n# Typer is now independent with vendored Click\n# Use Typer's native extension mechanisms instead\nif hasattr(app, 'command'):\n    # Use Typer's public API\n    pass",
+  "before_snippet": "import typer\nimport click\n\napp = typer.Typer()\n\n# In 0.25.1, users could access the underlying Click app and add plugins\nclick_app = app.typer_instance\nif hasattr(click_app, '__click_params__'):\n    # Could add Click-specific plugins or extensions\n    pass",
+  "case_id": "2ca851a7a35752a4",
+  "extra_requires": [],
+  "new_version": "0.26.0",
+  "old_version": "0.25.1",
+  "package": "typer",
+  "source": "pypi:typer==0.26.0",
+  "title": "Click plugins cannot be added to Typer app"
+}

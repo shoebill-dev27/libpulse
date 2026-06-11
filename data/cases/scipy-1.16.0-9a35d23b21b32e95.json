@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import scipy.integrate as integrate\nimport numpy as np\n\nx = np.linspace(0, 10, 11)\ny = np.sin(x)\n\n# Use scipy.integrate.trapezoid instead\nresult = integrate.trapezoid(y, x)\nassert result is not None",
+  "before_snippet": "import scipy.stats as stats\nimport numpy as np\n\nx = np.linspace(0, 10, 11)\ny = np.sin(x)\n\n# scipy.stats.trapz was removed\nresult = stats.trapz(y, x)\nassert result is not None",
+  "case_id": "9a35d23b21b32e95",
+  "extra_requires": [],
+  "new_version": "1.16.0",
+  "old_version": "1.15.3",
+  "package": "scipy",
+  "source": "pypi:scipy==1.16.0",
+  "title": "scipy.stats.trapz removed - use scipy.integrate.trapezoid instead"
+}

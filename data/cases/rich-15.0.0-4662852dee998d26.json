@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import rich\nassert True\n",
+  "before_snippet": "import sys\n# This script simulates code that was valid under Python 3.8 support contract.\n# We verify that rich can be imported and used on Python 3.8.\n# On Python 3.9+, rich 15.0.0 still works, so this is not a runtime API break.\n# Since the only breaking change is Python 3.8 EOL, and we cannot change the\n# interpreter version in a snippet, there are no executable API-level breaking changes.\nimport rich\nassert True\n",
+  "case_id": "4662852dee998d26",
+  "extra_requires": [],
+  "new_version": "15.0.0",
+  "old_version": "14.3.4",
+  "package": "rich",
+  "source": "pypi:rich==15.0.0",
+  "title": "Dropped support for Python 3.8 - sys.version_info check"
+}

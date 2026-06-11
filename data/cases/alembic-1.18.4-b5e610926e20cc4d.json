@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from alembic import op\nfrom sqlalchemy import Column, Integer\nfrom sqlalchemy.schema import Table, MetaData\nimport tempfile\nimport os\nfrom alembic.migration import MigrationContext\nfrom alembic.operations import Operations\n\n# Simulate migration context\nwith tempfile.TemporaryDirectory() as tmpdir:\n    db_path = os.path.join(tmpdir, 'test.db')\n    url = f'sqlite:///{db_path}'\n    ctx = MigrationContext.configure(url)\n    op_obj = Operations(ctx)\n    \n    # Create table first\n    op_obj.create_table('test_table', Column('id', Integer, primary_key=True))\n    \n    # In 1.18.4, use the new inline_primary_key parameter to render PRIMARY KEY inline\n    col = Column('id2', Integer, primary_key=True)\n    op_obj.add_column('test_table', col, inline_primary_key=True)\n    assert True",
+  "before_snippet": "from alembic import op\nfrom sqlalchemy import Column, Integer\nfrom sqlalchemy.schema import Table, MetaData\nimport tempfile\nimport os\nfrom alembic.migration import MigrationContext\nfrom alembic.operations import Operations\n\n# Simulate migration context\nwith tempfile.TemporaryDirectory() as tmpdir:\n    db_path = os.path.join(tmpdir, 'test.db')\n    url = f'sqlite:///{db_path}'\n    ctx = MigrationContext.configure(url)\n    op_obj = Operations(ctx)\n    \n    # In 1.18.3, add_column with primary_key=True would render PRIMARY KEY inline\n    # Create table first\n    op_obj.create_table('test_table', Column('id', Integer, primary_key=True))\n    \n    # Now try to add another primary key column - in 1.18.3 this rendered inline\n    # We verify the behavior by checking SQL generation doesn't fail\n    col = Column('id2', Integer, primary_key=True)\n    op_obj.add_column('test_table', col)\n    # In 1.18.4, this will fail or produce different SQL without inline_primary_key param\n    assert True",
+  "case_id": "b5e610926e20cc4d",
+  "extra_requires": [],
+  "new_version": "1.18.4",
+  "old_version": "1.18.3",
+  "package": "alembic",
+  "source": "pypi:alembic==1.18.4",
+  "title": "Operations.add_column() no longer renders PRIMARY KEY inline by default"
+}

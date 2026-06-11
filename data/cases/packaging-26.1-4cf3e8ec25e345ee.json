@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from packaging.version import Version\ntry:\n    v = Version('1.0+caf\u00e9')\n    raise AssertionError('Should have raised InvalidVersion')\nexcept Exception:\n    pass\n",
+  "before_snippet": "from packaging.version import Version\nv = Version('1.0+caf\u00e9')\n",
+  "case_id": "4cf3e8ec25e345ee",
+  "extra_requires": [],
+  "new_version": "26.1",
+  "old_version": "26.0",
+  "package": "packaging",
+  "source": "pypi:packaging==26.1",
+  "title": "Local version identifiers restricted to ASCII only"
+}

@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import asyncio\nfrom aiohttp import web\n\nasync def test():\n    # In 3.14.0, HTTP/1.1 requests without valid Host header are rejected with 400\n    app = web.Application()\n    \n    async def handler(request):\n        return web.Response(text='ok')\n    \n    app.router.add_get('/', handler)\n    runner = web.AppRunner(app)\n    await runner.setup()\n    site = web.TCPSite(runner, '127.0.0.1', 8080)\n    await site.start()\n    port = site._server.sockets[0].getsockname()[1]\n    \n    # Create raw connection and send HTTP/1.1 request without Host header\n    import socket\n    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n    sock.connect(('127.0.0.1', port))\n    sock.sendall(b'GET / HTTP/1.1\\r\\nConnection: close\\r\\n\\r\\n')\n    response = sock.recv(4096)\n    sock.close()\n    \n    # In 3.14.0, this returns 400 Bad Request\n    assert b'400' in response\n    \n    await runner.cleanup()\n\nasyncio.run(test())",
+  "before_snippet": "import asyncio\nfrom aiohttp import web\nfrom unittest.mock import AsyncMock, MagicMock\n\nasync def test():\n    # In 3.13.5, HTTP/1.1 requests without Host header were accepted\n    app = web.Application()\n    \n    async def handler(request):\n        return web.Response(text='ok')\n    \n    app.router.add_get('/', handler)\n    runner = web.AppRunner(app)\n    await runner.setup()\n    site = web.TCPSite(runner, '127.0.0.1', 8080)\n    await site.start()\n    port = site._server.sockets[0].getsockname()[1]\n    \n    # Create raw connection and send HTTP/1.1 request without Host header\n    import socket\n    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n    sock.connect(('127.0.0.1', port))\n    sock.sendall(b'GET / HTTP/1.1\\r\\nConnection: close\\r\\n\\r\\n')\n    response = sock.recv(4096)\n    sock.close()\n    \n    # In 3.13.5, this would return 200\n    assert b'200' in response or b'400' not in response\n    \n    await runner.cleanup()\n\nasyncio.run(test())",
+  "case_id": "b644819c59685b97",
+  "extra_requires": [],
+  "new_version": "3.14.0",
+  "old_version": "3.13.5",
+  "package": "aiohttp",
+  "source": "pypi:aiohttp==3.14.0",
+  "title": "HTTP/1.1 requests without valid Host header now rejected"
+}

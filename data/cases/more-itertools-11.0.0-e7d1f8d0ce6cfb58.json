@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from more_itertools import iequals\nresult = iequals([], [object()])\nassert result == False",
+  "before_snippet": "from more_itertools import iequals\nresult = iequals([], [object()])\nassert result == True",
+  "case_id": "e7d1f8d0ce6cfb58",
+  "extra_requires": [],
+  "new_version": "11.0.0",
+  "old_version": "10.8.0",
+  "package": "more-itertools",
+  "source": "pypi:more-itertools==11.0.0",
+  "title": "iequals returns False instead of True for ([], [ANY])"
+}

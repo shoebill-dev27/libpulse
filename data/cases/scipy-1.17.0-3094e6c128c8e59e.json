@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import numpy as np\nfrom scipy.interpolate import RegularGridInterpolator\n\npoints = ([0, 1, 2], [0, 1, 2])\nvalues = np.zeros((3, 3))\n# Pass updated values at construction time instead\nrgi = RegularGridInterpolator(points, np.ones((3, 3)))\n",
+  "before_snippet": "import numpy as np\nfrom scipy.interpolate import RegularGridInterpolator\n\npoints = ([0, 1, 2], [0, 1, 2])\nvalues = np.zeros((3, 3))\nrgi = RegularGridInterpolator(points, values)\n# In 1.16.3, .values was a mutable instance attribute\nrgi.values = np.ones((3, 3))\n",
+  "case_id": "3094e6c128c8e59e",
+  "extra_requires": [],
+  "new_version": "1.17.0",
+  "old_version": "1.16.3",
+  "package": "scipy",
+  "source": "pypi:scipy==1.17.0",
+  "title": "RegularGridInterpolator.grid and .values changed to read-only properties"
+}

@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from packaging.version import Version\nv = Version('1.0.0')\n# In 26.0, _version attribute no longer exists; use Version methods instead\nmajor = v.major\nminor = v.minor\nmicro = v.micro\nassert major == 1 and minor == 0 and micro == 0",
+  "before_snippet": "from packaging.version import Version\nv = Version('1.0.0')\n# Access the internal _version NamedTuple attribute\nold_version_tuple = v._version\nassert old_version_tuple is not None",
+  "case_id": "357ff6e399835933",
+  "extra_requires": [],
+  "new_version": "26.0",
+  "old_version": "25.0",
+  "package": "packaging",
+  "source": "pypi:packaging==26.0",
+  "title": "Version._version NamedTuple deprecated and removed"
+}

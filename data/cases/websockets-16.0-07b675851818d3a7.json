@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import websockets\n# legacy module still accessible\nimport websockets.legacy.server as legacy_server\nassert hasattr(legacy_server, 'WebSocketServerProtocol')\n",
+  "before_snippet": "import websockets\nimport websockets.legacy.server as legacy_server\n# Verify legacy server module exists and has ServerConnection\nassert hasattr(legacy_server, 'WebSocketServerProtocol')\n",
+  "case_id": "07b675851818d3a7",
+  "extra_requires": [],
+  "new_version": "16.0",
+  "old_version": "15.0.1",
+  "package": "websockets",
+  "source": "pypi:websockets==16.0",
+  "title": "legacy server create_connection parameter removed in favor of new API"
+}

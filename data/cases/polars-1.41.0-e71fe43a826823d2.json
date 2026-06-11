@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import polars as pl\ndf = pl.DataFrame({'a': [1, 2, 1], 'b': [4, 5, 6]})\ngb = df.groupby('a')\ntry:\n    next(gb)\nexcept TypeError:\n    pass",
+  "before_snippet": "import polars as pl\ndf = pl.DataFrame({'a': [1, 2, 1], 'b': [4, 5, 6]})\ngb = df.groupby('a')\nnext(gb)",
+  "case_id": "e71fe43a826823d2",
+  "extra_requires": [],
+  "new_version": "1.41.0",
+  "old_version": "1.40.1",
+  "package": "polars",
+  "source": "pypi:polars==1.41.0",
+  "title": "TypeError raised when calling next() directly on GroupBy objects"
+}

@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import typer\n\napp = typer.Typer()\n\n@app.command()\ndef hello(name: str):\n    print(f\"Hello {name}\")\n\n# In 0.26.0, Typer no longer exposes Click internals\n# Users cannot extract or customize with Click-specific types\n# Use Typer's public API instead\nif hasattr(app, 'registered_commands'):\n    for cmd in app.registered_commands:\n        # Work with Typer API only, not Click internals\n        pass",
+  "before_snippet": "import typer\nfrom click import Command\n\napp = typer.Typer()\n\n@app.command()\ndef hello(name: str):\n    print(f\"Hello {name}\")\n\n# In 0.25.1, extracting the underlying Click app was possible\nclick_app = app.registered_commands[0]\n# This would work with Click-specific types and plugins\nif isinstance(click_app, Command):\n    pass",
+  "case_id": "db5e8438cb0a9687",
+  "extra_requires": [],
+  "new_version": "0.26.0",
+  "old_version": "0.25.1",
+  "package": "typer",
+  "source": "pypi:typer==0.26.0",
+  "title": "Click-specific plugin extraction and customization no longer supported"
+}

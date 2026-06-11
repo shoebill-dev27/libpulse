@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import scipy.sparse as sp\nimport numpy as np\n\n# Create a sparse matrix\ndata = np.array([1, 2, 3])\nrow = np.array([0, 1, 2])\ncol = np.array([0, 1, 2])\nmatrix = sp.csr_matrix((data, (row, col)), shape=(3, 3))\n\n# Use the new API: .T.conj()\nresult = matrix.T.conj()\nassert result is not None",
+  "before_snippet": "import scipy.sparse as sp\nimport numpy as np\n\n# Create a sparse matrix\ndata = np.array([1, 2, 3])\nrow = np.array([0, 1, 2])\ncol = np.array([0, 1, 2])\nmatrix = sp.csr_matrix((data, (row, col)), shape=(3, 3))\n\n# This API existed in 1.15.3\nresult = sp.conjtransp(matrix)\nassert result is not None",
+  "case_id": "64b0d3f5f01f1f55",
+  "extra_requires": [],
+  "new_version": "1.16.0",
+  "old_version": "1.15.3",
+  "package": "scipy",
+  "source": "pypi:scipy==1.16.0",
+  "title": "scipy.sparse.conjtransp removed - use .T.conj() instead"
+}

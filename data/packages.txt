@@ -20,3 +20,35 @@ boto3
 redis
 celery
 jinja2
+# Expansion to curated-50 (2026-06-11): wheel-friendly, high-churn, agent-relevant.
+# Deliberately excluded: torch/tensorflow/opencv (GB-scale installs).
+scipy
+pyyaml
+aiohttp
+websockets
+attrs
+rich
+typer
+polars
+pyarrow
+openai
+anthropic
+langchain-core
+python-dateutil
+jsonschema
+marshmallow
+alembic
+pymongo
+protobuf
+lxml
+beautifulsoup4
+tqdm
+seaborn
+statsmodels
+networkx
+sympy
+tenacity
+more-itertools
+packaging
+setuptools
+httpcore

@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from scipy.stats import linregress\nimport numpy as np\n\n# In 1.16.0, x and y must be specified separately\nx = np.array([1, 2, 3, 4])\ny = np.array([2, 3, 5, 7])\nresult = linregress(x, y)\nassert result is not None",
+  "before_snippet": "from scipy.stats import linregress\nimport numpy as np\n\n# In 1.15.3, linregress could infer x and y from a single argument\nx_and_y = np.array([[1, 2], [2, 3], [3, 5], [4, 7]])\nresult = linregress(x_and_y)\nassert result is not None",
+  "case_id": "49c9a36294c8e2de",
+  "extra_requires": [],
+  "new_version": "1.16.0",
+  "old_version": "1.15.3",
+  "package": "scipy",
+  "source": "pypi:scipy==1.16.0",
+  "title": "scipy.stats.linregress no longer accepts single argument x for inference"
+}

@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import asyncio\nfrom aiohttp import ClientSession, encode_basic_auth\n\nasync def test():\n    # In 3.14.0, use encode_basic_auth() with Authorization header\n    async with ClientSession() as session:\n        # encode_basic_auth defaults to utf-8 (not latin1)\n        auth_header = encode_basic_auth('user', 'pass')\n        async with session.get(\n            'http://httpbin.org/basic-auth/user/pass',\n            headers={'Authorization': auth_header}\n        ) as resp:\n            assert resp.status == 200\n\nasyncio.run(test())",
+  "before_snippet": "import asyncio\nfrom aiohttp import ClientSession, BasicAuth\n\nasync def test():\n    # In 3.13.5, BasicAuth was the standard way\n    async with ClientSession() as session:\n        async with session.get(\n            'http://httpbin.org/basic-auth/user/pass',\n            auth=BasicAuth('user', 'pass')\n        ) as resp:\n            assert resp.status == 200\n\nasyncio.run(test())",
+  "case_id": "4395826c1c8733ed",
+  "extra_requires": [],
+  "new_version": "3.14.0",
+  "old_version": "3.13.5",
+  "package": "aiohttp",
+  "source": "pypi:aiohttp==3.14.0",
+  "title": "BasicAuth class and auth parameter deprecated and removed"
+}

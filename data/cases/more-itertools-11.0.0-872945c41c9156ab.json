@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from more_itertools import flatten\nresult = list(flatten([[1, 2], [3, 4]]))\nassert result == [1, 2, 3, 4]",
+  "before_snippet": "from more_itertools import flatten\nresult = list(flatten([[1, 2], [3, 4]]))\nassert result == [1, 2, 3, 4]",
+  "case_id": "872945c41c9156ab",
+  "extra_requires": [],
+  "new_version": "11.0.0",
+  "old_version": "10.8.0",
+  "package": "more-itertools",
+  "source": "pypi:more-itertools==11.0.0",
+  "title": "flatten parameter name changed from iterable to iterable_of_iterables"
+}

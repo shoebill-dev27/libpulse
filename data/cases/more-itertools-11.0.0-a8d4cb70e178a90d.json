@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from more_itertools import locate\ndef pred(*args):\n    return args[0] > 2\nresult = list(locate([1, 2, 3, 4], pred))\nassert result == [2, 3]",
+  "before_snippet": "from more_itertools import locate\ndef pred(x):\n    return x > 2\nresult = list(locate([1, 2, 3, 4], pred))\nassert result == [2, 3]",
+  "case_id": "a8d4cb70e178a90d",
+  "extra_requires": [],
+  "new_version": "11.0.0",
+  "old_version": "10.8.0",
+  "package": "more-itertools",
+  "source": "pypi:more-itertools==11.0.0",
+  "title": "locate and replace pred argument must handle variable number of arguments"
+}

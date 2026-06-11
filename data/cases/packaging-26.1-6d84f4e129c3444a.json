@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from packaging.version import _format_full_version\nresult = _format_full_version((3, 11, 0, 'final', 0))\n",
+  "before_snippet": "from packaging.version import format_full_version\nresult = format_full_version((3, 11, 0, 'final', 0))\n",
+  "case_id": "6d84f4e129c3444a",
+  "extra_requires": [],
+  "new_version": "26.1",
+  "old_version": "26.0",
+  "package": "packaging",
+  "source": "pypi:packaging==26.1",
+  "title": "format_full_version renamed to _format_full_version (made private)"
+}

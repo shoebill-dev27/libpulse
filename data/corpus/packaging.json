@@ -1,0 +1,19 @@
+{
+  "entries": [
+    {
+      "after": "from packaging.version import Version\nv = Version('1.2.3')\n# In 26.0, Version uses __slots__, so arbitrary attributes cannot be set\ntry:\n    v.custom_attr = 'test'\n    assert False, 'Should have raised AttributeError'\nexcept AttributeError:\n    pass",
+      "after_works_on_old": false,
+      "before": "from packaging.version import Version\nv = Version('1.2.3')\n# In 25.0, arbitrary attributes could be set on Version instances\nv.custom_attr = 'test'\nassert v.custom_attr == 'test'",
+      "case_id": "ff9645e2fb46cb78",
+      "extra_requires": [],
+      "new_version": "26.0",
+      "old_version": "25.0",
+      "package": "packaging",
+      "source": "pypi:packaging==26.0",
+      "title": "Version now uses __slots__ and internal _key is lazily calculated",
+      "verdict": "verified",
+      "verified_at": 1781182243
+    }
+  ],
+  "package": "packaging"
+}

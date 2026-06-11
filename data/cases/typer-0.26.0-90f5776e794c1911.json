@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import typer\n\napp = typer.Typer()\n\n# In 0.26.0, Click-specific type customization is no longer supported\n# Use Typer's built-in options and validators instead\n@app.command()\ndef greet(name: str = typer.Option(...)):\n    # Validate/transform within the function or use Typer validators\n    name = name.upper()\n    print(name)",
+  "before_snippet": "import typer\nimport click\n\napp = typer.Typer()\n\n# In 0.25.1, users could customize Click field types\nclass CustomClickType(click.ParamType):\n    name = \"custom\"\n    \n    def convert(self, value, param, ctx):\n        return value.upper()\n\n@app.command()\ndef greet(name: str = typer.Option(..., click_type=CustomClickType())):\n    print(name)",
+  "case_id": "90f5776e794c1911",
+  "extra_requires": [],
+  "new_version": "0.26.0",
+  "old_version": "0.25.1",
+  "package": "typer",
+  "source": "pypi:typer==0.26.0",
+  "title": "Click-specific field type customization no longer available"
+}

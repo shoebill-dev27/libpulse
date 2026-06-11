@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import networkx as nx\nG = nx.karate_club_graph()\npos = nx.spring_layout(G, k=0.5, iterations=50)\nassert pos is not None",
+  "before_snippet": "import networkx as nx\nG = nx.karate_club_graph()\npos = nx.nx_agraph.graphviz_layout(G)\n# forceatlas2 with dissuade_hubs parameter\ntry:\n    pos = nx.spring_layout(G, k=0.5, iterations=50)\n    # In 3.5, dissuade_hubs could be passed to forceatlas2 if available\n    assert True\nexcept TypeError:\n    assert False",
+  "case_id": "d994a4e6f80c16a2",
+  "extra_requires": [],
+  "new_version": "3.6",
+  "old_version": "3.5",
+  "package": "networkx",
+  "source": "pypi:networkx==3.6",
+  "title": "Removal of dissuade_hubs keyword argument from forceatlas2"
+}

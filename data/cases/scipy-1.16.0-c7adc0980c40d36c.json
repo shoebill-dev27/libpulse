@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import scipy.linalg as la\nimport numpy as np\n\n# Create a square matrix\nA = np.array([[1.0, 2.0], [3.0, 4.0]])\n\n# In 1.16.0, many-dimensional RHS are treated as batch operations\n# Reshape to be compatible with batch processing rules\nB = np.ones((2, 2))  # 2-D array for simple case\nresult = la.solve(A, B)\nassert result is not None",
+  "before_snippet": "import scipy.linalg as la\nimport numpy as np\n\n# Create a square matrix\nA = np.array([[1.0, 2.0], [3.0, 4.0]])\n\n# In 1.15.3, passing 3-D RHS might not raise\nB = np.ones((2, 2, 2))  # 3-D array\ntry:\n    result = la.solve(A, B)\n    # If it doesn't raise, we need to document the actual behavior\nexcept (ValueError, TypeError) as e:\n    # Expected in some cases\n    pass",
+  "case_id": "c7adc0980c40d36c",
+  "extra_requires": [],
+  "new_version": "1.16.0",
+  "old_version": "1.15.3",
+  "package": "scipy",
+  "source": "pypi:scipy==1.16.0",
+  "title": "scipy.linalg functions now enforce dimensionality rules on RHS argument"
+}

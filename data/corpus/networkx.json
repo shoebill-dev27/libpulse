@@ -1,0 +1,19 @@
+{
+  "entries": [
+    {
+      "after": "import networkx as nx\nimport json\nG = nx.Graph()\nG.add_edge(1, 2)\ndata = nx.node_link_graph(nx.node_link_data(G))\nassert data is not None",
+      "after_works_on_old": true,
+      "before": "import networkx as nx\nimport json\nG = nx.Graph()\nG.add_edge(1, 2)\ndata = nx.node_link_graph(nx.node_link_data(G, link='links'))\nassert data is not None",
+      "case_id": "02e9e5b236678c35",
+      "extra_requires": [],
+      "new_version": "3.6",
+      "old_version": "3.5",
+      "package": "networkx",
+      "source": "pypi:networkx==3.6",
+      "title": "Removal of link keyword argument from node_link functions",
+      "verdict": "verified",
+      "verified_at": 1781182064
+    }
+  ],
+  "package": "networkx"
+}

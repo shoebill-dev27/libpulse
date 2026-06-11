@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from more_itertools import windowed\ntry:\n    list(windowed([1, 2, 3], 0))\n    raise AssertionError('Should have raised ValueError')\nexcept ValueError:\n    pass",
+  "before_snippet": "from more_itertools import windowed\nresult = list(windowed([1, 2, 3], 0))\nassert result == []",
+  "case_id": "109e51f8328bd370",
+  "extra_requires": [],
+  "new_version": "11.0.0",
+  "old_version": "10.8.0",
+  "package": "more-itertools",
+  "source": "pypi:more-itertools==11.0.0",
+  "title": "windowed raises ValueError for window size of 0"
+}

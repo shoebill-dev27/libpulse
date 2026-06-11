@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import numpy as np\nfrom scipy.interpolate import NdBSpline\n\n# Build a new NdBSpline with desired coefficients instead of mutating\nt = [np.array([0, 0, 0, 1, 1, 1])]\nk = (2,)\nc = np.array([4.0, 5.0, 6.0])\nbsp = NdBSpline(t, c, k)\n",
+  "before_snippet": "import numpy as np\nfrom scipy.interpolate import NdBSpline\nfrom scipy.interpolate import BSpline\n\n# Build a simple 1-D NdBSpline\nt = [np.array([0, 0, 0, 1, 1, 1])]\nk = (2,)\nc = np.array([1.0, 2.0, 3.0])\nbsp = NdBSpline(t, c, k)\n# In 1.16.3, .c was a mutable instance attribute\nbsp.c = np.array([4.0, 5.0, 6.0])\n",
+  "case_id": "e00811a4eff5e231",
+  "extra_requires": [],
+  "new_version": "1.17.0",
+  "old_version": "1.16.3",
+  "package": "scipy",
+  "source": "pypi:scipy==1.17.0",
+  "title": "NdBSpline.c changed to read-only property"
+}

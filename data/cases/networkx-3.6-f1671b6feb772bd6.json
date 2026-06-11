@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import networkx as nx\nG = nx.random_lobster_graph(10, 0.5, 0.5)\nassert G is not None",
+  "before_snippet": "import networkx as nx\nG = nx.random_lobster(10, 0.5, 0.5)\nassert G is not None",
+  "case_id": "f1671b6feb772bd6",
+  "extra_requires": [],
+  "new_version": "3.6",
+  "old_version": "3.5",
+  "package": "networkx",
+  "source": "pypi:networkx==3.6",
+  "title": "Removal of random_lobster function"
+}

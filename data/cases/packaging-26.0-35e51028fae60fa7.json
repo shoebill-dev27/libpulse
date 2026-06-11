@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from packaging.specifiers import SpecifierSet\n# In 26.0, arbitrary equality intersection preservation was adjusted\nspec_set = SpecifierSet('==1.0')\nversions = ['1.0', '1.1', '2.0']\nfiltered = list(spec_set.filter(versions))\n# Verify the new behavior works correctly\nassert '1.0' in filtered",
+  "before_snippet": "from packaging.specifiers import SpecifierSet\n# Test arbitrary equality intersection with ordered specifiers\nspec_set = SpecifierSet('==1.0')\nversions = ['1.0', '1.1', '2.0']\nfiltered = list(spec_set.filter(versions))\n# In 25.0, behavior on arbitrary equality intersection was different\nassert len(filtered) > 0",
+  "case_id": "35e51028fae60fa7",
+  "extra_requires": [],
+  "new_version": "26.0",
+  "old_version": "25.0",
+  "package": "packaging",
+  "source": "pypi:packaging==26.0",
+  "title": "SpecifierSet.filter behavior changed for PEP 440 edge cases"
+}

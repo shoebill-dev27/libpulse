@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from packaging.specifiers import Specifier\nspec = Specifier('>=1.0')\n# In 26.0, contains returns False for invalid versions instead of raising\nresult = spec.contains('not-a-valid-version')\nassert result is False",
+  "before_snippet": "from packaging.specifiers import Specifier\nspec = Specifier('>=1.0')\n# In 25.0, passing an invalid version string raises an exception\ntry:\n    spec.contains('not-a-valid-version')\n    assert False, 'Should have raised'\nexcept Exception:\n    pass",
+  "case_id": "2f11e172a57012da",
+  "extra_requires": [],
+  "new_version": "26.0",
+  "old_version": "25.0",
+  "package": "packaging",
+  "source": "pypi:packaging==26.0",
+  "title": "Specifier.contains returns False instead of raising for invalid versions"
+}

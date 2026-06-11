@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import networkx as nx\nG = nx.maybe_regular_expander_graph(10, 3)\nassert G is not None",
+  "before_snippet": "import networkx as nx\nG = nx.maybe_regular_expander(10, 3)\nassert G is not None",
+  "case_id": "28ae2c6b28875203",
+  "extra_requires": [],
+  "new_version": "3.6",
+  "old_version": "3.5",
+  "package": "networkx",
+  "source": "pypi:networkx==3.6",
+  "title": "Removal of maybe_regular_expander function"
+}
