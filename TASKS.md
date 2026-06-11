@@ -27,6 +27,11 @@ Granularity: each task is 1–3 hours for a Claude Code session. Dependencies no
 ## Next (MVP)
 - [ ] T12 Seed corpus: curate top-50 package list; run loop over their releases from
       the last 12 months; triage verdicts. Depends: T10. (Bulk, parallelizable.)
+      Progress: `backfill` command done; pilot over the curated-20 list running.
+- [ ] T12a Changelog deep-fetch (discovered 2026-06-11): GitHub release bodies are
+      often announce-only (pandas) or absent; follow project_urls Changelog links
+      (raw .md/.rst on GitHub; docs HTML stripped via html.parser) to feed the
+      analyzer concrete API changes. Raises yield without model escalation.
 - [ ] T13 Weekly markdown report generator (corpus growth, freshness lag, verdict
       mix) + cron/scheduled-agent setup for the post-window unattended cadence.
 - [ ] T14 SECURITY_REVIEW.md (threat model: LLM-generated code execution, supply
