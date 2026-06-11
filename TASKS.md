@@ -42,8 +42,9 @@ Granularity: each task is 1–3 hours for a Claude Code session. Dependencies no
       Hardened now: wheels-only installs (--no-build), MCP package-name validation.
 - [x] T14a Network-less snippet execution: unshare -rn wrapper, auto-detected,
       opt-out via LIBPULSE_NO_NET_ISOLATION. Integration tests pass under it.
-- [ ] T15 HuggingFace dataset export format + publish dry-run (publication itself =
-      owner action).
+- [x] T15 HF dataset export: `libpulse export-hf` builds dist/hf/ (train.jsonl +
+      dataset card incl. SECURITY_REVIEW disclaimer, cc-by-4.0 working license).
+      Upload/publication itself = owner action.
 - [ ] T16 Apify actor wrapping corpus queries (PPE). Lives in actor-foundry; depends
       on corpus shape stabilizing (T12).
 

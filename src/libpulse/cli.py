@@ -165,6 +165,14 @@ def cmd_export(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_export_hf(args: argparse.Namespace) -> int:
+    from .hf_export import build_dataset
+
+    out = build_dataset(args.out, corpus=args.corpus_dir)
+    print(out)
+    return 0
+
+
 def cmd_report(args: argparse.Namespace) -> int:
     from .report import write_report
 
@@ -233,6 +241,10 @@ def main(argv: list[str] | None = None) -> int:
 
     p = sub.add_parser("report", help="write the weekly markdown report")
     p.set_defaults(func=cmd_report)
+
+    p = sub.add_parser("export-hf", help="build the HuggingFace dataset locally (dry run)")
+    p.add_argument("--out", default="dist/hf")
+    p.set_defaults(func=cmd_export_hf)
 
     p = sub.add_parser("prune-venvs", help="remove verifier venvs untouched for N days")
     p.add_argument("--keep-days", type=int, default=30)
