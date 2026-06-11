@@ -40,8 +40,8 @@ Granularity: each task is 1–3 hours for a Claude Code session. Dependencies no
 - [x] T14 SECURITY_REVIEW.md written (threat model: LLM code execution, supply
       chain, prompt injection via release notes, secrets, published surfaces).
       Hardened now: wheels-only installs (--no-build), MCP package-name validation.
-- [ ] T14a Network-less snippet execution (unshare/container) — required before
-      corpus scale-up beyond the curated list and before public publication.
+- [x] T14a Network-less snippet execution: unshare -rn wrapper, auto-detected,
+      opt-out via LIBPULSE_NO_NET_ISOLATION. Integration tests pass under it.
 - [ ] T15 HuggingFace dataset export format + publish dry-run (publication itself =
       owner action).
 - [ ] T16 Apify actor wrapping corpus queries (PPE). Lives in actor-foundry; depends

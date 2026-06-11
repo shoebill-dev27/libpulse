@@ -27,6 +27,34 @@ from .models import MigrationCase, StepResult, Verdict, VerificationResult
 SNIPPET_TIMEOUT = 60  # seconds per snippet
 INSTALL_TIMEOUT = 300  # seconds per environment build
 
+_isolation_prefix_cache: list[str] | None = None
+
+
+def _isolation_prefix() -> list[str]:
+    """Network-isolation wrapper for snippet execution (T14a).
+
+    `unshare -rn` puts the snippet in an empty network namespace where it can
+    only fail to reach anything. Auto-detected once; snippets must never need
+    network, so failures under isolation are correct verdicts. Opt out with
+    LIBPULSE_NO_NET_ISOLATION=1 (e.g. kernels without user namespaces).
+    """
+    global _isolation_prefix_cache
+    if os.getenv("LIBPULSE_NO_NET_ISOLATION"):
+        return []
+    if _isolation_prefix_cache is None:
+        exe = shutil.which("unshare")
+        usable = False
+        if exe:
+            try:
+                usable = (
+                    subprocess.run([exe, "-rn", "true"], capture_output=True, timeout=10).returncode
+                    == 0
+                )
+            except Exception:
+                usable = False
+        _isolation_prefix_cache = [exe, "-rn"] if usable else []
+    return _isolation_prefix_cache
+
 
 class EnvSetupError(RuntimeError):
     pass
@@ -105,7 +133,7 @@ def run_snippet(
         }
         try:
             proc = subprocess.run(
-                [python, str(script)],
+                [*_isolation_prefix(), python, str(script)],
                 cwd=tmp,
                 env=env,
                 capture_output=True,

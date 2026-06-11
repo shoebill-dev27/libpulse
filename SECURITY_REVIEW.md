@@ -67,5 +67,7 @@ instructions → generated snippet → verifier runs it.
 
 - [x] Wheels-only installs in the verifier (`--no-build`) — done this review.
 - [x] T14b Package-name validation in `corpus.load_entries` (MCP input).
-- [ ] T14a Network-less snippet execution before corpus scale-up / publication.
+- [x] T14a Network-less snippet execution: `unshare -rn` wrapper, auto-detected
+      (verified working on this WSL2 host; integration tests pass under it).
+      Opt out with LIBPULSE_NO_NET_ISOLATION=1 on unsupported kernels.
 - [ ] Dataset card disclaimer text when T15 (HF export) lands.
