@@ -10,6 +10,7 @@ import sys
 import time
 from pathlib import Path
 
+from .analyzer import Analyzer
 from .models import MigrationCase, Verdict
 from .store import Store
 from .verifier import Verifier
@@ -37,9 +38,41 @@ def cmd_verify_case(args: argparse.Namespace) -> int:
     return 0 if result.verdict == Verdict.VERIFIED else 1
 
 
+def _analyze(releases: list[NewRelease], cases_dir: Path, analyzer: Analyzer | None = None) -> int:
+    """Run the analyzer over discovered releases; per-release errors are logged & skipped."""
+    analyzer = analyzer or Analyzer()
+    if not analyzer.enabled:
+        if releases:
+            print(
+                "[analyze] ANTHROPIC_API_KEY not set: skipping case generation "
+                f"for {len(releases)} release(s)",
+                file=sys.stderr,
+            )
+        return 0
+    generated = 0
+    for release in releases:
+        try:
+            written = analyzer.analyze(release, cases_dir)
+        except Exception as exc:  # one bad release must not kill the cycle
+            print(
+                f"[analyze] {release.package} {release.new_version}: error: {exc}",
+                file=sys.stderr,
+            )
+            continue
+        generated += len(written)
+        print(f"[analyze] {release.package} {release.new_version}: {len(written)} candidate(s)")
+    return generated
+
+
 def cmd_cycle(args: argparse.Namespace) -> int:
     started = time.time()
     store = Store(args.db)
+    try:
+        releases = _watch(store, Path(args.packages_file))
+    except Exception as exc:  # watch failure must not kill the cycle
+        print(f"[cycle] watch error: {exc}", file=sys.stderr)
+        releases = []
+    generated = _analyze(releases, Path(args.cases_dir))
     ingested = _ingest(store, Path(args.cases_dir))
     verifier = Verifier()
     outcomes: dict[str, str] = {}
@@ -59,6 +92,8 @@ def cmd_cycle(args: argparse.Namespace) -> int:
     summary = {
         "ran_at": int(started),
         "duration_s": round(time.time() - started, 1),
+        "releases_found": len(releases),
+        "cases_generated": generated,
         "ingested": ingested,
         "verified_this_cycle": sum(1 for v in outcomes.values() if v == "verified"),
         "outcomes": outcomes,
@@ -90,6 +125,17 @@ def cmd_watch(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_analyze(args: argparse.Namespace) -> int:
+    analyzer = Analyzer()
+    if not analyzer.enabled:
+        print("ANTHROPIC_API_KEY not set; analyzer is disabled", file=sys.stderr)
+        return 1
+    release = NewRelease(args.package, args.old_version, args.new_version, "")
+    written = analyzer.analyze(release, Path(args.cases_dir))
+    print("\n".join(str(p) for p in written) or "(no cases generated)")
+    return 0
+
+
 def cmd_export(args: argparse.Namespace) -> int:
     written = Store(args.db).export_corpus(args.corpus_dir)
     print("\n".join(str(p) for p in written) or "(corpus empty)")
@@ -110,9 +156,16 @@ def main(argv: list[str] | None = None) -> int:
     p.set_defaults(func=cmd_verify_case)
 
     p = sub.add_parser(
-        "cycle", help="unattended loop: ingest queue, verify pending, export, report"
+        "cycle",
+        help="unattended loop: watch releases, generate cases, ingest, verify, export, report",
     )
     p.set_defaults(func=cmd_cycle)
+
+    p = sub.add_parser("analyze", help="generate candidate cases for one release (debugging aid)")
+    p.add_argument("package")
+    p.add_argument("old_version")
+    p.add_argument("new_version")
+    p.set_defaults(func=cmd_analyze)
 
     p = sub.add_parser(
         "watch", help="poll PyPI for new final releases of tracked packages (one JSON line each)"

@@ -13,14 +13,13 @@ Granularity: each task is 1–3 hours for a Claude Code session. Dependencies no
 - [x] T07 Doc pack: PRD, MVP, ADR-001..005, RISKS, OPERATIONS, ROADMAP-12M
 - [x] T08 Watcher: poll PyPI JSON API for tracked packages (packages.txt, curated 20),
       detect new final releases since last cycle, persist watermarks in store. No API keys.
+- [x] T09 Analyzer: release notes context (PyPI metadata + GitHub releases public API),
+      LLM-generated candidate cases → data/cases/ via Messages API (raw HTTP, stdlib).
+      LIBPULSE_MODEL env (default claude-haiku-4-5); skips cleanly when no key.
+- [x] T10 Wired watcher+analyzer into `cycle` (watch → analyze → ingest → verify →
+      export → report); per-stage failures logged, never crash. `analyze` debug command.
 
 ## Next (MVP)
-
-- [ ] T09 Analyzer: for a new release, fetch release notes/changelog (PyPI metadata,
-      GitHub releases via public API), LLM-generate candidate cases → data/cases/.
-      Anthropic API, LIBPULSE_MODEL env, optional (skip cleanly when no key).
-      Depends: T08.
-- [ ] T10 Wire watcher+analyzer into `cycle`; full unattended loop. Depends: T08, T09.
 - [ ] T11 MCP server (stdio, official `mcp` SDK as optional extra): tools =
       query_migrations(package, from_version?, to_version?), list_packages().
       Serves data/corpus/. Depends: T04.
