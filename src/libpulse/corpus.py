@@ -10,11 +10,15 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from pathlib import Path
 
 from .watcher import _version_key, is_final_version
 
 DEFAULT_CORPUS_DIR = "data/corpus"
+# MCP clients control `package`; it is interpolated into a filename, so only
+# plain PyPI-style names are accepted (no separators -> no path traversal).
+_PACKAGE_NAME_RE = re.compile(r"^[A-Za-z0-9_.-]+$")
 
 
 def corpus_dir(override: str | Path | None = None) -> Path:
@@ -22,6 +26,8 @@ def corpus_dir(override: str | Path | None = None) -> Path:
 
 
 def load_entries(package: str, corpus: str | Path | None = None) -> list[dict]:
+    if not _PACKAGE_NAME_RE.match(package):
+        return []
     path = corpus_dir(corpus) / f"{package}.json"
     if not path.exists():
         return []

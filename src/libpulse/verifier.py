@@ -72,8 +72,10 @@ class VenvCache:
                 timeout=INSTALL_TIMEOUT,
             )
             if specs:
+                # --no-build: wheels only. Building sdists executes arbitrary
+                # setup code at install time (supply-chain surface, T14).
                 subprocess.run(
-                    [_uv(), "pip", "install", "--python", str(python), *specs],
+                    [_uv(), "pip", "install", "--no-build", "--python", str(python), *specs],
                     check=True,
                     capture_output=True,
                     timeout=INSTALL_TIMEOUT,

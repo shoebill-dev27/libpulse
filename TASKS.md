@@ -37,8 +37,11 @@ Granularity: each task is 1–3 hours for a Claude Code session. Dependencies no
       scripts/cron.sh.example (crontab install = owner action, incurs daily cost).
 - [ ] T13a Persist release timestamps so the report can measure freshness lag
       (release -> published). Discovered 2026-06-11.
-- [ ] T14 SECURITY_REVIEW.md (threat model: LLM-generated code execution, supply
-      chain via pip installs of watched packages) — before any public publication.
+- [x] T14 SECURITY_REVIEW.md written (threat model: LLM code execution, supply
+      chain, prompt injection via release notes, secrets, published surfaces).
+      Hardened now: wheels-only installs (--no-build), MCP package-name validation.
+- [ ] T14a Network-less snippet execution (unshare/container) — required before
+      corpus scale-up beyond the curated list and before public publication.
 - [ ] T15 HuggingFace dataset export format + publish dry-run (publication itself =
       owner action).
 - [ ] T16 Apify actor wrapping corpus queries (PPE). Lives in actor-foundry; depends

@@ -64,6 +64,12 @@ def test_query_unknown_package(tmp_path):
     }
 
 
+def test_query_rejects_path_traversal_names(tmp_path):
+    (tmp_path / "secret.json").write_text(json.dumps({"entries": [{"new_version": "1"}]}))
+    for name in ("../secret", "a/b", "..", "a\\b", ""):
+        assert corpus.query_migrations(name, corpus=tmp_path)["entries"] == []
+
+
 def test_corpus_dir_env_override(monkeypatch, tmp_path):
     monkeypatch.setenv("LIBPULSE_CORPUS_DIR", str(tmp_path))
     assert corpus.corpus_dir() == tmp_path
