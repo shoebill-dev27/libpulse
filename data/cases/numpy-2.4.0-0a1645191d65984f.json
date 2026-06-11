@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import numpy as np\ndata = np.array([1, 2, 3, 4, 5])\nresult = np.percentile(data, 50, method='linear')\nassert result is not None",
+  "before_snippet": "import numpy as np\ndata = np.array([1, 2, 3, 4, 5])\nresult = np.percentile(data, 50, interpolation='linear')\nassert result is not None",
+  "case_id": "0a1645191d65984f",
+  "extra_requires": [],
+  "new_version": "2.4.0",
+  "old_version": "2.3.5",
+  "package": "numpy",
+  "source": "pypi:numpy==2.4.0",
+  "title": "Removed interpolation parameter from quantile and percentile functions"
+}

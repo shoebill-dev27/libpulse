@@ -1,0 +1,11 @@
+{
+  "after_snippet": "# In pytest 9.0.0, Python 3.10+ is required\n\nimport sys\n\n# pytest 9.0.0 requires Python 3.10 or later\n# Update your Python version or stay on pytest 8.4.2\nif sys.version_info >= (3, 10):\n    import pytest\n    # pytest 9.0.0 will work on Python 3.10+\n    pass\nelif sys.version_info >= (3, 9):\n    # For Python 3.9, use pytest 8.4.2 instead\n    raise RuntimeError(\"pytest 9.0.0 requires Python 3.10+\")\n",
+  "before_snippet": "# In pytest 8.4.2, pytest supported Python 3.9\n# In 9.0.0, Python 3.9 is no longer supported\n\nimport sys\n\n# This would work in pytest 8.4.2 on Python 3.9\n# but pytest 9.0.0 requires Python 3.10+\nif sys.version_info >= (3, 9):\n    import pytest\n    # If running on Python 3.9, pytest 9.0.0 will not be installable\n    # This is a package-level breaking change\n    pass\n",
+  "case_id": "c7b548a663e670a1",
+  "extra_requires": [],
+  "new_version": "9.0.0",
+  "old_version": "8.4.2",
+  "package": "pytest",
+  "source": "pypi:pytest==9.0.0",
+  "title": "Python 3.9 support dropped"
+}

@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from PIL import Image\n\nimg = Image.new('RGB', (100, 100), color=(128, 64, 32))\n# _expand was removed; use ImageOps.expand instead\nfrom PIL import ImageOps\nexpanded = ImageOps.expand(img, border=0)",
+  "before_snippet": "from PIL import Image\n\nimg = Image.new('RGB', (100, 100), color=(128, 64, 32))\n# Access deprecated/removed internal _expand method\nimg._expand(0, 0)",
+  "case_id": "11443d028c02fabc",
+  "extra_requires": [],
+  "new_version": "12.0.0",
+  "old_version": "11.3.0",
+  "package": "pillow",
+  "source": "pypi:pillow==12.0.0",
+  "title": "ImagingCore.getextrema removed; use Image.getextrema() instead"
+}

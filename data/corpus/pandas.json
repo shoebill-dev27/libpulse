@@ -1,6 +1,20 @@
 {
   "entries": [
     {
+      "after": "import pandas as pd\n\n# In pandas 3.0.0, Copy-on-Write is the default behavior\ndf = pd.DataFrame({'A': [1, 2, 3]})\nview = df['A']\nview.iloc[0] = 999\n# In 3.0.0, this does NOT modify the original due to CoW\nassert df['A'].iloc[0] == 1, \"Expected CoW to prevent modification\"\n",
+      "after_works_on_old": false,
+      "before": "import pandas as pd\n\n# In pandas 2.3.3, the default mode allows copy-on-write to be disabled\ndf = pd.DataFrame({'A': [1, 2, 3]})\nview = df['A']\nview.iloc[0] = 999\n# In 2.3.3, this modifies the original by default (unless CoW is explicitly enabled)\nassert df['A'].iloc[0] == 999, \"Expected modification to propagate in 2.3.3\"\n",
+      "case_id": "404d8ac6b9eb2980",
+      "extra_requires": [],
+      "new_version": "3.0.0",
+      "old_version": "2.3.3",
+      "package": "pandas",
+      "source": "pypi:pandas==3.0.0",
+      "title": "Copy-on-Write (CoW) enabled by default changes Series copy behavior",
+      "verdict": "verified",
+      "verified_at": 1781164060
+    },
+    {
       "after": "import pandas as pd\nimport numpy as np\n\n# In pandas 3.0, strings default to pd.StringDtype; convert explicitly\ns = pd.Series(['a','b','c'], dtype=object)\nassert s.values.dtype == np.dtype('O')\n",
       "after_works_on_old": true,
       "before": "import pandas as pd\nimport numpy as np\n\n# In pandas 2.x, object dtype Series.values returns numpy array of objects\ns = pd.Series(['a','b','c'])\n# Check the old object dtype is returned\nassert s.values.dtype == np.dtype('O'), f'Expected object dtype, got {s.values.dtype}'\n",
@@ -13,6 +27,34 @@
       "title": "DataFrame.to_numpy with dtype parameter: object dtype inference changed for string-typed DataFrames",
       "verdict": "verified",
       "verified_at": 1781159614
+    },
+    {
+      "after": "import pandas as pd\n\n# In pandas 3.0.0, datetime inference defaults to microsecond resolution\ndf = pd.DataFrame({'date': pd.date_range('2020-01-01', periods=3)})\nassert df['date'].dtype == 'datetime64[us]', f\"Expected datetime64[us], got {df['date'].dtype}\"\n",
+      "after_works_on_old": false,
+      "before": "import pandas as pd\nimport numpy as np\n\n# In pandas 2.3.3, datetime inference defaults to nanosecond resolution\ndf = pd.DataFrame({'date': pd.date_range('2020-01-01', periods=3)})\nassert df['date'].dtype == 'datetime64[ns]', f\"Expected datetime64[ns], got {df['date'].dtype}\"\n",
+      "case_id": "7cecb3f1f84c20d9",
+      "extra_requires": [],
+      "new_version": "3.0.0",
+      "old_version": "2.3.3",
+      "package": "pandas",
+      "source": "pypi:pandas==3.0.0",
+      "title": "Default datetime resolution inference changed",
+      "verdict": "verified",
+      "verified_at": 1781164065
+    },
+    {
+      "after": "import pandas as pd\nimport numpy as np\n\n# In pandas 3.0.0, skipna parameter behavior on argmax is stricter\ns = pd.Series([1.0, np.nan, 3.0])\nresult = s.argmax()\nassert isinstance(result, (int, np.integer)), \"argmax should return integer index\"\n",
+      "after_works_on_old": true,
+      "before": "import pandas as pd\nimport numpy as np\n\n# In pandas 2.3.3, Series.argmax(skipna=False) with NaN returns index position\ns = pd.Series([1.0, np.nan, 3.0])\nresult = s.argmax(skipna=False)\nassert result == -1 or isinstance(result, (int, np.integer)), \"Should return -1 or compatible with deprecated behavior\"\n",
+      "case_id": "88c3098c4b087c5b",
+      "extra_requires": [],
+      "new_version": "3.0.0",
+      "old_version": "2.3.3",
+      "package": "pandas",
+      "source": "pypi:pandas==3.0.0",
+      "title": "Removal of deprecated Series.argmax/argmin with skipna parameter behavior",
+      "verdict": "verified",
+      "verified_at": 1781164068
     }
   ],
   "package": "pandas"

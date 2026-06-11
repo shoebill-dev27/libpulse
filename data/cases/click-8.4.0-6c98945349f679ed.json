@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import click\nfrom enum import Enum\n\nclass Color(Enum):\n    RED = 'red'\n    BLUE = 'blue'\n\n# In 8.4.0, non-basic flag_value types are auto-detected as UNPROCESSED\n# and passed through as Python objects unchanged\n@click.command()\n@click.option('--color', flag_value=Color.RED)\ndef cmd(color):\n    # color is now the actual Enum member, not stringified\n    assert isinstance(color, Color)\n\nif __name__ == '__main__':\n    cmd()",
+  "before_snippet": "import click\nfrom enum import Enum\n\nclass Color(Enum):\n    RED = 'red'\n    BLUE = 'blue'\n\n# In 8.3.3, non-basic flag_value types were stringified without explicit type=UNPROCESSED\n@click.command()\n@click.option('--color', flag_value=Color.RED)\ndef cmd(color):\n    # color would be stringified to \"Color.RED\" string\n    assert isinstance(color, str)\n\nif __name__ == '__main__':\n    cmd()",
+  "case_id": "6c98945349f679ed",
+  "extra_requires": [],
+  "new_version": "8.4.0",
+  "old_version": "8.3.3",
+  "package": "click",
+  "source": "pypi:click==8.4.0",
+  "title": "Auto-detect type=UNPROCESSED for flag_value of non-basic types"
+}

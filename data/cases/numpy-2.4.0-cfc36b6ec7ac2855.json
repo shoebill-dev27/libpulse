@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import numpy as np\na = np.array([1, 2, 3])\nb = np.array([2, 3, 4])\nresult = np.isin(a, b)\nassert result is not None",
+  "before_snippet": "import numpy as np\na = np.array([1, 2, 3])\nb = np.array([2, 3, 4])\nresult = np.in1d(a, b)\nassert result is not None",
+  "case_id": "cfc36b6ec7ac2855",
+  "extra_requires": [],
+  "new_version": "2.4.0",
+  "old_version": "2.3.5",
+  "package": "numpy",
+  "source": "pypi:numpy==2.4.0",
+  "title": "Removed numpy.in1d function"
+}

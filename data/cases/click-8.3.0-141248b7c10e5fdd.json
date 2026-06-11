@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import click\n\n@click.command()\n@click.option('--flag', is_flag=True, flag_value=True, default=None)\ndef cmd(flag):\n    # In 8.3.0, default=None is preserved as-is\n    assert flag is None, f\"Expected None, got {flag}\"\n\nif __name__ == '__main__':\n    cmd([])\n",
+  "before_snippet": "import click\n\n@click.command()\n@click.option('--flag', is_flag=True, flag_value=True, default=None)\ndef cmd(flag):\n    # In 8.2.2, default=None behavior was inconsistent\n    # The new behavior explicitly preserves None\n    assert flag is None, f\"Expected None, got {flag}\"\n\nif __name__ == '__main__':\n    cmd([])\n",
+  "case_id": "141248b7c10e5fdd",
+  "extra_requires": [],
+  "new_version": "8.3.0",
+  "old_version": "8.2.2",
+  "package": "click",
+  "source": "pypi:click==8.3.0",
+  "title": "Flag option with default=None now preserves None instead of converting to flag_value"
+}

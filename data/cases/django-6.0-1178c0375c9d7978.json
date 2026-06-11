@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from django.db import models\nfrom django.db.models import QuerySet\n\nclass TestModel(models.Model):\n    name = models.CharField(max_length=100)\n    class Meta:\n        app_label = 'test'\n\nqs = QuerySet(model=TestModel)\nqs.delete(using='default')",
+  "before_snippet": "from django.db import models\nfrom django.db.models import QuerySet\n\nclass TestModel(models.Model):\n    name = models.CharField(max_length=100)\n    class Meta:\n        app_label = 'test'\n\nqs = QuerySet(model=TestModel)\nqs.delete('default')",
+  "case_id": "1178c0375c9d7978",
+  "extra_requires": [],
+  "new_version": "6.0",
+  "old_version": "5.2.15",
+  "package": "django",
+  "source": "pypi:django==6.0",
+  "title": "django.db.models.query.QuerySet.delete() no longer accepts positional 'using' argument"
+}

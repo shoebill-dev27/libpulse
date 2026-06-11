@@ -1,0 +1,11 @@
+{
+  "after_snippet": "# In pytest 9.0.0, CI mode only activates with non-empty values\n\nimport subprocess\nimport sys\nimport os\nimport tempfile\nfrom pathlib import Path\n\nwith tempfile.TemporaryDirectory() as tmpdir:\n    tmp = Path(tmpdir)\n    (tmp / \"test_x.py\").write_text(\"def test_x(): pass\")\n    \n    # In 9.0.0, empty string does not activate CI mode\n    env = os.environ.copy()\n    env[\"CI\"] = \"\"  # Empty value - does NOT activate CI mode in 9.0.0\n    \n    result = subprocess.run(\n        [sys.executable, \"-m\", \"pytest\", \"--collect-only\", tmp / \"test_x.py\"],\n        cwd=tmp,\n        env=env,\n        capture_output=True\n    )\n    # To activate CI mode, set a non-empty value\n    assert result.returncode == 0\n    \n    # To activate CI mode in 9.0.0, use non-empty value\n    env[\"CI\"] = \"true\"\n    result = subprocess.run(\n        [sys.executable, \"-m\", \"pytest\", \"--collect-only\", tmp / \"test_x.py\"],\n        cwd=tmp,\n        env=env,\n        capture_output=True\n    )\n    assert result.returncode == 0\n",
+  "before_snippet": "# In pytest 8.4.2, CI/CD mode would activate if $CI or $BUILD_NUMBER were defined,\n# even if set to empty string\n\nimport subprocess\nimport sys\nimport os\nimport tempfile\nfrom pathlib import Path\n\nwith tempfile.TemporaryDirectory() as tmpdir:\n    tmp = Path(tmpdir)\n    (tmp / \"test_x.py\").write_text(\"def test_x(): pass\")\n    \n    # In 8.4.2, setting CI to empty string would still activate CI mode\n    env = os.environ.copy()\n    env[\"CI\"] = \"\"  # Empty value\n    \n    result = subprocess.run(\n        [sys.executable, \"-m\", \"pytest\", \"--collect-only\", tmp / \"test_x.py\"],\n        cwd=tmp,\n        env=env,\n        capture_output=True\n    )\n    # In 8.4.2 this would have CI mode active\n    assert result.returncode == 0\n",
+  "case_id": "25d231feb533a5df",
+  "extra_requires": [],
+  "new_version": "9.0.0",
+  "old_version": "8.4.2",
+  "package": "pytest",
+  "source": "pypi:pytest==9.0.0",
+  "title": "CI mode only activates with non-empty CI or BUILD_NUMBER environment variables"
+}

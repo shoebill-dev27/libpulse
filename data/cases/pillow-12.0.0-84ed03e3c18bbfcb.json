@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from PIL import Image, ImageDraw\n\nimg = Image.new('RGB', (200, 100))\ndraw = ImageDraw.Draw(img)\nlength = draw.textlength('Hello')",
+  "before_snippet": "from PIL import Image, ImageDraw\n\nimg = Image.new('RGB', (200, 100))\ndraw = ImageDraw.Draw(img)\n# getlength was removed in favour of textlength; check old getlength\nlength = draw.getlength('Hello')",
+  "case_id": "84ed03e3c18bbfcb",
+  "extra_requires": [],
+  "new_version": "12.0.0",
+  "old_version": "11.3.0",
+  "package": "pillow",
+  "source": "pypi:pillow==12.0.0",
+  "title": "ImageDraw.Draw.textlength() accepts only str, not bytes (getlength removed)"
+}

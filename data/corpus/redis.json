@@ -1,0 +1,33 @@
+{
+  "entries": [
+    {
+      "after": "import redis\n\n# In 8.0.0, max_connections defaults to 100\nclient = redis.Redis(host='localhost', port=6379)\n# Verify new default\nassert client.connection_pool.max_connections == 100\n",
+      "after_works_on_old": false,
+      "before": "import redis\n\n# In 7.4.1, max_connections defaulted to 50\nclient = redis.Redis(host='localhost', port=6379)\n# The connection pool should have max_connections != 100\nassert client.connection_pool.max_connections != 100\n",
+      "case_id": "012a117788efc69f",
+      "extra_requires": [],
+      "new_version": "8.0.0",
+      "old_version": "7.4.1",
+      "package": "redis",
+      "source": "pypi:redis==8.0.0",
+      "title": "Connection pool max_connections default changed from 50 to 100",
+      "verdict": "verified",
+      "verified_at": 1781164046
+    },
+    {
+      "after": "import redis\n\n# In 8.0.0, socket_timeout defaults to 5 seconds\nclient = redis.Redis(host='localhost', port=6379)\n# Verify new default\nassert client.connection_pool.connection_kwargs.get('socket_timeout') == 5\n",
+      "after_works_on_old": false,
+      "before": "import redis\n\n# In 7.4.1, socket_timeout defaulted to None (no timeout)\nclient = redis.Redis(host='localhost', port=6379)\n# Verify old default\nassert client.connection_pool.connection_kwargs.get('socket_timeout') is None or client.connection_pool.connection_kwargs.get('socket_timeout') != 5\n",
+      "case_id": "7d55eba8f825484a",
+      "extra_requires": [],
+      "new_version": "8.0.0",
+      "old_version": "7.4.1",
+      "package": "redis",
+      "source": "pypi:redis==8.0.0",
+      "title": "Socket timeout defaults changed from None to 5 seconds, affecting blocking commands like BLPOP",
+      "verdict": "verified",
+      "verified_at": 1781164066
+    }
+  ],
+  "package": "redis"
+}

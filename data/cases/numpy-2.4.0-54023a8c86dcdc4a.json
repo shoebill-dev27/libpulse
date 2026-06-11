@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import numpy as np\narr = np.array([1, 2, 3])\nresult = int(arr[0])\nassert result == 1",
+  "before_snippet": "import numpy as np\narr = np.array([1, 2, 3])\nresult = int(arr)\nassert result is not None",
+  "case_id": "54023a8c86dcdc4a",
+  "extra_requires": [],
+  "new_version": "2.4.0",
+  "old_version": "2.3.5",
+  "package": "numpy",
+  "source": "pypi:numpy==2.4.0",
+  "title": "Conversion of ndarray with ndim > 0 to scalar raises TypeError"
+}

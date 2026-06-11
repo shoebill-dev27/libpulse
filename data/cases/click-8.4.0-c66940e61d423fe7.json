@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import click\nfrom typing import TypedDict\n\n# In 8.4.0, to_info_dict returns specific TypedDict subclasses\nstring_type = click.STRING\ninfo = string_type.to_info_dict()\n# The return type is still dict-like but now typed as a specific TypedDict\nassert isinstance(info, dict)\nassert 'name' in info",
+  "before_snippet": "import click\n\n# In 8.3.3, to_info_dict returned generic dict[str, Any]\nstring_type = click.STRING\ninfo = string_type.to_info_dict()\nassert isinstance(info, dict)\nassert 'name' in info",
+  "case_id": "c66940e61d423fe7",
+  "extra_requires": [],
+  "new_version": "8.4.0",
+  "old_version": "8.3.3",
+  "package": "click",
+  "source": "pypi:click==8.4.0",
+  "title": "ParamType.to_info_dict now returns TypedDict subclasses instead of dict[str, Any]"
+}

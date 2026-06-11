@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import pandas as pd\n\n# In pandas 3.0.0, dtype inference for strings defaults to StringDtype\ndf = pd.DataFrame({'A': ['a', 'b', 'c']})\nassert str(df['A'].dtype) == 'string', f\"Expected string dtype, got {df['A'].dtype}\"\n",
+  "before_snippet": "import pandas as pd\nimport numpy as np\n\n# In pandas 2.3.3, dtype inference for strings defaults to 'object'\ndf = pd.DataFrame({'A': ['a', 'b', 'c']})\nassert df['A'].dtype == np.object_, f\"Expected object dtype, got {df['A'].dtype}\"\n",
+  "case_id": "08859c9901c60c06",
+  "extra_requires": [],
+  "new_version": "3.0.0",
+  "old_version": "2.3.3",
+  "package": "pandas",
+  "source": "pypi:pandas==3.0.0",
+  "title": "Dedicated string data type becomes default (StringDtype for object-containing Series)"
+}

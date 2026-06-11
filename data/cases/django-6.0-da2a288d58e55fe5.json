@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from django.db import models\n\nclass TestModel(models.Model):\n    name = models.CharField(max_length=100)\n    class Meta:\n        app_label = 'test'\n\nobj = TestModel(name='test')\nobj.save(using='default')",
+  "before_snippet": "from django.db import models\n\nclass TestModel(models.Model):\n    name = models.CharField(max_length=100)\n    class Meta:\n        app_label = 'test'\n\nobj = TestModel(name='test')\nobj.save('default')",
+  "case_id": "da2a288d58e55fe5",
+  "extra_requires": [],
+  "new_version": "6.0",
+  "old_version": "5.2.15",
+  "package": "django",
+  "source": "pypi:django==6.0",
+  "title": "django.db.models.Model.save() no longer accepts positional 'using' argument"
+}

@@ -1,0 +1,11 @@
+{
+  "after_snippet": "# In pytest 9.0.0, duplicate paths are automatically removed\n\nimport subprocess\nimport sys\nimport tempfile\nfrom pathlib import Path\n\nwith tempfile.TemporaryDirectory() as tmpdir:\n    tmp = Path(tmpdir)\n    (tmp / \"test_file.py\").write_text(\"def test_x(): pass\")\n    \n    # In 9.0.0, passing the same file twice only runs it once\n    result = subprocess.run(\n        [sys.executable, \"-m\", \"pytest\", \"--collect-only\", \"-q\", \"test_file.py\", \"test_file.py\"],\n        cwd=tmp,\n        capture_output=True,\n        text=True\n    )\n    # Now only 1 test is collected\n    assert \"1 test\" in result.stdout\n    \n    # To preserve the old behavior, use --keep-duplicates\n    result2 = subprocess.run(\n        [sys.executable, \"-m\", \"pytest\", \"--collect-only\", \"-q\", \"--keep-duplicates\", \"test_file.py\", \"test_file.py\"],\n        cwd=tmp,\n        capture_output=True,\n        text=True\n    )\n    assert result2.returncode == 0\n",
+  "before_snippet": "# In pytest 8.4.2, pytest x.py x.py would execute the same file twice\n# In 9.0.0, duplicates are removed by default\n\nimport subprocess\nimport sys\nimport tempfile\nfrom pathlib import Path\n\nwith tempfile.TemporaryDirectory() as tmpdir:\n    tmp = Path(tmpdir)\n    (tmp / \"test_file.py\").write_text(\"def test_x(): pass\")\n    \n    # In 8.4.2, explicitly passing the same file twice would run it twice\n    result = subprocess.run(\n        [sys.executable, \"-m\", \"pytest\", \"--collect-only\", \"-q\", \"test_file.py\", \"test_file.py\"],\n        cwd=tmp,\n        capture_output=True,\n        text=True\n    )\n    # In 8.4.2 this would show 2 tests collected\n    assert \"2 test\" in result.stdout\n",
+  "case_id": "0d5101ba1efcf33d",
+  "extra_requires": [],
+  "new_version": "9.0.0",
+  "old_version": "8.4.2",
+  "package": "pytest",
+  "source": "pypi:pytest==9.0.0",
+  "title": "Running same test file twice no longer executes it twice"
+}

@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from django.utils.decorators import method_decorator\nfrom django.http import HttpResponse\nfrom django.views import View\n\ndef my_decorator(func):\n    def wrapper(*args, **kwargs):\n        return func(*args, **kwargs)\n    return wrapper\n\nclass MyView(View):\n    @method_decorator(my_decorator, name='get')\n    def get(self, request):\n        return HttpResponse('OK')\n\nview = MyView()\nview.get(None)",
+  "before_snippet": "from django.utils.decorators import method_decorator\nfrom django.http import HttpResponse\nfrom django.views import View\n\ndef my_decorator(func):\n    def wrapper(*args, **kwargs):\n        return func(*args, **kwargs)\n    return wrapper\n\nclass MyView(View):\n    @method_decorator(my_decorator, 'get')\n    def get(self, request):\n        return HttpResponse('OK')\n\nview = MyView()\nview.get(None)",
+  "case_id": "6bf3c51435fa3d12",
+  "extra_requires": [],
+  "new_version": "6.0",
+  "old_version": "5.2.15",
+  "package": "django",
+  "source": "pypi:django==6.0",
+  "title": "django.utils.decorators.method_decorator no longer accepts positional arguments beyond the decorator"
+}

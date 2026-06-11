@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import click\nfrom click.testing import CliRunner\n\n@click.command()\ndef cmd():\n    click.echo('test')\n\nrunner = CliRunner(capture='fd')  # Use capture='fd' to get real file descriptors\nresult = runner.invoke(cmd)\n# In 8.4.0, default capture mode no longer exposes original fd\nassert result.exit_code == 0",
+  "before_snippet": "import click\nfrom click.testing import CliRunner\nimport os\n\n@click.command()\ndef cmd():\n    click.echo('test')\n\nrunner = CliRunner()\nresult = runner.invoke(cmd)\n# In 8.3.3, fileno() on the redirected stream returned the original fd\nassert result.output_bytes is not None or os.isatty(result.stdout.fileno() if hasattr(result, 'stdout') else 1)",
+  "case_id": "4f7bad8551f8f848",
+  "extra_requires": [],
+  "new_version": "8.4.0",
+  "old_version": "8.3.3",
+  "package": "click",
+  "source": "pypi:click==8.4.0",
+  "title": "CliRunner fileno() no longer exposes original file descriptor in default capture mode"
+}

@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from PIL import Image, ImageDraw, ImageFont\n\nimg = Image.new('RGB', (200, 100))\ndraw = ImageDraw.Draw(img)\nleft, top, right, bottom = draw.textbbox((0, 0), 'Hello')\nwidth = right - left\nheight = bottom - top",
+  "before_snippet": "from PIL import Image, ImageDraw, ImageFont\n\nimg = Image.new('RGB', (200, 100))\ndraw = ImageDraw.Draw(img)\nwidth, height = draw.textsize('Hello')",
+  "case_id": "b5be292b83742e60",
+  "extra_requires": [],
+  "new_version": "12.0.0",
+  "old_version": "11.3.0",
+  "package": "pillow",
+  "source": "pypi:pillow==12.0.0",
+  "title": "ImageDraw.Draw.textsize() method removed"
+}

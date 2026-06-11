@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from cryptography.hazmat.backends import default_backend\nbackend = default_backend()\nassert backend is not None\n",
+  "before_snippet": "from cryptography.hazmat.backends.openssl.backend import backend\nassert backend is not None\n",
+  "case_id": "4817b132e4f528b0",
+  "extra_requires": [],
+  "new_version": "48.0.0",
+  "old_version": "47.0.0",
+  "package": "cryptography",
+  "source": "pypi:cryptography==48.0.0",
+  "title": "OpenSSL backend removal: cryptography.hazmat.backends.openssl.backend no longer importable"
+}

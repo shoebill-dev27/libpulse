@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import redis\n\n# In 8.0.0, Lock.extend() and Lock.reacquire() are typed as returning Literal[True]\n# These methods only succeed or raise, so Literal[True] is more precise\nclient = redis.Redis(host='localhost', port=6379)\nlock = client.lock('mykey')\nassert True\n",
+  "before_snippet": "import redis\n\n# In 7.4.1, Lock.extend() and Lock.reacquire() returned generic bool\nclient = redis.Redis(host='localhost', port=6379)\nlock = client.lock('mykey')\n# The return type annotation was bool, not Literal[True]\nassert True\n",
+  "case_id": "ae374cefa6705666",
+  "extra_requires": [],
+  "new_version": "8.0.0",
+  "old_version": "7.4.1",
+  "package": "redis",
+  "source": "pypi:redis==8.0.0",
+  "title": "Lock.extend() and Lock.reacquire() now return Literal[True] instead of bool"
+}

@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import pytest\nimport warnings\nfrom pathlib import Path\nimport tempfile\nimport sys\n\n# In pytest 9.0.0, PytestRemovedIn9Warning is converted to an error by default.\n# To migrate, either:\n# 1. Stop using the deprecated feature, or\n# 2. Explicitly filter the warning as an error in pytest.ini\n\ndef test_deprecated_feature():\n    # The recommended approach is to update code to not use deprecated features\n    # For features removed in 9.0.0, consult the deprecations documentation\n    pass\n",
+  "before_snippet": "import pytest\nimport warnings\n\n# In pytest 8.4.2, PytestRemovedIn9Warning could be issued as a warning\n# and the code would continue. This test verifies the old behavior where\n# deprecated features would warn but not fail by default.\n\ndef test_deprecated_feature():\n    # Using a deprecated API that raises PytestRemovedIn9Warning\n    # In 8.4.2 this would warn but pass\n    with warnings.catch_warnings(record=True) as w:\n        warnings.simplefilter(\"always\")\n        # The deprecated monkeypatch.syspath_prepend with namespace packages\n        # would issue a warning in 8.4.2\n        pass\n    # Test passes in 8.4.2 without errors\n",
+  "case_id": "4ffd58ec47399d0e",
+  "extra_requires": [],
+  "new_version": "9.0.0",
+  "old_version": "8.4.2",
+  "package": "pytest",
+  "source": "pypi:pytest==9.0.0",
+  "title": "PytestRemovedIn9Warning now raises errors by default instead of warnings"
+}

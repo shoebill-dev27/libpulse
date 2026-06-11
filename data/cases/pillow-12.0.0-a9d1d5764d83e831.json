@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from PIL import Image\nfrom io import BytesIO\n\nimg = Image.new('RGB', (100, 100))\nresult = img.resize((50, 50), Image.LANCZOS)",
+  "before_snippet": "from PIL import Image\nfrom io import BytesIO\n\nimg = Image.new('RGB', (100, 100))\nresult = img.resize((50, 50), Image.ANTIALIAS)",
+  "case_id": "a9d1d5764d83e831",
+  "extra_requires": [],
+  "new_version": "12.0.0",
+  "old_version": "11.3.0",
+  "package": "pillow",
+  "source": "pypi:pillow==12.0.0",
+  "title": "Image.ANTIALIAS alias removed (was deprecated, fully removed in Pillow 10+, confirm via constants removal path)"
+}

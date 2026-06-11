@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import click\n\n@click.command()\n@click.option('--flag', is_flag=True, flag_value='custom', default=True)\ndef cmd(flag):\n    # In 8.3.0, default=True is preserved as-is (but maintains backward compat)\n    # The actual behavior still defaults to flag_value for default=True for backward compat\n    assert flag == 'custom', f\"Expected 'custom', got {flag}\"\n\nif __name__ == '__main__':\n    cmd([])\n",
+  "before_snippet": "import click\n\n@click.command()\n@click.option('--flag', is_flag=True, flag_value='custom', default=True)\ndef cmd(flag):\n    # In 8.2.2, default=True would be overridden to flag_value='custom'\n    assert flag == 'custom', f\"Expected 'custom', got {flag}\"\n\nif __name__ == '__main__':\n    cmd([])\n",
+  "case_id": "2a83b971ac88af21",
+  "extra_requires": [],
+  "new_version": "8.3.0",
+  "old_version": "8.2.2",
+  "package": "click",
+  "source": "pypi:click==8.3.0",
+  "title": "Flag option with default=True no longer defaults to flag_value in all cases"
+}

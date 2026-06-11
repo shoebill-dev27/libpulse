@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import pandas as pd\n\n# In pandas 3.0.0, Copy-on-Write is the default behavior\ndf = pd.DataFrame({'A': [1, 2, 3]})\nview = df['A']\nview.iloc[0] = 999\n# In 3.0.0, this does NOT modify the original due to CoW\nassert df['A'].iloc[0] == 1, \"Expected CoW to prevent modification\"\n",
+  "before_snippet": "import pandas as pd\n\n# In pandas 2.3.3, the default mode allows copy-on-write to be disabled\ndf = pd.DataFrame({'A': [1, 2, 3]})\nview = df['A']\nview.iloc[0] = 999\n# In 2.3.3, this modifies the original by default (unless CoW is explicitly enabled)\nassert df['A'].iloc[0] == 999, \"Expected modification to propagate in 2.3.3\"\n",
+  "case_id": "404d8ac6b9eb2980",
+  "extra_requires": [],
+  "new_version": "3.0.0",
+  "old_version": "2.3.3",
+  "package": "pandas",
+  "source": "pypi:pandas==3.0.0",
+  "title": "Copy-on-Write (CoW) enabled by default changes Series copy behavior"
+}

@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from django import forms\n\nclass TestForm(forms.Form):\n    name = forms.CharField()\n\nform = TestForm(prefix='test_prefix')",
+  "before_snippet": "from django import forms\n\nclass TestForm(forms.Form):\n    name = forms.CharField()\n\nform = TestForm('test_prefix')",
+  "case_id": "02ce03c597b61dc9",
+  "extra_requires": [],
+  "new_version": "6.0",
+  "old_version": "5.2.15",
+  "package": "django",
+  "source": "pypi:django==6.0",
+  "title": "django.forms.Form no longer accepts positional 'prefix' argument"
+}

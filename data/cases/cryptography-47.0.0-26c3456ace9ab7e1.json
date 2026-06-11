@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from cryptography.hazmat.primitives.asymmetric.rsa import generate_private_key\n\nkey = generate_private_key(\n    public_exponent=65537,\n    key_size=2048\n)\n",
+  "before_snippet": "from cryptography.hazmat.primitives.asymmetric.rsa import generate_private_key\nfrom cryptography.hazmat.backends import default_backend\n\n# In 47.0.0 the backend parameter was removed entirely and raises TypeError\nkey = generate_private_key(\n    public_exponent=65537,\n    key_size=2048,\n    backend=default_backend()\n)\n",
+  "case_id": "26c3456ace9ab7e1",
+  "extra_requires": [],
+  "new_version": "47.0.0",
+  "old_version": "46.0.7",
+  "package": "cryptography",
+  "source": "pypi:cryptography==47.0.0",
+  "title": "Removal of backend parameter from asymmetric key generation functions"
+}

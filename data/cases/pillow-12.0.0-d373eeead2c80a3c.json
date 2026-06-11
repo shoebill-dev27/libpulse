@@ -1,0 +1,13 @@
+{
+  "after_snippet": "import numpy as np\nfrom PIL import Image\n\narr = np.zeros((10, 10, 3), dtype=np.uint8)\nimg = Image.fromarray(arr)\nassert img.mode == 'RGB'",
+  "before_snippet": "import numpy as np\nfrom PIL import Image\n\narr = np.zeros((10, 10, 3), dtype=np.uint8)\n# In 11.x, passing a mode that changes data type was deprecated but worked\nimg = Image.fromarray(arr, mode='RGB')\nassert img.mode == 'RGB'",
+  "case_id": "d373eeead2c80a3c",
+  "extra_requires": [
+    "numpy"
+  ],
+  "new_version": "12.0.0",
+  "old_version": "11.3.0",
+  "package": "pillow",
+  "source": "pypi:pillow==12.0.0",
+  "title": "Image.fromarray no longer accepts mode argument for type-changing reinterpretation (only deprecated mode change)"
+}

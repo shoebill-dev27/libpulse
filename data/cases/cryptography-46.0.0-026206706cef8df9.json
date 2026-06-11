@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes\nimport os\n\nkey = os.urandom(32)\niv = os.urandom(16)\ncipher = Cipher(algorithms.AES(key), modes.CBC(iv))\n",
+  "before_snippet": "from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes\nfrom cryptography.hazmat.backends import default_backend\nimport os\n\nkey = os.urandom(32)\niv = os.urandom(16)\n# The backend parameter was deprecated; in 46.0.0 passing it raises TypeError\ncipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())\n",
+  "case_id": "026206706cef8df9",
+  "extra_requires": [],
+  "new_version": "46.0.0",
+  "old_version": "45.0.7",
+  "package": "cryptography",
+  "source": "pypi:cryptography==46.0.0",
+  "title": "Removal of deprecated backend parameter from symmetric cipher construction"
+}

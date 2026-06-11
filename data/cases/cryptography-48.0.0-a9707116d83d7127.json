@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes\nimport os\n\nkey = os.urandom(32)\niv = os.urandom(16)\ncipher = Cipher(algorithms.AES(key), modes.CBC(iv))\nencryptor = cipher.encryptor()\nct = encryptor.update(b'A' * 16) + encryptor.finalize()\nassert len(ct) == 16\n",
+  "before_snippet": "from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes\nfrom cryptography.hazmat.backends import default_backend\nimport os\n\nkey = os.urandom(32)\niv = os.urandom(16)\ncipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())\nencryptor = cipher.encryptor()\n# Old: passing backend keyword still works\nct = encryptor.update(b'A' * 16) + encryptor.finalize()\nassert len(ct) == 16\n",
+  "case_id": "a9707116d83d7127",
+  "extra_requires": [],
+  "new_version": "48.0.0",
+  "old_version": "47.0.0",
+  "package": "cryptography",
+  "source": "pypi:cryptography==48.0.0",
+  "title": "Removal of deprecated CipherContext update_into accepting non-writable buffers"
+}

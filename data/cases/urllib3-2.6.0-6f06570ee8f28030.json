@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import io\nfrom urllib3.response import HTTPResponse\n\n# Create a minimal HTTPResponse object\nfp = io.BytesIO(b\"test data\")\nheaders = {\"Content-Type\": \"text/plain\", \"Content-Length\": \"9\"}\nresp = HTTPResponse(body=fp, headers=headers, preload_content=False)\n\n# Use headers attribute directly instead of getheaders() method\nresult = resp.headers\nassert result is not None",
+  "before_snippet": "import io\nfrom urllib3.response import HTTPResponse\n\n# Create a minimal HTTPResponse object\nfp = io.BytesIO(b\"test data\")\nheaders = {\"Content-Type\": \"text/plain\", \"Content-Length\": \"9\"}\nresp = HTTPResponse(body=fp, headers=headers, preload_content=False)\n\n# This method existed in 2.5.0 but is removed in 2.6.0\nresult = resp.getheaders()\nassert result is not None",
+  "case_id": "6f06570ee8f28030",
+  "extra_requires": [],
+  "new_version": "2.6.0",
+  "old_version": "2.5.0",
+  "package": "urllib3",
+  "source": "pypi:urllib3==2.6.0",
+  "title": "HTTPResponse.getheaders() method removed"
+}

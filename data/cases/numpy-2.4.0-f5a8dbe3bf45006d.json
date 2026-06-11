@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import numpy as np\nx = np.array([1, 2, 3])\ny = np.array([1, 4, 9])\nresult = np.trapezoid(y, x)\nassert result is not None",
+  "before_snippet": "import numpy as np\nx = np.array([1, 2, 3])\ny = np.array([1, 4, 9])\nresult = np.trapz(y, x)\nassert result is not None",
+  "case_id": "f5a8dbe3bf45006d",
+  "extra_requires": [],
+  "new_version": "2.4.0",
+  "old_version": "2.3.5",
+  "package": "numpy",
+  "source": "pypi:numpy==2.4.0",
+  "title": "Removed numpy.trapz function"
+}

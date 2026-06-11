@@ -55,6 +55,62 @@
       "title": "np.float_ alias removed in NumPy 2.0",
       "verdict": "verified",
       "verified_at": 1781110168
+    },
+    {
+      "after": "import numpy as np\ndata = np.array([1, 2, 3, 4, 5])\nresult = np.percentile(data, 50, method='linear')\nassert result is not None",
+      "after_works_on_old": true,
+      "before": "import numpy as np\ndata = np.array([1, 2, 3, 4, 5])\nresult = np.percentile(data, 50, interpolation='linear')\nassert result is not None",
+      "case_id": "0a1645191d65984f",
+      "extra_requires": [],
+      "new_version": "2.4.0",
+      "old_version": "2.3.5",
+      "package": "numpy",
+      "source": "pypi:numpy==2.4.0",
+      "title": "Removed interpolation parameter from quantile and percentile functions",
+      "verdict": "verified",
+      "verified_at": 1781164052
+    },
+    {
+      "after": "import numpy as np\narr = np.array([1, 2, 3, 4, 5, 6])\nresult = np.reshape(arr, (2, 3))\nassert result.shape == (2, 3)",
+      "after_works_on_old": true,
+      "before": "import numpy as np\narr = np.array([1, 2, 3, 4, 5, 6])\nresult = np.reshape(arr, newshape=(2, 3))\nassert result.shape == (2, 3)",
+      "case_id": "6ccdd77e7e0f0693",
+      "extra_requires": [],
+      "new_version": "2.4.0",
+      "old_version": "2.3.5",
+      "package": "numpy",
+      "source": "pypi:numpy==2.4.0",
+      "title": "Removed newshape parameter from numpy.reshape",
+      "verdict": "verified",
+      "verified_at": 1781164062
+    },
+    {
+      "after": "import numpy as np\na = np.array([1, 2, 3])\nb = np.array([2, 3, 4])\nresult = np.isin(a, b)\nassert result is not None",
+      "after_works_on_old": true,
+      "before": "import numpy as np\na = np.array([1, 2, 3])\nb = np.array([2, 3, 4])\nresult = np.in1d(a, b)\nassert result is not None",
+      "case_id": "cfc36b6ec7ac2855",
+      "extra_requires": [],
+      "new_version": "2.4.0",
+      "old_version": "2.3.5",
+      "package": "numpy",
+      "source": "pypi:numpy==2.4.0",
+      "title": "Removed numpy.in1d function",
+      "verdict": "verified",
+      "verified_at": 1781164080
+    },
+    {
+      "after": "import numpy as np\nx = np.array([1, 2, 3])\ny = np.array([1, 4, 9])\nresult = np.trapezoid(y, x)\nassert result is not None",
+      "after_works_on_old": true,
+      "before": "import numpy as np\nx = np.array([1, 2, 3])\ny = np.array([1, 4, 9])\nresult = np.trapz(y, x)\nassert result is not None",
+      "case_id": "f5a8dbe3bf45006d",
+      "extra_requires": [],
+      "new_version": "2.4.0",
+      "old_version": "2.3.5",
+      "package": "numpy",
+      "source": "pypi:numpy==2.4.0",
+      "title": "Removed numpy.trapz function",
+      "verdict": "verified",
+      "verified_at": 1781164082
     }
   ],
   "package": "numpy"

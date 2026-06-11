@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import pandas as pd\n\n# In pandas 3.0.0, datetime inference defaults to microsecond resolution\ndf = pd.DataFrame({'date': pd.date_range('2020-01-01', periods=3)})\nassert df['date'].dtype == 'datetime64[us]', f\"Expected datetime64[us], got {df['date'].dtype}\"\n",
+  "before_snippet": "import pandas as pd\nimport numpy as np\n\n# In pandas 2.3.3, datetime inference defaults to nanosecond resolution\ndf = pd.DataFrame({'date': pd.date_range('2020-01-01', periods=3)})\nassert df['date'].dtype == 'datetime64[ns]', f\"Expected datetime64[ns], got {df['date'].dtype}\"\n",
+  "case_id": "7cecb3f1f84c20d9",
+  "extra_requires": [],
+  "new_version": "3.0.0",
+  "old_version": "2.3.3",
+  "package": "pandas",
+  "source": "pypi:pandas==3.0.0",
+  "title": "Default datetime resolution inference changed"
+}

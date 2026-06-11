@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import click\n\n# In 8.4.0, Parameter is abstract and cannot be instantiated\n# Use a concrete subclass instead\nparam = click.Option(['-t', '--test'])\nassert param is not None",
+  "before_snippet": "import click\n\n# In 8.3.3, Parameter could be instantiated directly\nparam = click.core.Parameter(param_decls=['--test'])\nassert param is not None",
+  "case_id": "b8939e798886dc7b",
+  "extra_requires": [],
+  "new_version": "8.4.0",
+  "old_version": "8.3.3",
+  "package": "click",
+  "source": "pypi:click==8.4.0",
+  "title": "Parameter is now an abstract base class and cannot be instantiated directly"
+}

@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import redis\n\n# In 8.0.0, socket_timeout defaults to 5 seconds\nclient = redis.Redis(host='localhost', port=6379)\n# Verify new default\nassert client.connection_pool.connection_kwargs.get('socket_timeout') == 5\n",
+  "before_snippet": "import redis\n\n# In 7.4.1, socket_timeout defaulted to None (no timeout)\nclient = redis.Redis(host='localhost', port=6379)\n# Verify old default\nassert client.connection_pool.connection_kwargs.get('socket_timeout') is None or client.connection_pool.connection_kwargs.get('socket_timeout') != 5\n",
+  "case_id": "7d55eba8f825484a",
+  "extra_requires": [],
+  "new_version": "8.0.0",
+  "old_version": "7.4.1",
+  "package": "redis",
+  "source": "pypi:redis==8.0.0",
+  "title": "Socket timeout defaults changed from None to 5 seconds, affecting blocking commands like BLPOP"
+}

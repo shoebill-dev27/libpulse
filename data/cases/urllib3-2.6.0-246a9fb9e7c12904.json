@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import io\nfrom urllib3.response import HTTPResponse\n\n# Create a minimal HTTPResponse object\nfp = io.BytesIO(b\"test data\")\nheaders = {\"Content-Type\": \"text/plain\"}\nresp = HTTPResponse(body=fp, headers=headers, preload_content=False)\n\n# Use headers.get() instead of getheader() method\nresult = resp.headers.get(\"X-Missing\", \"default_value\")\nassert result == \"default_value\"",
+  "before_snippet": "import io\nfrom urllib3.response import HTTPResponse\n\n# Create a minimal HTTPResponse object\nfp = io.BytesIO(b\"test data\")\nheaders = {\"Content-Type\": \"text/plain\"}\nresp = HTTPResponse(body=fp, headers=headers, preload_content=False)\n\n# This method signature existed in 2.5.0 but is removed in 2.6.0\nresult = resp.getheader(\"X-Missing\", \"default_value\")\nassert result == \"default_value\"",
+  "case_id": "246a9fb9e7c12904",
+  "extra_requires": [],
+  "new_version": "2.6.0",
+  "old_version": "2.5.0",
+  "package": "urllib3",
+  "source": "pypi:urllib3==2.6.0",
+  "title": "HTTPResponse.getheader() method with default parameter removed"
+}

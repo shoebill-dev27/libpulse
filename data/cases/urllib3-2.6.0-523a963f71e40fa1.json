@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from urllib3.response import ContentDecoder\nimport io\n\n# In 2.6.0, custom decompressors must follow the updated API\nclass CustomDecoder(ContentDecoder):\n    def __init__(self):\n        # New initialization pattern\n        self._decompressor = None\n    \n    def decompress(self, data):\n        return data\n    \n    def flush(self):\n        return b\"\"\n\n# Instantiate with new API\ndecoder = CustomDecoder()\nresult = decoder.decompress(b\"test\")\nassert result == b\"test\"",
+  "before_snippet": "from urllib3.response import ContentDecoder\nimport io\n\n# In 2.5.0, custom decompressors inherited from ContentDecoder\n# with a specific API that has changed in 2.6.0\nclass CustomDecoder(ContentDecoder):\n    def __init__(self):\n        # Old initialization pattern\n        pass\n    \n    def decompress(self, data):\n        return data\n\n# Attempt to instantiate with old API expectations\ndecoder = CustomDecoder()\n# The old API would work here in 2.5.0\nresult = decoder.decompress(b\"test\")\nassert result == b\"test\"",
+  "case_id": "523a963f71e40fa1",
+  "extra_requires": [],
+  "new_version": "2.6.0",
+  "old_version": "2.5.0",
+  "package": "urllib3",
+  "source": "pypi:urllib3==2.6.0",
+  "title": "ContentDecoder API change for custom decompressors"
+}

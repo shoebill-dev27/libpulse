@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import pandas as pd\n\n# In pandas 3.0.0, Index.base has been removed\nidx = pd.Index([1, 2, 3])\ntry:\n    base = idx.base\n    raise AssertionError(\"Index.base should not exist in 3.0.0\")\nexcept AttributeError:\n    pass  # Expected\n",
+  "before_snippet": "import pandas as pd\n\n# In pandas 2.3.3, Index.base was deprecated but still accessible\nidx = pd.Index([1, 2, 3])\nbase = idx.base\nassert base is None or base is not None  # Just accessing it should work\n",
+  "case_id": "e76ea5393334326c",
+  "extra_requires": [],
+  "new_version": "3.0.0",
+  "old_version": "2.3.3",
+  "package": "pandas",
+  "source": "pypi:pandas==3.0.0",
+  "title": "Removal of deprecated Index.base property"
+}

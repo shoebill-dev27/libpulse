@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from PIL import Image\nimport io\n\n# In 12.2.0, encoding an empty image raises ValueError\nimg = Image.new('RGB', (0, 0))\nbuf = io.BytesIO()\ntry:\n    img.save(buf, format='PNG')\nexcept ValueError:\n    pass  # Expected in 12.2.0\n",
+  "before_snippet": "from PIL import Image\nimport io\n\n# In 12.1.1, encoding an empty (zero-dimension) image raises something other than ValueError\n# We verify it does NOT raise ValueError (i.e. old behavior)\nimg = Image.new('RGB', (0, 0))\nbuf = io.BytesIO()\ntry:\n    img.save(buf, format='PNG')\nexcept ValueError:\n    # If ValueError is raised in old version, test fails (we expect old error type)\n    raise AssertionError('Got ValueError in old version - unexpected')\nexcept Exception:\n    pass  # Expected: some other error in 12.1.1\n",
+  "case_id": "c722ec353660cce3",
+  "extra_requires": [],
+  "new_version": "12.2.0",
+  "old_version": "12.1.1",
+  "package": "pillow",
+  "source": "pypi:pillow==12.2.0",
+  "title": "Encoding an empty image now raises ValueError instead of a different error"
+}

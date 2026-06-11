@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import redis\n\n# In 8.0.0, max_connections defaults to 100\nclient = redis.Redis(host='localhost', port=6379)\n# Verify new default\nassert client.connection_pool.max_connections == 100\n",
+  "before_snippet": "import redis\n\n# In 7.4.1, max_connections defaulted to 50\nclient = redis.Redis(host='localhost', port=6379)\n# The connection pool should have max_connections != 100\nassert client.connection_pool.max_connections != 100\n",
+  "case_id": "012a117788efc69f",
+  "extra_requires": [],
+  "new_version": "8.0.0",
+  "old_version": "7.4.1",
+  "package": "redis",
+  "source": "pypi:redis==8.0.0",
+  "title": "Connection pool max_connections default changed from 50 to 100"
+}

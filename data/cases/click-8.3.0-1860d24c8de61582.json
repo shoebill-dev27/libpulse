@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import click\n\n@click.command()\n@click.argument('files', nargs=-1, default=['a.txt'])\ndef cmd(files):\n    # In 8.3.0, default works for nargs=-1\n    assert files == ('a.txt',), f\"Expected ('a.txt',), got {files}\"\n\nif __name__ == '__main__':\n    cmd([])\n",
+  "before_snippet": "import click\n\n@click.command()\n@click.argument('files', nargs=-1, default=['a.txt'])\ndef cmd(files):\n    # In 8.2.2, this would raise an error or not work as expected\n    assert files == ('a.txt',), f\"Expected ('a.txt',), got {files}\"\n\nif __name__ == '__main__':\n    cmd([])\n",
+  "case_id": "1860d24c8de61582",
+  "extra_requires": [],
+  "new_version": "8.3.0",
+  "old_version": "8.2.2",
+  "package": "click",
+  "source": "pypi:click==8.3.0",
+  "title": "Argument with nargs=-1 can now have a default value"
+}

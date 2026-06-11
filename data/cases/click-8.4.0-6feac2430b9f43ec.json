@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import click\n\n# In 8.4.0, Parameter.name is always str, empty string when expose_value=False\nctx = click.Context(click.Command('test'))\nparam = click.Option(['-t', '--test'], expose_value=False)\nassert param.name == ''",
+  "before_snippet": "import click\n\n# In 8.3.3, Parameter.name could be None when expose_value=False\nctx = click.Context(click.Command('test'))\nparam = click.Option(['-t', '--test'], expose_value=False)\nassert param.name is None",
+  "case_id": "6feac2430b9f43ec",
+  "extra_requires": [],
+  "new_version": "8.4.0",
+  "old_version": "8.3.3",
+  "package": "click",
+  "source": "pypi:click==8.4.0",
+  "title": "Parameter.name is now str instead of str | None, and expose_value=False uses empty string instead of None"
+}

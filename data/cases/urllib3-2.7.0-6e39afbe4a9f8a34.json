@@ -1,0 +1,13 @@
+{
+  "after_snippet": "import sys\nimport urllib3\n\n# urllib3 2.7.0 requires Python >= 3.10\n# On supported Python versions (>=3.10), import works fine\nassert sys.version_info >= (3, 10), 'Python 3.10+ required for urllib3 2.7.0'\n",
+  "before_snippet": "import sys\nimport urllib3\n\n# On Python 3.9, urllib3 2.6.3 works fine; 2.7.0 does not support Python 3.9\n# This snippet verifies urllib3 imports successfully on Python 3.9\nif sys.version_info[:2] == (3, 9):\n    # urllib3 2.7.0 dropped Python 3.9 support; attempting to import should fail\n    # We simulate by checking the package metadata\n    from importlib.metadata import version, requires\n    v = version('urllib3')\n    major, minor, patch = (int(x) for x in v.split('.')[:3])\n    if major == 2 and minor >= 7:\n        # Check requires-python\n        from importlib.metadata import metadata\n        meta = metadata('urllib3')\n        requires_python = meta['Requires-Python']\n        # 2.7.0 requires >=3.10, so on 3.9 this should have failed at install\n        # We assert the requires-python is compatible with 3.9\n        import packaging.specifiers\n        spec = packaging.specifiers.SpecifierSet(requires_python)\n        assert sys.version_info[:2] >= (3, 10) or packaging.version.Version('3.9') in spec, \\\n            'urllib3 2.7.0 does not support Python 3.9'\n",
+  "case_id": "6e39afbe4a9f8a34",
+  "extra_requires": [
+    "packaging"
+  ],
+  "new_version": "2.7.0",
+  "old_version": "2.6.3",
+  "package": "urllib3",
+  "source": "pypi:urllib3==2.7.0",
+  "title": "Removed support for Python 3.9 (runtime guard)"
+}

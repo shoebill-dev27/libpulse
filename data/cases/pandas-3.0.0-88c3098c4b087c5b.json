@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import pandas as pd\nimport numpy as np\n\n# In pandas 3.0.0, skipna parameter behavior on argmax is stricter\ns = pd.Series([1.0, np.nan, 3.0])\nresult = s.argmax()\nassert isinstance(result, (int, np.integer)), \"argmax should return integer index\"\n",
+  "before_snippet": "import pandas as pd\nimport numpy as np\n\n# In pandas 2.3.3, Series.argmax(skipna=False) with NaN returns index position\ns = pd.Series([1.0, np.nan, 3.0])\nresult = s.argmax(skipna=False)\nassert result == -1 or isinstance(result, (int, np.integer)), \"Should return -1 or compatible with deprecated behavior\"\n",
+  "case_id": "88c3098c4b087c5b",
+  "extra_requires": [],
+  "new_version": "3.0.0",
+  "old_version": "2.3.3",
+  "package": "pandas",
+  "source": "pypi:pandas==3.0.0",
+  "title": "Removal of deprecated Series.argmax/argmin with skipna parameter behavior"
+}

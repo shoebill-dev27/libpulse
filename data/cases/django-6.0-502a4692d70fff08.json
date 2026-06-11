@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from django.core.cache import cache\n\ncache.set('key', 'value', timeout=300)",
+  "before_snippet": "from django.core.cache import cache\n\ncache.set('key', 'value', 300)",
+  "case_id": "502a4692d70fff08",
+  "extra_requires": [],
+  "new_version": "6.0",
+  "old_version": "5.2.15",
+  "package": "django",
+  "source": "pypi:django==6.0",
+  "title": "django.core.cache.cache.set() no longer accepts positional 'timeout' argument"
+}

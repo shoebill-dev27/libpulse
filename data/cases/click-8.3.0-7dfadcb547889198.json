@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import click\n\n@click.command()\n@click.option('--flag', is_flag=True, flag_value='on', default='off')\ndef cmd(flag):\n    # In 8.3.0, non-boolean defaults are preserved as-is\n    assert flag == 'off', f\"Expected 'off', got {flag}\"\n\nif __name__ == '__main__':\n    cmd([])\n",
+  "before_snippet": "import click\n\n@click.command()\n@click.option('--flag', is_flag=True, flag_value='on', default='off')\ndef cmd(flag):\n    # In 8.2.2, non-True defaults were not reliably preserved\n    assert flag == 'off', f\"Expected 'off', got {flag}\"\n\nif __name__ == '__main__':\n    cmd([])\n",
+  "case_id": "7dfadcb547889198",
+  "extra_requires": [],
+  "new_version": "8.3.0",
+  "old_version": "8.2.2",
+  "package": "click",
+  "source": "pypi:click==8.3.0",
+  "title": "Flag option with explicit non-boolean default now preserves the default value"
+}

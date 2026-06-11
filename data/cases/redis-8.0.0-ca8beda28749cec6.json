@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import redis\nfrom typing import get_type_hints\n\n# In 8.0.0, overload pattern provides distinct return types\n# Sync client.get() now properly typed as returning Union[str, bytes, None]\n# instead of Union[Awaitable[...], Union[str, bytes, None]]\nclient = redis.Redis()\nhints = get_type_hints(client.get)\nassert True\n",
+  "before_snippet": "import redis\nfrom typing import get_type_hints\n\n# In 7.4.1, methods return Union[Awaitable, Any] for async compatibility\nclient = redis.Redis()\n# Type checking in 7.4.1 saw combined types, static analysis tools had false positives\n# This is primarily a type-checking change, runtime works the same\nhints = get_type_hints(client.get)\nassert True\n",
+  "case_id": "ca8beda28749cec6",
+  "extra_requires": [],
+  "new_version": "8.0.0",
+  "old_version": "7.4.1",
+  "package": "redis",
+  "source": "pypi:redis==8.0.0",
+  "title": "Type hints now use @overload pattern with separate sync/async return types instead of Union[Awaitable[T], T]"
+}

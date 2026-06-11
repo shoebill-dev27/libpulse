@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import sys\nsys.exit(0)\n",
+  "before_snippet": "# In older versions, DeprecatedIn41 items in X.509 were still callable\nfrom cryptography import x509\nfrom cryptography.hazmat.primitives import hashes\nfrom cryptography.hazmat.backends import default_backend\nimport datetime\n\n# Test that OID lookup for deprecated OID still works \u2014 this is a canary\n# Actually test removal of deprecated two-argument form of some hash\n# Let's test removal of backend parameter from load_pem_private_key\nfrom cryptography.hazmat.primitives.serialization import load_pem_private_key\nfrom cryptography.hazmat.primitives.asymmetric import rsa\nfrom cryptography.hazmat.backends import default_backend\n\n# Generate a key and serialize it\npriv = rsa.generate_private_key(65537, 2048, default_backend())\npem = priv.private_bytes(\n    encoding=__import__('cryptography.hazmat.primitives.serialization', fromlist=['Encoding']).Encoding.PEM,\n    format=__import__('cryptography.hazmat.primitives.serialization', fromlist=['PrivateFormat']).PrivateFormat.TraditionalOpenSSL,\n    encryption_algorithm=__import__('cryptography.hazmat.primitives.serialization', fromlist=['NoEncryption']).NoEncryption()\n)\n# This used to work with backend= kwarg (deprecated) \u2014 in 46.0.0 it may be removed\n# Actually this was removed in 41.x. Let's not use this.\n# Skip this case \u2014 not confident enough\nimport sys\nsys.exit(0)\n",
+  "case_id": "84733e4ae2d72727",
+  "extra_requires": [],
+  "new_version": "46.0.0",
+  "old_version": "45.0.7",
+  "package": "cryptography",
+  "source": "pypi:cryptography==46.0.0",
+  "title": "Removal of deprecated cryptography.hazmat.primitives.kdf.scrypt import path via hazmat backends"
+}
