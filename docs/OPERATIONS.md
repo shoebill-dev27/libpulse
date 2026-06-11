@@ -9,7 +9,13 @@ skipped, never fatal.
   Runs watch → analyze → verify → store → export → (weekly) report.
 - **Verify-only** (no API key): same `libpulse cycle` with `ANTHROPIC_API_KEY`
   unset → skips `analyze`, re-verifies and serves existing candidates (ADR-005).
-- **Publish**: `libpulse mcp` — MCP server over stdio; serves only VERIFIED.
+- **Publish**: `libpulse-mcp` — MCP server over stdio; serves only VERIFIED.
+  Needs the optional extra: `uv pip install -p .venv -e ".[mcp]"`.
+  Tools: `list_packages()`, `query_migrations(package, from_version?, to_version?)`.
+  Register with Claude Code:
+  `claude mcp add libpulse -- ~/claude-dev/libpulse/.venv/bin/libpulse-mcp`
+  (set `LIBPULSE_CORPUS_DIR=~/claude-dev/libpulse/data/corpus` if launched
+  from another working directory).
 - **Report**: `libpulse report` — regenerate the latest markdown report.
 
 Model selection: `LIBPULSE_MODEL` (cheap default for the loop).

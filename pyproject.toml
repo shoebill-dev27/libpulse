@@ -7,9 +7,11 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0", "ruff>=0.4", "black>=24.0"]
+mcp = ["mcp>=1.2"]
 
 [project.scripts]
 libpulse = "libpulse.cli:main"
+libpulse-mcp = "libpulse.mcp_server:main"
 
 [build-system]
 requires = ["setuptools>=68"]
