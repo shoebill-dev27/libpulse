@@ -45,8 +45,9 @@ Granularity: each task is 1–3 hours for a Claude Code session. Dependencies no
 - [x] T15 HF dataset export: `libpulse export-hf` builds dist/hf/ (train.jsonl +
       dataset card incl. SECURITY_REVIEW disclaimer, cc-by-4.0 working license).
       Upload/publication itself = owner action.
-- [ ] T16 Apify actor wrapping corpus queries (PPE). Lives in actor-foundry; depends
-      on corpus shape stabilizing (T12).
+- [x] T16 Apify actors wrapping corpus queries: done in ~/claude-dev/actor-foundry
+      (changelog-diff + dependency-migration-check, bundled corpus snapshot).
+      PPE pricing happens at publish (owner, actor-foundry A04).
 
 ## Later
 
