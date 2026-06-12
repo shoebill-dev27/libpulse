@@ -33,26 +33,34 @@ _isolation_prefix_cache: list[str] | None = None
 def _isolation_prefix() -> list[str]:
     """Network-isolation wrapper for snippet execution (T14a).
 
-    `unshare -rn` puts the snippet in an empty network namespace where it can
-    only fail to reach anything. Auto-detected once; snippets must never need
-    network, so failures under isolation are correct verdicts. Opt out with
-    LIBPULSE_NO_NET_ISOLATION=1 (e.g. kernels without user namespaces).
+    `unshare -rn` puts the snippet in an empty network namespace. Loopback is
+    brought up inside the namespace so snippets may use 127.0.0.1 — local
+    server fixtures are legitimate library usage (e.g. aiohttp) — while
+    anything beyond loopback still has nowhere to go. Auto-detected once.
+    Opt out with LIBPULSE_NO_NET_ISOLATION=1 (e.g. kernels without user
+    namespaces).
     """
     global _isolation_prefix_cache
     if os.getenv("LIBPULSE_NO_NET_ISOLATION"):
         return []
     if _isolation_prefix_cache is None:
-        exe = shutil.which("unshare")
-        usable = False
-        if exe:
+        prefix: list[str] = []
+        unshare = shutil.which("unshare")
+        sh = shutil.which("sh")
+        ip = shutil.which("ip")
+        if unshare and sh:
+            lo_up = f'"{ip}" link set lo up 2>/dev/null || true; ' if ip else ""
+            candidate = [unshare, "-rn", sh, "-c", f'{lo_up}exec "$@"', "libpulse-isolate"]
             try:
                 usable = (
-                    subprocess.run([exe, "-rn", "true"], capture_output=True, timeout=10).returncode
+                    subprocess.run([*candidate, "true"], capture_output=True, timeout=10).returncode
                     == 0
                 )
             except Exception:
                 usable = False
-        _isolation_prefix_cache = [exe, "-rn"] if usable else []
+            if usable:
+                prefix = candidate
+        _isolation_prefix_cache = prefix
     return _isolation_prefix_cache
 
 
@@ -80,11 +88,43 @@ class VenvCache:
         self.root = Path(root or Path.cwd() / "venvs")
         self.root.mkdir(parents=True, exist_ok=True)
 
+    @staticmethod
+    def _python_candidates() -> list[tuple[str, str]]:
+        """(executable, version-tag) pairs to try for env builds.
+
+        The running interpreter first; newer system interpreters as fallbacks
+        for packages whose requires-python exceeds it (e.g. django 6.0 needs
+        3.12 while the harness runs on 3.11).
+        """
+        current = sys.version_info[:2]
+        cands = [(sys.executable, f"{current[0]}.{current[1]}")]
+        for minor in (12, 13, 14):
+            if (3, minor) <= current:
+                continue
+            exe = shutil.which(f"python3.{minor}")
+            if exe:
+                cands.append((exe, f"3.{minor}"))
+        return cands
+
     def python_for(self, specs: list[str]) -> str:
         """Return a python executable from a venv with `specs` installed."""
-        key = hashlib.sha256(
-            ("|".join(sorted(specs)) + f"|py{sys.version_info[:2]}").encode()
-        ).hexdigest()[:16]
+        last_exc: EnvSetupError | None = None
+        for exe, tag in self._python_candidates():
+            try:
+                return self._build(exe, tag, specs)
+            except EnvSetupError as exc:
+                last_exc = exc
+                # uv wraps its error text, so normalize whitespace before
+                # matching. Only a requires-python conflict justifies trying
+                # a newer interpreter; any other failure is final.
+                msg = " ".join(str(exc).split())
+                if "does not satisfy Python" not in msg and "requires Python" not in msg:
+                    raise
+        assert last_exc is not None
+        raise last_exc
+
+    def _build(self, base_python: str, tag: str, specs: list[str]) -> str:
+        key = hashlib.sha256(("|".join(sorted(specs)) + f"|py{tag}").encode()).hexdigest()[:16]
         env_dir = self.root / key
         python = env_dir / "bin" / "python"
         marker = env_dir / ".libpulse-ready"
@@ -94,7 +134,7 @@ class VenvCache:
             shutil.rmtree(env_dir)  # half-built env from a previous crash
         try:
             subprocess.run(
-                [_uv(), "venv", str(env_dir), "--python", sys.executable],
+                [_uv(), "venv", str(env_dir), "--python", base_python],
                 check=True,
                 capture_output=True,
                 timeout=INSTALL_TIMEOUT,

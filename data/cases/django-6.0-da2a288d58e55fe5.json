@@ -1,6 +1,6 @@
 {
-  "after_snippet": "from django.db import models\n\nclass TestModel(models.Model):\n    name = models.CharField(max_length=100)\n    class Meta:\n        app_label = 'test'\n\nobj = TestModel(name='test')\nobj.save(using='default')",
-  "before_snippet": "from django.db import models\n\nclass TestModel(models.Model):\n    name = models.CharField(max_length=100)\n    class Meta:\n        app_label = 'test'\n\nobj = TestModel(name='test')\nobj.save('default')",
+  "after_snippet": "import django\nfrom django.conf import settings\n\nif not settings.configured:\n    settings.configure()\n    django.setup()\n\nfrom django.db import models\n\nclass TestModel(models.Model):\n    name = models.CharField(max_length=100)\n    class Meta:\n        app_label = 'test'\n\nobj = TestModel(name='test')\nobj.save(using='default')",
+  "before_snippet": "import django\nfrom django.conf import settings\n\nif not settings.configured:\n    settings.configure()\n    django.setup()\n\nfrom django.db import models\n\nclass TestModel(models.Model):\n    name = models.CharField(max_length=100)\n    class Meta:\n        app_label = 'test'\n\nobj = TestModel(name='test')\nobj.save('default')",
   "case_id": "da2a288d58e55fe5",
   "extra_requires": [],
   "new_version": "6.0",

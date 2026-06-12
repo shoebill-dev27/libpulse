@@ -92,6 +92,18 @@ Precision rules (cases failing these are rejected by an execution harness, so be
   documented change is about them.
 - Never invent keyword arguments or behaviors; if unsure how an API behaved in
   {old_version}, drop the case.
+- The before_snippet may use ONLY APIs that already exist in {old_version}; it must
+  not reference anything introduced in {new_version}.
+
+Snippet environment rules (the harness runs snippets as standalone scripts in a
+sandbox with only loopback networking):
+- Snippets must be fully self-contained. Frameworks needing global setup must do it
+  inline, e.g. django: `from django.conf import settings; settings.configure();
+  import django; django.setup()` before touching any settings-dependent API.
+- Drive CLI frameworks in-process (e.g. `click.testing.CliRunner().invoke(...)`),
+  never via subprocess.
+- No external network access. Local 127.0.0.1 server fixtures are allowed but must
+  always shut down/terminate so the script exits promptly.
 
 Ground claims in the context when possible. When the context only announces a major
 release without listing concrete API changes, you may also propose breaking changes you
