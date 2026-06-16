@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS cases (
     after_snippet TEXT NOT NULL,
     extra_requires TEXT NOT NULL DEFAULT '[]',
     source TEXT NOT NULL DEFAULT '',
+    released_at TEXT NOT NULL DEFAULT '',
     created_at REAL NOT NULL
 );
 CREATE TABLE IF NOT EXISTS results (
@@ -51,14 +52,25 @@ class Store:
         self.conn = sqlite3.connect(self.db_path)
         self.conn.row_factory = sqlite3.Row
         self.conn.executescript(SCHEMA)
+        self._migrate()
+
+    def _migrate(self) -> None:
+        """Apply additive schema migrations to pre-existing databases."""
+        cols = {r["name"] for r in self.conn.execute("PRAGMA table_info(cases)").fetchall()}
+        if "released_at" not in cols:
+            self.conn.execute("ALTER TABLE cases ADD COLUMN released_at TEXT NOT NULL DEFAULT ''")
+            self.conn.commit()
 
     def upsert_case(self, case: MigrationCase) -> None:
         self.conn.execute(
-            """INSERT INTO cases VALUES (?,?,?,?,?,?,?,?,?,?)
+            """INSERT INTO cases
+                 (case_id, package, old_version, new_version, title, before_snippet,
+                  after_snippet, extra_requires, source, released_at, created_at)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?)
                ON CONFLICT(case_id) DO UPDATE SET
                  title=excluded.title, before_snippet=excluded.before_snippet,
                  after_snippet=excluded.after_snippet, extra_requires=excluded.extra_requires,
-                 source=excluded.source""",
+                 source=excluded.source, released_at=excluded.released_at""",
             (
                 case.case_id,
                 case.package,
@@ -69,6 +81,7 @@ class Store:
                 case.after_snippet,
                 json.dumps(case.extra_requires),
                 case.source,
+                case.released_at,
                 time.time(),
             ),
         )
@@ -151,6 +164,7 @@ class Store:
                 "after": d["after_snippet"],
                 "extra_requires": json.loads(d["extra_requires"]),
                 "source": d["source"],
+                "released_at": d["released_at"],
                 "after_works_on_old": (
                     bool(d["after_works_on_old"]) if d["after_works_on_old"] is not None else None
                 ),

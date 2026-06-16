@@ -38,6 +38,7 @@ class MigrationCase:
     after_snippet: str
     extra_requires: list[str] = field(default_factory=list)
     source: str = ""  # provenance: release-notes/changelog URL
+    released_at: str = ""  # ISO 8601 upload time of new_version on PyPI, or "" if unknown
     case_id: str = ""
 
     def __post_init__(self) -> None:

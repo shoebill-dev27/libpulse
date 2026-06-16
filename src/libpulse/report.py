@@ -7,6 +7,7 @@ quarterly kill-reviews, generated unattended (cron, T13).
 from __future__ import annotations
 
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 from .store import Store
@@ -16,6 +17,42 @@ WINDOW_DAYS = 7
 
 def _pct(part: int, whole: int) -> str:
     return f"{100 * part / whole:.0f}%" if whole else "n/a"
+
+
+def _parse_iso_epoch(value: str) -> float | None:
+    """Parse an ISO 8601 timestamp to epoch seconds (UTC); None if unparseable."""
+    if not value:
+        return None
+    try:
+        dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.timestamp()
+
+
+def _freshness_line(store: Store) -> str:
+    """One-line release->verified lag summary over timestamped verified cases."""
+    rows = store.conn.execute(
+        """SELECT c.released_at, r.verified_at FROM cases c JOIN results r USING(case_id)
+           WHERE r.verdict='verified' AND c.released_at != ''"""
+    ).fetchall()
+    lags_days: list[float] = []
+    for row in rows:
+        released = _parse_iso_epoch(row["released_at"])
+        if released is None:
+            continue
+        lags_days.append((row["verified_at"] - released) / 86400)
+    if not lags_days:
+        return "- Freshness lag: no timestamped verified cases yet."
+    lags_days.sort()
+    n = len(lags_days)
+    median = lags_days[n // 2] if n % 2 else (lags_days[n // 2 - 1] + lags_days[n // 2]) / 2
+    return (
+        f"- Freshness lag (release→verified): median {round(median)}d, "
+        f"max {round(max(lags_days))}d, over {n} timestamped verified case(s)."
+    )
 
 
 def build_report(store: Store, now: float | None = None, window_days: int = WINDOW_DAYS) -> str:
@@ -67,7 +104,7 @@ def build_report(store: Store, now: float | None = None, window_days: int = WIND
             if flagged
             else "- No packages flagged."
         ),
-        "- Freshness lag: not yet measured (release timestamp not persisted; TODO T13a).",
+        _freshness_line(store),
         "",
     ]
     return "\n".join(lines)

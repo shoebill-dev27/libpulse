@@ -1,6 +1,7 @@
 """Weekly report tests against a synthetic store."""
 
 import time
+from datetime import datetime, timezone
 
 from libpulse.models import MigrationCase, StepResult, Verdict, VerificationResult
 from libpulse.report import build_report
@@ -40,3 +41,37 @@ def test_report_empty_store(tmp_path):
     report = build_report(Store(tmp_path / "db.sqlite"), now=NOW)
     assert "**0 verified**" in report
     assert "No packages flagged" in report
+
+
+def test_freshness_lag_reported(tmp_path):
+    store = Store(tmp_path / "db.sqlite")
+    base = datetime(2024, 1, 1, tzinfo=timezone.utc).timestamp()
+    # Two verified cases released the same day, verified 2 and 4 days later.
+    for i, lag_days in enumerate((2, 4)):
+        case = MigrationCase(
+            "numpy",
+            "1.0.0",
+            "2.0.0",
+            f"case {i}",
+            "b",
+            "a",
+            released_at="2024-01-01T00:00:00+00:00",
+        )
+        store.upsert_case(case)
+        store.save_result(
+            VerificationResult(
+                case_id=case.case_id, verdict=Verdict.VERIFIED, verified_at=base + lag_days * 86400
+            )
+        )
+    report = build_report(store, now=NOW)
+    assert (
+        "- Freshness lag (release→verified): median 3d, max 4d, "
+        "over 2 timestamped verified case(s)." in report
+    )
+
+
+def test_freshness_lag_absent_without_timestamps(tmp_path):
+    store = Store(tmp_path / "db.sqlite")
+    _seed(store, "numpy", Verdict.VERIFIED, NOW - 86400)  # no released_at
+    report = build_report(store, now=NOW)
+    assert "- Freshness lag: no timestamped verified cases yet." in report

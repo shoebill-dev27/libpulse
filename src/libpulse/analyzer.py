@@ -248,6 +248,7 @@ class Analyzer:
                 after_snippet=c["after_snippet"],
                 extra_requires=list(c.get("extra_requires") or []),
                 source=source,
+                released_at=release.released_at,
             )
             for c in raw_cases
         ]
