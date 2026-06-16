@@ -9,6 +9,7 @@
       "new_version": "3.6",
       "old_version": "3.5",
       "package": "networkx",
+      "released_at": "",
       "source": "pypi:networkx==3.6",
       "title": "Removal of link keyword argument from node_link functions",
       "verdict": "verified",

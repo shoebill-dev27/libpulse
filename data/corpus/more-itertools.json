@@ -9,6 +9,7 @@
       "new_version": "11.0.0",
       "old_version": "10.8.0",
       "package": "more-itertools",
+      "released_at": "",
       "source": "pypi:more-itertools==11.0.0",
       "title": "unique_everseen raises TypeError for unhashable inputs instead of falling back silently",
       "verdict": "verified",

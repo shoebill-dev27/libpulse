@@ -9,6 +9,7 @@
       "new_version": "26.0",
       "old_version": "25.0",
       "package": "packaging",
+      "released_at": "",
       "source": "pypi:packaging==26.0",
       "title": "Version now uses __slots__ and internal _key is lazily calculated",
       "verdict": "verified",
