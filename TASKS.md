@@ -48,6 +48,19 @@ Granularity: each task is 1–3 hours for a Claude Code session. Dependencies no
 - [x] T16 Apify actors wrapping corpus queries: done in ~/claude-dev/actor-foundry
       (changelog-diff + dependency-migration-check, bundled corpus snapshot).
       PPE pricing happens at publish (owner, actor-foundry A04).
+- [x] T19 Deprecation feed (`libpulse deprecations`): time-ordered deprecation
+      signals across tracked packages, from two sources — the verified corpus
+      (offline) and PyPI info.description/summary (injectable fetcher). Regex
+      extracts api token + deprecated_in/removed_in version hints; de-duped,
+      newest-first. Writes reports/deprecations.md + data/deprecations.json;
+      `--no-pypi` for offline. report.py shows a one-line corpus summary.
+      Where the corpus says "what broke", this says "what is about to break".
+- [x] T20 License matrix (`libpulse license-matrix`): per tracked package, its
+      normalized SPDX-ish license (info.license + Trove classifiers) and the
+      licenses of its direct dependencies (requires_dist, extras skipped).
+      Flags permissive→copyleft (GPL/AGPL/LGPL) combos as a redistribution risk.
+      Writes reports/license_matrix.md + data/license_matrix.json. T19/T20 are
+      network-free in tests via injected fetchers (14 new tests; full suite 66).
 
 ## Later
 

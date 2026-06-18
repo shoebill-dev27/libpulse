@@ -55,6 +55,22 @@ def _freshness_line(store: Store) -> str:
     )
 
 
+def _deprecation_line(corpus_dir: str | None = None) -> str:
+    """One-line deprecation-signal summary from the corpus (offline, no network)."""
+    from . import corpus as corpus_mod
+    from .deprecations import from_corpus
+
+    packages = [row["package"] for row in corpus_mod.list_packages(corpus_dir)]
+    records = from_corpus(packages, corpus_dir)
+    if not records:
+        return "- Deprecation signals: none found in the corpus yet."
+    affected = sorted({r.package for r in records})
+    return (
+        f"- Deprecation signals: {len(records)} across {len(affected)} package(s) "
+        f"({', '.join(affected)}). Run `libpulse deprecations` for the full feed."
+    )
+
+
 def build_report(store: Store, now: float | None = None, window_days: int = WINDOW_DAYS) -> str:
     now = now or time.time()
     since = now - window_days * 86400
@@ -105,6 +121,7 @@ def build_report(store: Store, now: float | None = None, window_days: int = WIND
             else "- No packages flagged."
         ),
         _freshness_line(store),
+        _deprecation_line(),
         "",
     ]
     return "\n".join(lines)

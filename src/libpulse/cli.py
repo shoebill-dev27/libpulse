@@ -181,6 +181,52 @@ def cmd_report(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_deprecations(args: argparse.Namespace) -> int:
+    """Build the deprecation feed from the corpus (+ optional PyPI scan)."""
+    from . import corpus as corpus_mod
+    from .deprecations import build_feed, render_markdown
+    from .watcher import read_packages
+
+    if args.packages:
+        packages = args.packages
+    else:
+        packages = [row["package"] for row in corpus_mod.list_packages(args.corpus_dir)]
+        if args.scan_pypi and Path(args.packages_file).exists():
+            packages = sorted(set(packages) | set(read_packages(args.packages_file)))
+
+    records = build_feed(
+        packages,
+        corpus_dir=args.corpus_dir,
+        scan_pypi=args.scan_pypi,
+        limit=args.limit,
+    )
+    md_path = Path(args.out_md)
+    json_path = Path(args.out_json)
+    md_path.parent.mkdir(parents=True, exist_ok=True)
+    json_path.parent.mkdir(parents=True, exist_ok=True)
+    md_path.write_text(render_markdown(records), encoding="utf-8")
+    json_path.write_text(json.dumps([r.to_dict() for r in records], indent=2), encoding="utf-8")
+    print(f"{len(records)} deprecation signal(s) -> {md_path}, {json_path}")
+    return 0
+
+
+def cmd_license_matrix(args: argparse.Namespace) -> int:
+    """Build the license matrix for tracked packages + their direct dependencies."""
+    from .licenses import build_matrix, render_markdown
+    from .watcher import read_packages
+
+    packages = args.packages or read_packages(args.packages_file)
+    matrix = build_matrix(packages)
+    md_path = Path(args.out_md)
+    json_path = Path(args.out_json)
+    md_path.parent.mkdir(parents=True, exist_ok=True)
+    json_path.parent.mkdir(parents=True, exist_ok=True)
+    md_path.write_text(render_markdown(matrix), encoding="utf-8")
+    json_path.write_text(json.dumps(matrix, indent=2), encoding="utf-8")
+    print(f"{len(matrix['packages'])} package(s), {matrix['conflicts']} conflict(s) -> {md_path}")
+    return 0
+
+
 def cmd_prune_venvs(args: argparse.Namespace) -> int:
     """Remove verifier venvs untouched for N days (disk hygiene for the cron loop)."""
     import shutil
@@ -245,6 +291,26 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("export-hf", help="build the HuggingFace dataset locally (dry run)")
     p.add_argument("--out", default="dist/hf")
     p.set_defaults(func=cmd_export_hf)
+
+    p = sub.add_parser(
+        "deprecations", help="build the deprecation feed (corpus + optional PyPI scan)"
+    )
+    p.add_argument("packages", nargs="*", help="packages to scan (default: corpus + tracked list)")
+    p.add_argument("--out-md", default="reports/deprecations.md")
+    p.add_argument("--out-json", default="data/deprecations.json")
+    p.add_argument("--limit", type=int, default=None, help="cap the number of records")
+    p.add_argument(
+        "--no-pypi", dest="scan_pypi", action="store_false", help="corpus only, no network"
+    )
+    p.set_defaults(func=cmd_deprecations, scan_pypi=True)
+
+    p = sub.add_parser(
+        "license-matrix", help="build a license + copyleft-conflict matrix for tracked packages"
+    )
+    p.add_argument("packages", nargs="*", help="packages to scan (default: tracked list)")
+    p.add_argument("--out-md", default="reports/license_matrix.md")
+    p.add_argument("--out-json", default="data/license_matrix.json")
+    p.set_defaults(func=cmd_license_matrix)
 
     p = sub.add_parser("prune-venvs", help="remove verifier venvs untouched for N days")
     p.add_argument("--keep-days", type=int, default=30)
