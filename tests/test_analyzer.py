@@ -5,6 +5,9 @@ import json
 from libpulse.analyzer import (
     API_URL,
     Analyzer,
+    _changelog_to_text,
+    _changelog_url_from_pypi,
+    _extract_version_section,
     _github_repo_from_pypi,
     _matching_release_notes,
 )
@@ -117,6 +120,102 @@ def test_matching_release_notes_prefers_exact_tag():
     assert _matching_release_notes(releases, "2.0.0") == ["## v2.0.0\ntwo"]
     # No exact match: fall back to the newest bodies.
     assert _matching_release_notes(releases, "9.9.9") == ["## v3.0.0\nthree", "## v2.0.0\ntwo"]
+
+
+# --- T12a: changelog deep-fetch ---
+
+
+def _pypi_with_changelog(package: str) -> dict:
+    # No GitHub repo: forces the deep-fetch path to be the only source of notes.
+    return {
+        "info": {
+            "summary": "demo package",
+            "project_urls": {"Changelog": "https://demo.example/CHANGELOG.md"},
+        }
+    }
+
+
+def test_changelog_url_from_pypi_matches_labels():
+    urls = {"Documentation": "https://d", "Release Notes": "https://r/notes"}
+    assert _changelog_url_from_pypi({"project_urls": urls}) == "https://r/notes"
+    assert _changelog_url_from_pypi({"project_urls": {"Source": "https://s"}}) is None
+
+
+def test_extract_version_section_isolates_block():
+    text = (
+        "# Changelog\n"
+        "## 2.0.0\n"
+        "- Removed foo(); use bar()\n"
+        "- Dropped Python 3.8\n"
+        "## 1.9.0\n"
+        "- Added baz()\n"
+    )
+    section = _extract_version_section(text, "2.0.0")
+    assert "Removed foo()" in section
+    assert "Dropped Python 3.8" in section
+    assert "Added baz()" not in section  # stopped at the 1.9.0 heading
+
+
+def test_extract_version_section_falls_back_to_head():
+    text = "## 3.1.0\n- newest entry\n## 3.0.0\n- older entry\n"
+    # 9.9.9 absent -> return the head (newest entries) rather than nothing.
+    assert "newest entry" in _extract_version_section(text, "9.9.9")
+
+
+def test_changelog_to_text_strips_html_but_keeps_markdown():
+    html = (
+        "<html><head><style>x{}</style></head><body><h2>2.0.0</h2><p>Removed foo</p></body></html>"
+    )
+    text = _changelog_to_text("https://demo.example/changelog", html)
+    assert "Removed foo" in text
+    assert "x{}" not in text  # style content dropped
+    md = "## 2.0.0\n- Removed foo\n"
+    assert _changelog_to_text("https://demo.example/CHANGELOG.md", md) == md
+
+
+def test_fetch_context_deep_fetches_changelog_when_no_release_notes():
+    fetched = []
+
+    def text_fetch(url):
+        fetched.append(url)
+        return "# Changelog\n## 2.0.0\n- Removed demo.foo(); use demo.bar()\n## 1.0.0\n- init\n"
+
+    def http(url, headers, payload=None, timeout=0):
+        raise AssertionError("no GitHub repo, so the releases API must not be called")
+
+    analyzer = Analyzer(
+        api_key="k", http=http, pypi_fetch=_pypi_with_changelog, text_fetch=text_fetch
+    )
+    context = analyzer.fetch_context(REL)
+    assert fetched == ["https://demo.example/CHANGELOG.md"]
+    assert "Removed demo.foo()" in context
+    assert "- init" not in context  # only the 2.0.0 section
+
+
+def test_deep_fetch_skipped_when_github_notes_present():
+    def text_fetch(url):
+        raise AssertionError("changelog must not be fetched when release notes exist")
+
+    def http(url, headers, payload=None, timeout=0):
+        return [{"tag_name": "v2.0.0", "body": "Removed foo(); use bar()."}]
+
+    analyzer = Analyzer(api_key="k", http=http, pypi_fetch=_pypi_stub, text_fetch=text_fetch)
+    assert "Removed foo()" in analyzer.fetch_context(REL)
+
+
+def test_deep_fetch_error_degrades_gracefully(capsys):
+    def text_fetch(url):
+        raise OSError("changelog host down")
+
+    analyzer = Analyzer(
+        api_key="k",
+        http=lambda *a, **k: (_ for _ in ()).throw(OSError("no gh")),
+        pypi_fetch=_pypi_with_changelog,
+        text_fetch=text_fetch,
+    )
+    context = analyzer.fetch_context(REL)
+    assert "PyPI summary: demo package" in context  # still returns what it has
+    assert "changelog fetch error" in capsys.readouterr().err
 
 
 def test_escalates_to_fallback_model_on_significant_bump(tmp_path):
