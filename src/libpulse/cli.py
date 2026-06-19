@@ -227,6 +227,21 @@ def cmd_license_matrix(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_failure_taxonomy(args: argparse.Namespace) -> int:
+    """Classify how verified breaking changes manifest (offline, from the store)."""
+    from .taxonomy import build_taxonomy, render_markdown
+
+    taxonomy = build_taxonomy(Store(args.db))
+    md_path = Path(args.out_md)
+    json_path = Path(args.out_json)
+    md_path.parent.mkdir(parents=True, exist_ok=True)
+    json_path.parent.mkdir(parents=True, exist_ok=True)
+    md_path.write_text(render_markdown(taxonomy), encoding="utf-8")
+    json_path.write_text(json.dumps(taxonomy, indent=2), encoding="utf-8")
+    print(f"{taxonomy['classified']} verified case(s) classified -> {md_path}, {json_path}")
+    return 0
+
+
 def cmd_prune_venvs(args: argparse.Namespace) -> int:
     """Remove verifier venvs untouched for N days (disk hygiene for the cron loop)."""
     import shutil
@@ -311,6 +326,11 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--out-md", default="reports/license_matrix.md")
     p.add_argument("--out-json", default="data/license_matrix.json")
     p.set_defaults(func=cmd_license_matrix)
+
+    p = sub.add_parser("failure-taxonomy", help="classify how verified breaking changes manifest")
+    p.add_argument("--out-md", default="reports/failure_taxonomy.md")
+    p.add_argument("--out-json", default="data/failure_taxonomy.json")
+    p.set_defaults(func=cmd_failure_taxonomy)
 
     p = sub.add_parser("prune-venvs", help="remove verifier venvs untouched for N days")
     p.add_argument("--keep-days", type=int, default=30)
