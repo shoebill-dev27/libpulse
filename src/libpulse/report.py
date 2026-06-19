@@ -122,9 +122,17 @@ def build_report(store: Store, now: float | None = None, window_days: int = WIND
         ),
         _freshness_line(store),
         _deprecation_line(),
+        _taxonomy_line(store),
         "",
     ]
     return "\n".join(lines)
+
+
+def _taxonomy_line(store: Store) -> str:
+    """One-line CI-failure-taxonomy summary from the store (offline)."""
+    from .taxonomy import build_taxonomy, summary_line
+
+    return summary_line(build_taxonomy(store))
 
 
 def write_report(store: Store, reports_dir: str | Path = "reports", now: float | None = None):

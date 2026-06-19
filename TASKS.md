@@ -61,6 +61,16 @@ Granularity: each task is 1–3 hours for a Claude Code session. Dependencies no
       Flags permissive→copyleft (GPL/AGPL/LGPL) combos as a redistribution risk.
       Writes reports/license_matrix.md + data/license_matrix.json. T19/T20 are
       network-free in tests via injected fetchers (14 new tests; full suite 66).
+- [x] T21 CI failure taxonomy (`libpulse failure-taxonomy`): classifies HOW each
+      verified breaking change manifests by reading the `before_on_new` step's
+      stderr in the store — import-error / removed-api / signature-change /
+      behavior-change / deprecation / syntax-error / env-error / unknown. Pure
+      string-matching classifier + store aggregation; writes
+      reports/failure_taxonomy.md + data/failure_taxonomy.json, report.py shows a
+      one-line summary. Completes the A02/A04 near-miss data-asset trio
+      (deprecation feed + license matrix + failure taxonomy). Offline, 8 new
+      tests (full suite 74). Live store: 29 verified cases classified
+      (removed-api 10, behavior-change 9, signature-change 4, import-error 3).
 
 ## Later
 
