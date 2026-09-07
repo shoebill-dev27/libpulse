@@ -1,0 +1,12 @@
+{
+  "after_snippet": "import numpy as np\n# In 2.5.0, this raises OverflowError for out-of-range integers\ntry:\n    result = np.where(True, 2**100, 0)\nexcept OverflowError:\n    pass  # Expected behavior in 2.5.0\n",
+  "before_snippet": "import numpy as np\n# In 2.4.6, this would silently truncate the large integer\nresult = np.where(True, 2**100, 0)\n",
+  "case_id": "ca146d483970728f",
+  "extra_requires": [],
+  "new_version": "2.5.0",
+  "old_version": "2.4.6",
+  "package": "numpy",
+  "released_at": "2026-06-21T20:56:16.657410Z",
+  "source": "pypi:numpy==2.5.0",
+  "title": "numpy.where raises OverflowError for out-of-range Python integers"
+}

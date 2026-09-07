@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from cryptography.hazmat.primitives.asymmetric.utils import decode_dss_signature\n\ndef encode_dss_signature(r, s):\n    def encode_int(n):\n        b = []\n        while n:\n            b.append(n & 0xff)\n            n >>= 8\n        b = bytes(reversed(b))\n        if b[0] & 0x80:\n            b = b'\\x00' + b\n        return b\n    rb = encode_int(r)\n    sb = encode_int(s)\n    seq = bytes([0x02, len(rb)]) + rb + bytes([0x02, len(sb)]) + sb\n    return bytes([0x30, len(seq)]) + seq\n\nsig = encode_dss_signature(0xdeadbeef, 0xcafebabe)\nr, s = decode_dss_signature(sig)\nassert r == 0xdeadbeef\nassert s == 0xcafebabe\n",
+  "before_snippet": "from cryptography.hazmat.primitives.asymmetric.utils import decode_dss_signature\nimport struct\n\n# Build a minimal DER-encoded DSS signature\ndef encode_dss_signature(r, s):\n    def encode_int(n):\n        b = []\n        while n:\n            b.append(n & 0xff)\n            n >>= 8\n        b = bytes(reversed(b))\n        if b[0] & 0x80:\n            b = b'\\x00' + b\n        return b\n    rb = encode_int(r)\n    sb = encode_int(s)\n    seq = bytes([0x02, len(rb)]) + rb + bytes([0x02, len(sb)]) + sb\n    return bytes([0x30, len(seq)]) + seq\n\nsig = encode_dss_signature(0xdeadbeef, 0xcafebabe)\nr, s = decode_dss_signature(sig)\nassert r == 0xdeadbeef\nassert s == 0xcafebabe\n",
+  "case_id": "78f3121b6bb09d66",
+  "extra_requires": [],
+  "new_version": "49.0.0",
+  "old_version": "48.0.1",
+  "package": "cryptography",
+  "source": "pypi:cryptography==49.0.0",
+  "title": "Removal of cryptography.hazmat.primitives.asymmetric.utils.decode_dss_signature accepting raw bytes"
+}

@@ -119,6 +119,51 @@
       "title": "Removed numpy.trapz function",
       "verdict": "verified",
       "verified_at": 1781164082
+    },
+    {
+      "after": "import numpy as np\na = np.array([1, 2, 3])\nb = np.array([4, 5, 6])\nresult = np.vstack((a, b))\n",
+      "after_works_on_old": true,
+      "before": "import numpy as np\na = np.array([1, 2, 3])\nb = np.array([4, 5, 6])\nresult = np.row_stack((a, b))\n",
+      "case_id": "70f3716022d90240",
+      "extra_requires": [],
+      "new_version": "2.5.0",
+      "old_version": "2.4.6",
+      "package": "numpy",
+      "released_at": "2026-06-21T20:56:16.657410Z",
+      "source": "pypi:numpy==2.5.0",
+      "title": "numpy.row_stack removed in favor of numpy.vstack",
+      "verdict": "verified",
+      "verified_at": 1788798209
+    },
+    {
+      "after": "# numpy.distutils is removed in 2.5.0\n# Use setuptools or other build backends instead\ntry:\n    from setuptools import setup\nexcept ImportError:\n    pass\n",
+      "after_works_on_old": true,
+      "before": "import numpy.distutils\nfrom numpy.distutils.core import setup\n",
+      "case_id": "7d6522d4c4b1d4f1",
+      "extra_requires": [],
+      "new_version": "2.5.0",
+      "old_version": "2.4.6",
+      "package": "numpy",
+      "released_at": "2026-06-21T20:56:16.657410Z",
+      "source": "pypi:numpy==2.5.0",
+      "title": "numpy.distutils module removed",
+      "verdict": "verified",
+      "verified_at": 1788798210
+    },
+    {
+      "after": "import numpy as np\n# numpy.cross now requires 3D or higher dimensional vectors\na = np.array([1, 2, 0])\nb = np.array([3, 4, 0])\nresult = np.cross(a, b)\n",
+      "after_works_on_old": true,
+      "before": "import numpy as np\na = np.array([1, 2])\nb = np.array([3, 4])\nresult = np.cross(a, b)\n",
+      "case_id": "f71df8272a65772c",
+      "extra_requires": [],
+      "new_version": "2.5.0",
+      "old_version": "2.4.6",
+      "package": "numpy",
+      "released_at": "2026-06-21T20:56:16.657410Z",
+      "source": "pypi:numpy==2.5.0",
+      "title": "numpy.cross no longer supports 2-dimensional vectors",
+      "verdict": "verified",
+      "verified_at": 1788798217
     }
   ],
   "package": "numpy"

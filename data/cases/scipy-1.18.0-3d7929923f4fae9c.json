@@ -1,0 +1,12 @@
+{
+  "after_snippet": "import numpy as np\nfrom scipy.stats import rankdata\n\ndata = np.array([1, 2, 3, 1, 2], dtype=np.int32)\nresult = rankdata(data)\nassert result.dtype in (np.float64, np.float32), f\"Expected floating point, got {result.dtype}\"",
+  "before_snippet": "import numpy as np\nfrom scipy.stats import rankdata\n\ndata = np.array([1, 2, 3, 1, 2], dtype=np.int32)\nresult = rankdata(data)\nassert result.dtype == np.int32, f\"Expected int32, got {result.dtype}\"",
+  "case_id": "3d7929923f4fae9c",
+  "extra_requires": [],
+  "new_version": "1.18.0",
+  "old_version": "1.17.1",
+  "package": "scipy",
+  "released_at": "2026-06-19T14:59:45.203789Z",
+  "source": "pypi:scipy==1.18.0",
+  "title": "scipy.stats.rankdata now returns floating point dtype instead of input dtype"
+}

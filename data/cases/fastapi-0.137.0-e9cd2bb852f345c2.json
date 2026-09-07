@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from fastapi import FastAPI, APIRouter\n\nrouter = APIRouter()\n\n@router.get('/test')\ndef handler():\n    return {'msg': 'test'}\n\n# In 0.137.0, router.routes is an internal implementation detail\n# Applications should not iterate or modify router.routes directly\n# Instead, use FastAPI's public APIs for route introspection\napp = FastAPI()\napp.include_router(router)\n\n# Use app.routes instead for the final flattened structure\nfor route in app.routes:\n    if hasattr(route, 'path'):\n        path = route.path\n        methods = route.methods if hasattr(route, 'methods') else None\n",
+  "before_snippet": "from fastapi import FastAPI, APIRouter\n\nrouter = APIRouter()\n\n@router.get('/test')\ndef handler():\n    return {'msg': 'test'}\n\n# In 0.136.3, router.routes was treated as a stable public API\n# Code could safely introspect and work with router.routes\nfor route in router.routes:\n    # Expecting a simple list of APIRoute objects\n    path = route.path\n    methods = route.methods\n    endpoint = route.endpoint\n",
+  "case_id": "e9cd2bb852f345c2",
+  "extra_requires": [],
+  "new_version": "0.137.0",
+  "old_version": "0.136.3",
+  "package": "fastapi",
+  "source": "pypi:fastapi==0.137.0",
+  "title": "router.routes should not be used for application logic; it is now an internal implementation detail"
+}

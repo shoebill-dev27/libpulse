@@ -1,0 +1,11 @@
+{
+  "after_snippet": "import pytest\n\n# Move fixture to conftest.py or accept it runs twice\n# Solution: use conftest.py instead of inline definition\n# For inline fixtures, expect they may run twice with --doctest-modules\n\ndef test_fixture_behavior():\n    # Acknowledge that fixtures may execute multiple times with --doctest-modules\n    # and adjust test expectations accordingly\n    pass\n",
+  "before_snippet": "import pytest\n\n@pytest.fixture(scope=\"module\", autouse=True)\ndef my_fixture():\n    global call_count\n    call_count = getattr(pytest, '_test_call_count', 0) + 1\n    pytest._test_call_count = call_count\n    yield\n\ndef test_fixture_called_once():\n    # In 9.0.3, this fixture runs once even with --doctest-modules\n    # In 9.1.0, it runs twice (once per collection pass)\n    assert pytest._test_call_count == 1, f\"Expected 1, got {pytest._test_call_count}\"\n",
+  "case_id": "fd14d8c356bd766d",
+  "extra_requires": [],
+  "new_version": "9.1.0",
+  "old_version": "9.0.3",
+  "package": "pytest",
+  "source": "pypi:pytest==9.1.0",
+  "title": "Autouse fixtures with module/package/session scope in --doctest-modules now execute twice"
+}

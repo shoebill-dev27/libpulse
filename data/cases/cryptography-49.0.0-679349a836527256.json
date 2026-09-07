@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from cryptography import x509\nfrom cryptography.hazmat.primitives.asymmetric.ec import generate_private_key, SECP256R1\nfrom cryptography.hazmat.backends import default_backend\nfrom cryptography.x509.oid import NameOID\nfrom cryptography.hazmat.primitives import hashes\nimport datetime\n\nkey = generate_private_key(SECP256R1(), default_backend())\nsubject = issuer = x509.Name([x509.NameAttribute(NameOID.COMMON_NAME, u\"test\")])\ncert = (\n    x509.CertificateBuilder()\n    .subject_name(subject)\n    .issuer_name(issuer)\n    .public_key(key.public_key())\n    .serial_number(x509.random_serial_number())\n    .not_valid_before(datetime.datetime.utcnow())\n    .not_valid_after(datetime.datetime.utcnow() + datetime.timedelta(days=365))\n    .sign(key, hashes.SHA256(), default_backend())\n)\nassert cert.subject is not None\n",
+  "before_snippet": "from cryptography import x509\nfrom cryptography.hazmat.primitives.asymmetric.ec import generate_private_key, SECP256R1\nfrom cryptography.hazmat.backends import default_backend\nfrom cryptography.x509.oid import NameOID\nfrom cryptography.hazmat.primitives import hashes\nfrom cryptography.hazmat.primitives.serialization import Encoding\nimport datetime\n\nkey = generate_private_key(SECP256R1(), default_backend())\nsubject = issuer = x509.Name([x509.NameAttribute(NameOID.COMMON_NAME, u\"test\")])\ncert = (\n    x509.CertificateBuilder()\n    .subject_name(subject)\n    .issuer_name(issuer)\n    .public_key(key.public_key())\n    .serial_number(x509.random_serial_number())\n    .not_valid_before(datetime.datetime.utcnow())\n    .not_valid_after(datetime.datetime.utcnow() + datetime.timedelta(days=365))\n    .sign(key, hashes.SHA256(), default_backend())\n)\n\nfrom cryptography.x509 import load_der_x509_certificate\nfrom cryptography.hazmat.primitives.asymmetric.padding import PKCS1v15\n\n# Just verify cert loads\nassert cert.subject is not None\n",
+  "case_id": "679349a836527256",
+  "extra_requires": [],
+  "new_version": "49.0.0",
+  "old_version": "48.0.1",
+  "package": "cryptography",
+  "source": "pypi:cryptography==49.0.0",
+  "title": "Removal of deprecated X509Store.add_cert accepting duplicate certificates"
+}

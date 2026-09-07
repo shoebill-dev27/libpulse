@@ -1,0 +1,12 @@
+{
+  "after_snippet": "import numpy as np\nfrom scipy.linalg import solve\n\n# Using a non-standard dtype now raises an error\nA = np.array([[1, 0], [0, 1]], dtype=np.uint8)\nb = np.array([1, 2], dtype=np.uint8)\n\ntry:\n    x = solve(A, b)\n    raise AssertionError(\"Should have raised an error for non-LAPACK dtype\")\nexcept (TypeError, ValueError):\n    pass",
+  "before_snippet": "import numpy as np\nfrom scipy.linalg import solve\n\n# Using a non-standard dtype like uint8 that linalg doesn't support\nA = np.array([[1, 0], [0, 1]], dtype=np.uint8)\nb = np.array([1, 2], dtype=np.uint8)\n\ntry:\n    x = solve(A, b)\n    # In 1.17.1, this might work with casting\nexcept Exception:\n    pass",
+  "case_id": "36d3692e2e8ff56c",
+  "extra_requires": [],
+  "new_version": "1.18.0",
+  "old_version": "1.17.1",
+  "package": "scipy",
+  "released_at": "2026-06-19T14:59:45.203789Z",
+  "source": "pypi:scipy==1.18.0",
+  "title": "scipy.linalg functions now reject non-LAPACK dtypes"
+}

@@ -1,0 +1,12 @@
+{
+  "after_snippet": "from setuptools import Distribution\nfrom setuptools.command.build import build\n\n# In 83.0.0, dry_run has been removed\ndist = Distribution({'name': 'test'})\ncmd = build(dist)\n# dry_run attribute no longer exists; attempting to set/read it raises AttributeError\ntry:\n    cmd.dry_run = True\n    raise AssertionError('Expected AttributeError')\nexcept AttributeError:\n    pass",
+  "before_snippet": "from setuptools import Distribution\nfrom setuptools.command.build import build\n\n# In 82.0.1, dry_run was supported on Distribution and commands\ndist = Distribution({'name': 'test'})\ncmd = build(dist)\ncmd.dry_run = True\nassert cmd.dry_run == True",
+  "case_id": "35c77d932547945d",
+  "extra_requires": [],
+  "new_version": "83.0.0",
+  "old_version": "82.0.1",
+  "package": "setuptools",
+  "released_at": "2026-07-04T15:31:20.885481Z",
+  "source": "pypi:setuptools==83.0.0",
+  "title": "Removal of dry_run support in Distribution and build commands"
+}

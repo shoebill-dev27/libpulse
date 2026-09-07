@@ -1,0 +1,12 @@
+{
+  "after_snippet": "import polars as pl\n\ns_dur = pl.Series(values=[1000000, 2000000, 3000000]).cast(pl.Duration('us'))\ns_int = pl.Series([10, 20, 30])\ntry:\n    result = s_dur + s_int\n    # If it raises, that's the expected new behavior\nexcept Exception:\n    pass\n",
+  "before_snippet": "import polars as pl\n\ns_date = pl.Series([1, 2, 3])\ns_int = pl.Series([10, 20, 30])\n# In 1.42.1 adding two integer series is fine; but the bug fix is about temporal+non-temporal\n# Use a duration series + integer series which previously silently worked\ns_dur = pl.Series(values=[1000000, 2000000, 3000000]).cast(pl.Duration('us'))\nresult = s_dur + s_int\n",
+  "case_id": "2bd44104d10e4cc9",
+  "extra_requires": [],
+  "new_version": "1.43.0",
+  "old_version": "1.42.1",
+  "package": "polars",
+  "released_at": "2026-07-21T04:29:06.680119Z",
+  "source": "pypi:polars==1.43.0",
+  "title": "Raise on addition/subtraction between temporal and non-temporal Series"
+}

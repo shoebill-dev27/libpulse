@@ -1,0 +1,119 @@
+[
+  {
+    "package": "numpy",
+    "api": "numpy.cumproduct",
+    "message": "numpy.cumproduct removed in favor of numpy.cumprod",
+    "deprecated_in": "",
+    "removed_in": "",
+    "source": "pypi:numpy==2.0.0",
+    "released_at": ""
+  },
+  {
+    "package": "numpy",
+    "api": "numpy.product",
+    "message": "numpy.product removed in favor of numpy.prod",
+    "deprecated_in": "",
+    "removed_in": "",
+    "source": "pypi:numpy==2.0.0",
+    "released_at": ""
+  },
+  {
+    "package": "numpy",
+    "api": "np.float_",
+    "message": "np.float_ alias removed in NumPy 2.0",
+    "deprecated_in": "",
+    "removed_in": "",
+    "source": "https://numpy.org/doc/stable/numpy_2_0_migration_guide.html",
+    "released_at": ""
+  },
+  {
+    "package": "numpy",
+    "api": "",
+    "message": "Removed interpolation parameter from quantile and percentile functions",
+    "deprecated_in": "",
+    "removed_in": "",
+    "source": "pypi:numpy==2.4.0",
+    "released_at": ""
+  },
+  {
+    "package": "pandas",
+    "api": "Series.argmax",
+    "message": "Removal of deprecated Series.argmax/argmin with skipna parameter behavior",
+    "deprecated_in": "",
+    "removed_in": "",
+    "source": "pypi:pandas==3.0.0",
+    "released_at": ""
+  },
+  {
+    "package": "pandas",
+    "api": "np.integer",
+    "message": "assert result == -1 or isinstance(result, (int, np.integer)), \"Should return -1 or compatible with deprecated behavior\"",
+    "deprecated_in": "",
+    "removed_in": "",
+    "source": "pypi:pandas==3.0.0",
+    "released_at": ""
+  },
+  {
+    "package": "pillow",
+    "api": "",
+    "message": "# Access deprecated/removed internal _expand method",
+    "deprecated_in": "",
+    "removed_in": "",
+    "source": "pypi:pillow==12.0.0",
+    "released_at": ""
+  },
+  {
+    "package": "pytest",
+    "api": "",
+    "message": "# This behavior is no longer supported in 9.0.0",
+    "deprecated_in": "",
+    "removed_in": "",
+    "source": "pypi:pytest==9.0.0",
+    "released_at": ""
+  },
+  {
+    "package": "typer",
+    "api": "",
+    "message": "Click-specific field type customization no longer available",
+    "deprecated_in": "",
+    "removed_in": "",
+    "source": "pypi:typer==0.26.0",
+    "released_at": ""
+  },
+  {
+    "package": "typer",
+    "api": "",
+    "message": "# In 0.26.0, Click-specific type customization is no longer supported",
+    "deprecated_in": "",
+    "removed_in": "",
+    "source": "pypi:typer==0.26.0",
+    "released_at": ""
+  },
+  {
+    "package": "typer",
+    "api": "",
+    "message": "Click-specific plugin extraction and customization no longer supported",
+    "deprecated_in": "",
+    "removed_in": "",
+    "source": "pypi:typer==0.26.0",
+    "released_at": ""
+  },
+  {
+    "package": "urllib3",
+    "api": "",
+    "message": "# This method signature existed in 2.5.0 but is removed in 2.6.0",
+    "deprecated_in": "",
+    "removed_in": "2.6.0",
+    "source": "pypi:urllib3==2.6.0",
+    "released_at": ""
+  },
+  {
+    "package": "urllib3",
+    "api": "",
+    "message": "# This method existed in 2.5.0 but is removed in 2.6.0",
+    "deprecated_in": "",
+    "removed_in": "2.6.0",
+    "source": "pypi:urllib3==2.6.0",
+    "released_at": ""
+  }
+]

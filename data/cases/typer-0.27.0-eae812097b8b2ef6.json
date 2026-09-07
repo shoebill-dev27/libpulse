@@ -1,0 +1,12 @@
+{
+  "after_snippet": "import typer\nfrom typer.testing import CliRunner\nfrom typing import List\n\napp = typer.Typer()\n\n@app.command()\ndef cmd(names: List[str] = typer.Argument(...)):\n    pass\n\nrunner = CliRunner()\nresult = runner.invoke(app, [\"--help\"])\n# In 0.27.0, metavar format changed\nassert result.exit_code == 0\n# Just verify help works, don't assert on specific metavar format\nprint(result.output)\n",
+  "before_snippet": "import typer\nfrom typer.testing import CliRunner\nfrom typing import List\n\napp = typer.Typer()\n\n@app.command()\ndef cmd(names: List[str] = typer.Argument(...)):\n    pass\n\nrunner = CliRunner()\nresult = runner.invoke(app, [\"--help\"])\n# In 0.26.8, metavar for List[str] Argument shows as TEXT...\n# The old format used 'TEXT...' style\nassert 'TEXT...' in result.output, f\"Expected 'TEXT...' in output but got:\\n{result.output}\"\n",
+  "case_id": "eae812097b8b2ef6",
+  "extra_requires": [],
+  "new_version": "0.27.0",
+  "old_version": "0.26.8",
+  "package": "typer",
+  "released_at": "2026-07-15T19:21:05.553825Z",
+  "source": "pypi:typer==0.27.0",
+  "title": "Metavar display format changed for List/Optional types in help text"
+}

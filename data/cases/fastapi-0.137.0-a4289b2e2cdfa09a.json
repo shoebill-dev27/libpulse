@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from fastapi import FastAPI, APIRouter\nfrom fastapi.routing import APIRoute\n\nrouter1 = APIRouter()\nrouter2 = APIRouter()\n\n@router1.get('/path1')\ndef handler1():\n    return {'msg': 'handler1'}\n\n@router2.get('/path2')\ndef handler2():\n    return {'msg': 'handler2'}\n\nrouter1.include_router(router2)\n\n# In 0.137.0, router.routes now contains intermediate objects\n# Code that iterates and modifies must handle both APIRoute and intermediate objects\noriginal_routes = list(router1.routes)\nfor i, route in enumerate(original_routes):\n    # Some items may not have 'endpoint' if they are intermediate objects\n    if isinstance(route, APIRoute):\n        assert hasattr(route, 'endpoint')\n",
+  "before_snippet": "from fastapi import FastAPI, APIRouter\n\nrouter1 = APIRouter()\nrouter2 = APIRouter()\n\n@router1.get('/path1')\ndef handler1():\n    return {'msg': 'handler1'}\n\n@router2.get('/path2')\ndef handler2():\n    return {'msg': 'handler2'}\n\nrouter1.include_router(router2)\n\n# In 0.136.3, modifying router.routes affects only APIRoute objects\noriginal_routes = list(router1.routes)\nfor i, route in enumerate(original_routes):\n    # All items should be APIRoute with modifiable attributes\n    assert hasattr(route, 'endpoint'), f\"Route {i} has no endpoint attribute\"\n",
+  "case_id": "a4289b2e2cdfa09a",
+  "extra_requires": [],
+  "new_version": "0.137.0",
+  "old_version": "0.136.3",
+  "package": "fastapi",
+  "source": "pypi:fastapi==0.137.0",
+  "title": "Code that modifies router.routes directly now sees intermediate objects, not just APIRoute instances"
+}

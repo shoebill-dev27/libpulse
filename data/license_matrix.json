@@ -1,0 +1,901 @@
+{
+  "packages": [
+    {
+      "package": "numpy",
+      "license": "UNKNOWN",
+      "dependencies": [],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "pandas",
+      "license": "Apache-2.0",
+      "dependencies": [
+        {
+          "name": "numpy",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "python-dateutil",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "tzdata",
+          "license": "Apache-2.0"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "requests",
+      "license": "Apache-2.0",
+      "dependencies": [
+        {
+          "name": "charset_normalizer",
+          "license": "MIT"
+        },
+        {
+          "name": "idna",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "urllib3",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "certifi",
+          "license": "MPL-2.0"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "urllib3",
+      "license": "UNKNOWN",
+      "dependencies": [],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "pydantic",
+      "license": "UNKNOWN",
+      "dependencies": [
+        {
+          "name": "annotated-types",
+          "license": "MIT"
+        },
+        {
+          "name": "pydantic-core",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "typing-extensions",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "typing-inspection",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "sqlalchemy",
+      "license": "MIT",
+      "dependencies": [
+        {
+          "name": "importlib-metadata",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "greenlet",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "typing-extensions",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "flask",
+      "license": "UNKNOWN",
+      "dependencies": [
+        {
+          "name": "blinker",
+          "license": "MIT"
+        },
+        {
+          "name": "click",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "importlib-metadata",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "itsdangerous",
+          "license": "BSD"
+        },
+        {
+          "name": "jinja2",
+          "license": "BSD"
+        },
+        {
+          "name": "markupsafe",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "werkzeug",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "django",
+      "license": "UNKNOWN",
+      "dependencies": [
+        {
+          "name": "asgiref",
+          "license": "BSD-3-Clause"
+        },
+        {
+          "name": "sqlparse",
+          "license": "BSD"
+        },
+        {
+          "name": "tzdata",
+          "license": "Apache-2.0"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "click",
+      "license": "UNKNOWN",
+      "dependencies": [
+        {
+          "name": "colorama",
+          "license": "BSD"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "pytest",
+      "license": "UNKNOWN",
+      "dependencies": [
+        {
+          "name": "colorama",
+          "license": "BSD"
+        },
+        {
+          "name": "exceptiongroup",
+          "license": "MIT"
+        },
+        {
+          "name": "iniconfig",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "packaging",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "pluggy",
+          "license": "MIT"
+        },
+        {
+          "name": "pygments",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "tomli",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "httpx",
+      "license": "BSD-3-Clause",
+      "dependencies": [
+        {
+          "name": "anyio",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "certifi",
+          "license": "MPL-2.0"
+        },
+        {
+          "name": "httpcore",
+          "license": "BSD"
+        },
+        {
+          "name": "idna",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "fastapi",
+      "license": "UNKNOWN",
+      "dependencies": [
+        {
+          "name": "starlette",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "pydantic",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "typing-extensions",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "typing-inspection",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "annotated-doc",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "scikit-learn",
+      "license": "UNKNOWN",
+      "dependencies": [
+        {
+          "name": "numpy",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "scipy",
+          "license": "MIT"
+        },
+        {
+          "name": "joblib",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "narwhals",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "threadpoolctl",
+          "license": "BSD-3-Clause"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "matplotlib",
+      "license": "Apache-2.0",
+      "dependencies": [
+        {
+          "name": "contourpy",
+          "license": "MIT"
+        },
+        {
+          "name": "cycler",
+          "license": "MIT"
+        },
+        {
+          "name": "fonttools",
+          "license": "MIT"
+        },
+        {
+          "name": "kiwisolver",
+          "license": "MIT"
+        },
+        {
+          "name": "numpy",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "packaging",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "pillow",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "pyparsing",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "python-dateutil",
+          "license": "Apache-2.0"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "pillow",
+      "license": "UNKNOWN",
+      "dependencies": [],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "cryptography",
+      "license": "UNKNOWN",
+      "dependencies": [
+        {
+          "name": "cffi",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "typing-extensions",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "boto3",
+      "license": "Apache-2.0",
+      "dependencies": [
+        {
+          "name": "botocore",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "jmespath",
+          "license": "MIT"
+        },
+        {
+          "name": "s3transfer",
+          "license": "Apache-2.0"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "redis",
+      "license": "MIT",
+      "dependencies": [
+        {
+          "name": "async-timeout",
+          "license": "Apache-2.0"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "celery",
+      "license": "BSD-3-Clause",
+      "dependencies": [
+        {
+          "name": "billiard",
+          "license": "BSD"
+        },
+        {
+          "name": "kombu",
+          "license": "BSD-3-Clause"
+        },
+        {
+          "name": "vine",
+          "license": "BSD"
+        },
+        {
+          "name": "click",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "click-didyoumean",
+          "license": "MIT"
+        },
+        {
+          "name": "click-repl",
+          "license": "MIT"
+        },
+        {
+          "name": "click-plugins",
+          "license": "BSD"
+        },
+        {
+          "name": "python-dateutil",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "exceptiongroup",
+          "license": "MIT"
+        },
+        {
+          "name": "tzlocal",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "jinja2",
+      "license": "BSD",
+      "dependencies": [
+        {
+          "name": "MarkupSafe",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "scipy",
+      "license": "MIT",
+      "dependencies": [
+        {
+          "name": "numpy",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "pyyaml",
+      "license": "MIT",
+      "dependencies": [],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "aiohttp",
+      "license": "Apache-2.0",
+      "dependencies": [
+        {
+          "name": "aiohappyeyeballs",
+          "license": "PSF-2.0"
+        },
+        {
+          "name": "aiosignal",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "async-timeout",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "attrs",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "frozenlist",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "multidict",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "propcache",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "typing_extensions",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "yarl",
+          "license": "Apache-2.0"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "websockets",
+      "license": "UNKNOWN",
+      "dependencies": [],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "attrs",
+      "license": "UNKNOWN",
+      "dependencies": [],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "rich",
+      "license": "MIT",
+      "dependencies": [
+        {
+          "name": "markdown-it-py",
+          "license": "MIT"
+        },
+        {
+          "name": "pygments",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "typer",
+      "license": "UNKNOWN",
+      "dependencies": [
+        {
+          "name": "shellingham",
+          "license": "ISC"
+        },
+        {
+          "name": "rich",
+          "license": "MIT"
+        },
+        {
+          "name": "annotated-doc",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "colorama",
+          "license": "BSD"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "polars",
+      "license": "MIT",
+      "dependencies": [
+        {
+          "name": "polars-runtime-32",
+          "license": "MIT"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "pyarrow",
+      "license": "UNKNOWN",
+      "dependencies": [],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "openai",
+      "license": "Apache-2.0",
+      "dependencies": [
+        {
+          "name": "anyio",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "distro",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "httpx",
+          "license": "BSD-3-Clause"
+        },
+        {
+          "name": "jiter",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "pydantic",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "sniffio",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "tqdm",
+          "license": "MIT"
+        },
+        {
+          "name": "typing-extensions",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "anthropic",
+      "license": "MIT",
+      "dependencies": [
+        {
+          "name": "anyio",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "distro",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "docstring-parser",
+          "license": "MIT"
+        },
+        {
+          "name": "httpx",
+          "license": "BSD-3-Clause"
+        },
+        {
+          "name": "jiter",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "pydantic",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "sniffio",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "typing-extensions",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "langchain-core",
+      "license": "MIT",
+      "dependencies": [
+        {
+          "name": "jsonpatch",
+          "license": "BSD"
+        },
+        {
+          "name": "langchain-protocol",
+          "license": "MIT"
+        },
+        {
+          "name": "langsmith",
+          "license": "MIT"
+        },
+        {
+          "name": "packaging",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "pydantic",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "pyyaml",
+          "license": "MIT"
+        },
+        {
+          "name": "tenacity",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "typing-extensions",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "uuid-utils",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "python-dateutil",
+      "license": "Apache-2.0",
+      "dependencies": [
+        {
+          "name": "six",
+          "license": "MIT"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "jsonschema",
+      "license": "UNKNOWN",
+      "dependencies": [
+        {
+          "name": "attrs",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "jsonschema-specifications",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "referencing",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "rpds-py",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "marshmallow",
+      "license": "UNKNOWN",
+      "dependencies": [
+        {
+          "name": "backports-datetime-fromisoformat",
+          "license": "MIT"
+        },
+        {
+          "name": "typing-extensions",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "alembic",
+      "license": "UNKNOWN",
+      "dependencies": [
+        {
+          "name": "SQLAlchemy",
+          "license": "MIT"
+        },
+        {
+          "name": "Mako",
+          "license": "MIT"
+        },
+        {
+          "name": "typing-extensions",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "tomli",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "pymongo",
+      "license": "UNKNOWN",
+      "dependencies": [
+        {
+          "name": "dnspython",
+          "license": "ISC"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "protobuf",
+      "license": "BSD",
+      "dependencies": [],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "lxml",
+      "license": "BSD-3-Clause",
+      "dependencies": [],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "beautifulsoup4",
+      "license": "MIT",
+      "dependencies": [
+        {
+          "name": "soupsieve",
+          "license": "MIT"
+        },
+        {
+          "name": "typing-extensions",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "tqdm",
+      "license": "MIT",
+      "dependencies": [
+        {
+          "name": "colorama",
+          "license": "BSD"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "seaborn",
+      "license": "BSD",
+      "dependencies": [
+        {
+          "name": "numpy",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "pandas",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "matplotlib",
+          "license": "Apache-2.0"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "statsmodels",
+      "license": "BSD",
+      "dependencies": [
+        {
+          "name": "numpy",
+          "license": "UNKNOWN"
+        },
+        {
+          "name": "scipy",
+          "license": "MIT"
+        },
+        {
+          "name": "pandas",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "patsy",
+          "license": "BSD"
+        },
+        {
+          "name": "packaging",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "networkx",
+      "license": "UNKNOWN",
+      "dependencies": [],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "sympy",
+      "license": "BSD",
+      "dependencies": [
+        {
+          "name": "mpmath",
+          "license": "UNKNOWN"
+        }
+      ],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "tenacity",
+      "license": "Apache-2.0",
+      "dependencies": [],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "more-itertools",
+      "license": "UNKNOWN",
+      "dependencies": [],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "packaging",
+      "license": "UNKNOWN",
+      "dependencies": [],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "setuptools",
+      "license": "UNKNOWN",
+      "dependencies": [],
+      "copyleft_conflict": false
+    },
+    {
+      "package": "httpcore",
+      "license": "BSD",
+      "dependencies": [
+        {
+          "name": "certifi",
+          "license": "MPL-2.0"
+        },
+        {
+          "name": "h11",
+          "license": "MIT"
+        }
+      ],
+      "copyleft_conflict": false
+    }
+  ],
+  "conflicts": 0
+}

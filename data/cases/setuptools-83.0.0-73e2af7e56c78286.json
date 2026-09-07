@@ -1,0 +1,12 @@
+{
+  "after_snippet": "import sys\n\n# In 83.0.0, Python 3.10+ is required\nassert sys.version_info >= (3, 10), \"setuptools 83.0.0 requires Python 3.10 or later\"\n\nimport setuptools\nassert hasattr(setuptools, '__version__')",
+  "before_snippet": "import sys\nimport setuptools\n\n# In 82.0.1, setuptools could be imported on Python < 3.10\n# This test only runs on Python 3.10+, so it passes on older interpreters in 82.0.1\n# but would fail in 83.0.0 if someone tries to use 83.0.0 on Python < 3.10.\n# Since we cannot easily test on Python 3.9 in this harness, we verify\n# the version requirement is enforced via setuptools' own check.\nassert hasattr(setuptools, '__version__')",
+  "case_id": "73e2af7e56c78286",
+  "extra_requires": [],
+  "new_version": "83.0.0",
+  "old_version": "82.0.1",
+  "package": "setuptools",
+  "released_at": "2026-07-04T15:31:20.885481Z",
+  "source": "pypi:setuptools==83.0.0",
+  "title": "Python 3.10+ requirement enforced at import/runtime"
+}

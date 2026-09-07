@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from cryptography.hazmat.primitives.asymmetric.ec import (\n    generate_private_key, SECP256R1\n)\nfrom cryptography.hazmat.backends import default_backend\nfrom cryptography.hazmat.primitives.serialization import Encoding, PublicFormat\n\nkey = generate_private_key(SECP256R1(), default_backend())\npub = key.public_key()\nencoded = pub.public_bytes(\n    encoding=Encoding.X962,\n    format=PublicFormat.UncompressedPoint\n)\nassert len(encoded) == 65\n",
+  "before_snippet": "from cryptography.hazmat.primitives.asymmetric.ec import (\n    generate_private_key, SECP256R1, EllipticCurvePublicKey\n)\nfrom cryptography.hazmat.backends import default_backend\n\nkey = generate_private_key(SECP256R1(), default_backend())\npub = key.public_key()\n# encode_point was deprecated and removed in 49.0.0\nencoded = pub.public_bytes(\n    encoding=__import__('cryptography.hazmat.primitives.serialization', fromlist=['Encoding']).Encoding.X962,\n    format=__import__('cryptography.hazmat.primitives.serialization', fromlist=['PublicFormat']).PublicFormat.UncompressedPoint\n)\nassert len(encoded) == 65\n",
+  "case_id": "48c05d6b7a394470",
+  "extra_requires": [],
+  "new_version": "49.0.0",
+  "old_version": "48.0.1",
+  "package": "cryptography",
+  "source": "pypi:cryptography==49.0.0",
+  "title": "Removal of deprecated encode_point / from_encoded_point on EllipticCurvePublicKey"
+}

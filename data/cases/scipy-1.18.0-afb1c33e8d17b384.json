@@ -1,0 +1,12 @@
+{
+  "after_snippet": "import numpy as np\nfrom scipy.signal import lfilter_zi\n\n# Filter with leading zero a[0] == 0 now raises ValueError\na = np.array([0.0, 1.0, 2.0])\n\ntry:\n    zi = lfilter_zi(np.array([1.0]), a)\n    raise AssertionError(\"Should have raised ValueError\")\nexcept ValueError:\n    pass",
+  "before_snippet": "import numpy as np\nfrom scipy.signal import lfilter_zi\n\n# Filter with leading zero a[0] == 0\na = np.array([0.0, 1.0, 2.0])\n\ntry:\n    zi = lfilter_zi(np.array([1.0]), a)\n    # In 1.17.1, this might work or raise LinAlgError\nexcept Exception:\n    pass",
+  "case_id": "afb1c33e8d17b384",
+  "extra_requires": [],
+  "new_version": "1.18.0",
+  "old_version": "1.17.1",
+  "package": "scipy",
+  "released_at": "2026-06-19T14:59:45.203789Z",
+  "source": "pypi:scipy==1.18.0",
+  "title": "scipy.signal.lfilter_zi now raises ValueError for filters with leading zero"
+}

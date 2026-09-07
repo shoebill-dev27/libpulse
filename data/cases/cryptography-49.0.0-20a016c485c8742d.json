@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from cryptography import x509\nfrom cryptography.hazmat.primitives.asymmetric.rsa import generate_private_key\nfrom cryptography.hazmat.backends import default_backend\nfrom cryptography.x509.oid import NameOID\nfrom cryptography.hazmat.primitives import hashes\nimport datetime\n\nkey = generate_private_key(65537, 2048, default_backend())\nissuer = x509.Name([x509.NameAttribute(NameOID.COMMON_NAME, u\"test\")])\n\ncrl = (\n    x509.CertificateRevocationListBuilder()\n    .issuer_name(issuer)\n    .last_update(datetime.datetime(2024, 1, 1, tzinfo=datetime.timezone.utc))\n    .next_update(datetime.datetime(2025, 1, 1, tzinfo=datetime.timezone.utc))\n    .sign(key, hashes.SHA256(), default_backend())\n)\n",
+  "before_snippet": "from cryptography import x509\nfrom cryptography.hazmat.primitives.asymmetric.rsa import generate_private_key\nfrom cryptography.hazmat.backends import default_backend\nfrom cryptography.x509.oid import NameOID\nfrom cryptography.hazmat.primitives import hashes\nimport datetime\n\nkey = generate_private_key(65537, 2048, default_backend())\nissuer = x509.Name([x509.NameAttribute(NameOID.COMMON_NAME, u\"test\")])\n\n# naive datetime was deprecated; in 49.0.0 it must raise\ncrl = (\n    x509.CertificateRevocationListBuilder()\n    .issuer_name(issuer)\n    .last_update(datetime.datetime(2024, 1, 1))  # naive - should fail in 49.0.0\n    .next_update(datetime.datetime(2025, 1, 1))  # naive\n    .sign(key, hashes.SHA256(), default_backend())\n)\n",
+  "case_id": "20a016c485c8742d",
+  "extra_requires": [],
+  "new_version": "49.0.0",
+  "old_version": "48.0.1",
+  "package": "cryptography",
+  "source": "pypi:cryptography==49.0.0",
+  "title": "Removal of deprecated CertificateRevocationListBuilder.last_update / next_update accepting naive datetimes"
+}

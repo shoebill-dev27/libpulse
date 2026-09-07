@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from fastapi import FastAPI, APIRouter\nfrom fastapi.routing import APIRoute\n\nrouter1 = APIRouter()\nrouter2 = APIRouter()\n\n@router1.get('/path1')\ndef handler1():\n    return {'msg': 'handler1'}\n\n@router2.get('/path2')\ndef handler2():\n    return {'msg': 'handler2'}\n\nrouter1.include_router(router2)\n\n# In 0.137.0, iterating router1.routes does not flatten the tree\n# You cannot expect to extract all routes by simple iteration\n# The tree structure must be traversed properly or use FastAPI's internal methods\nroute_count = len([r for r in router1.routes if isinstance(r, APIRoute) and hasattr(r, 'path')])\n# route_count may now be less than the total number of routes in the app\npass\n",
+  "before_snippet": "from fastapi import FastAPI, APIRouter\n\nrouter1 = APIRouter()\nrouter2 = APIRouter()\n\n@router1.get('/path1')\ndef handler1():\n    return {'msg': 'handler1'}\n\n@router2.get('/path2')\ndef handler2():\n    return {'msg': 'handler2'}\n\nrouter1.include_router(router2)\n\n# In 0.136.3, iterating router1.routes gives you all routes including nested ones\nroute_count = len([r for r in router1.routes if hasattr(r, 'path')])\nassert route_count == 2, f\"Expected 2 routes, got {route_count}\"\n",
+  "case_id": "94d6bb918822ac94",
+  "extra_requires": [],
+  "new_version": "0.137.0",
+  "old_version": "0.136.3",
+  "package": "fastapi",
+  "source": "pypi:fastapi==0.137.0",
+  "title": "Iterating over router.routes no longer yields all routes in the app when routers are nested"
+}

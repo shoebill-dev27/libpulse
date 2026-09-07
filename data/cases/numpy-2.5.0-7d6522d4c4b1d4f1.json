@@ -1,0 +1,12 @@
+{
+  "after_snippet": "# numpy.distutils is removed in 2.5.0\n# Use setuptools or other build backends instead\ntry:\n    from setuptools import setup\nexcept ImportError:\n    pass\n",
+  "before_snippet": "import numpy.distutils\nfrom numpy.distutils.core import setup\n",
+  "case_id": "7d6522d4c4b1d4f1",
+  "extra_requires": [],
+  "new_version": "2.5.0",
+  "old_version": "2.4.6",
+  "package": "numpy",
+  "released_at": "2026-06-21T20:56:16.657410Z",
+  "source": "pypi:numpy==2.5.0",
+  "title": "numpy.distutils module removed"
+}

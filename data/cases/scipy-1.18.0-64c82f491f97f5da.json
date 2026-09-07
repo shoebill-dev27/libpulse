@@ -1,0 +1,12 @@
+{
+  "after_snippet": "import numpy as np\nfrom scipy.linalg import lstsq\n\nA = np.array([[1.0, 0.0], [1.0, 1.0], [1.0, 2.0]])\nb = np.array([1.0, 2.0, 3.0])\n\n# overdetermined system with gelss driver now always returns non-empty residuals\nx, residuals, rank, s = lstsq(A, b, lapack_driver='gelss')\nassert len(residuals) > 0, \"Expected non-empty residuals for overdetermined system\"",
+  "before_snippet": "import numpy as np\nfrom scipy.linalg import lstsq\n\nA = np.array([[1.0, 0.0], [1.0, 1.0], [1.0, 2.0]])\nb = np.array([1.0, 2.0, 3.0])\n\n# overdetermined system with gelss driver (default)\nx, residuals, rank, s = lstsq(A, b, lapack_driver='gelss')\n# In 1.17.1, residuals could be empty for certain conditions\nassert len(residuals) == 0 or residuals is not None, \"Expected empty or valid residuals\"",
+  "case_id": "64c82f491f97f5da",
+  "extra_requires": [],
+  "new_version": "1.18.0",
+  "old_version": "1.17.1",
+  "package": "scipy",
+  "released_at": "2026-06-19T14:59:45.203789Z",
+  "source": "pypi:scipy==1.18.0",
+  "title": "scipy.linalg.lstsq residuals behavior changed for overdetermined systems with gelsd/gelss drivers"
+}

@@ -1,0 +1,12 @@
+{
+  "after_snippet": "import numpy as np\n# numpy.cross now requires 3D or higher dimensional vectors\na = np.array([1, 2, 0])\nb = np.array([3, 4, 0])\nresult = np.cross(a, b)\n",
+  "before_snippet": "import numpy as np\na = np.array([1, 2])\nb = np.array([3, 4])\nresult = np.cross(a, b)\n",
+  "case_id": "f71df8272a65772c",
+  "extra_requires": [],
+  "new_version": "2.5.0",
+  "old_version": "2.4.6",
+  "package": "numpy",
+  "released_at": "2026-06-21T20:56:16.657410Z",
+  "source": "pypi:numpy==2.5.0",
+  "title": "numpy.cross no longer supports 2-dimensional vectors"
+}

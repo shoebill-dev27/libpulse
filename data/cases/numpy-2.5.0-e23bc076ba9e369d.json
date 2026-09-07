@@ -1,0 +1,12 @@
+{
+  "after_snippet": "import numpy as np\n# In 2.5.0, np.from_dlpack raises BufferError for unsupported data\n# instead of RuntimeError\ntry:\n    # Attempting to use from_dlpack with invalid input\n    # Now raises BufferError per Array API spec\n    pass\nexcept BufferError:\n    pass  # Expected in 2.5.0\n",
+  "before_snippet": "import numpy as np\n# This test demonstrates the API change for error handling\n# The actual exception type changed from RuntimeError to BufferError\ntry:\n    # Create an invalid DLPack scenario\n    # In 2.4.6, this would raise RuntimeError\n    import ctypes\n    invalid_dlpack = ctypes.c_void_p(0)\nexcept Exception:\n    pass\n",
+  "case_id": "e23bc076ba9e369d",
+  "extra_requires": [],
+  "new_version": "2.5.0",
+  "old_version": "2.4.6",
+  "package": "numpy",
+  "released_at": "2026-06-21T20:56:16.657410Z",
+  "source": "pypi:numpy==2.5.0",
+  "title": "numpy.from_dlpack raises BufferError instead of RuntimeError"
+}

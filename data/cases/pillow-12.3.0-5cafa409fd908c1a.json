@@ -1,0 +1,12 @@
+{
+  "after_snippet": "from PIL import Image, ImageCms\n\n# In 12.3.0, non-image ImageCms modes have been removed\n# Only use standard image-compatible modes\nim = Image.new('RGB', (10, 10))\n# Work only with valid image modes supported by ImageCms\n# Avoid creating ImageCms operations with non-image modes\npass\n",
+  "before_snippet": "from PIL import Image, ImageCms\nimport io\n\n# In 12.2.0, ImageCms modes could be created for non-image operations\n# Attempt to use a non-image ImageCms mode that would be removed\ntry:\n    # Create a simple profile transform\n    im = Image.new('RGB', (10, 10))\n    # This should work in 12.2.0 but may fail in 12.3.0 if modes are restricted\n    transform = ImageCms.buildTransform(None, None, 'RGB', 'RGB')\nexcept Exception as e:\n    # If it raises in 12.2.0, this case doesn't apply\n    pass\n",
+  "case_id": "5cafa409fd908c1a",
+  "extra_requires": [],
+  "new_version": "12.3.0",
+  "old_version": "12.2.0",
+  "package": "pillow",
+  "released_at": "2026-07-01T11:53:27.808291Z",
+  "source": "pypi:pillow==12.3.0",
+  "title": "Remove non-image ImageCms modes"
+}

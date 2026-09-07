@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from cryptography.hazmat.primitives.serialization import load_pem_private_key\n\ntry:\n    key = load_pem_private_key(b\"-----BEGIN EC PRIVATE KEY-----\\nfake\\n-----END EC PRIVATE KEY-----\", password=None)\nexcept (ValueError, TypeError, UnicodeDecodeError):\n    pass\n",
+  "before_snippet": "from cryptography.hazmat.primitives.serialization import load_pem_private_key\nfrom cryptography.hazmat.backends import default_backend\n\npem = b\"\"\"-----BEGIN EC PRIVATE KEY-----\nMHQCAQEEIOathesearenotrealkeysdataxyzpadpadpadpadpadpadpado\noGgwZgIBAQQgAQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eH6AKBggq\nhkjOPQMBB6FEA0IABBZXdXYJ5g5hGl1gX3k1yvtXi7MhHCq9qHCy0hGrTm0\nJNKl2R7aVzOjlHQaFkEuBHZ+YK5YpVWM0Q3K4BqHtFI=\n-----END EC PRIVATE KEY-----\"\"\"\n\ntry:\n    key = load_pem_private_key(pem, password=None, backend=default_backend())\nexcept Exception:\n    # The key bytes are fake but the backend kwarg should not raise TypeError\n    pass\n",
+  "case_id": "4bbbbe4fa4443ddd",
+  "extra_requires": [],
+  "new_version": "49.0.0",
+  "old_version": "48.0.1",
+  "package": "cryptography",
+  "source": "pypi:cryptography==49.0.0",
+  "title": "Removal of deprecated backend parameter from load_pem_private_key"
+}

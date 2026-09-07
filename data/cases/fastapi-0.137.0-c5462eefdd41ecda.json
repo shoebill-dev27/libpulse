@@ -1,0 +1,11 @@
+{
+  "after_snippet": "from fastapi import FastAPI, APIRouter\nfrom fastapi.routing import APIRoute\n\nrouter1 = APIRouter()\nrouter2 = APIRouter()\n\n@router1.get('/path1')\ndef handler1():\n    return {'msg': 'handler1'}\n\n@router2.get('/path2')\ndef handler2():\n    return {'msg': 'handler2'}\n\nrouter1.include_router(router2)\n\n# In 0.137.0, router1.routes may contain intermediate objects that are not APIRoute\n# The structure is now a tree, not a flat list\n# Check that some items may not be plain APIRoute instances\nhas_non_route = False\nfor route in router1.routes:\n    if not isinstance(route, APIRoute):\n        has_non_route = True\n        break\n\n# The router.routes structure has changed to support nested routers\n# This is expected behavior in 0.137.0\npass\n",
+  "before_snippet": "from fastapi import FastAPI, APIRouter\n\nrouter1 = APIRouter()\nrouter2 = APIRouter()\n\n@router1.get('/path1')\ndef handler1():\n    return {'msg': 'handler1'}\n\n@router2.get('/path2')\ndef handler2():\n    return {'msg': 'handler2'}\n\nrouter1.include_router(router2)\n\n# In 0.136.3, router1.routes contains only APIRoute instances\nfor route in router1.routes:\n    assert hasattr(route, 'path'), f\"Expected APIRoute with 'path', got {type(route)}\"\n    assert hasattr(route, 'endpoint'), f\"Expected APIRoute with 'endpoint', got {type(route)}\"\n",
+  "case_id": "c5462eefdd41ecda",
+  "extra_requires": [],
+  "new_version": "0.137.0",
+  "old_version": "0.136.3",
+  "package": "fastapi",
+  "source": "pypi:fastapi==0.137.0",
+  "title": "router.routes is no longer a plain list but a tree of intermediate objects"
+}

@@ -1,0 +1,12 @@
+{
+  "after_snippet": "import polars as pl\nimport io\n\ncsv_data = 'a,b\\n1,\\n2,hello\\n'\ndf = pl.read_csv(io.StringIO(csv_data), empty_string_is_null=False)\n",
+  "before_snippet": "import polars as pl\nimport io\n\ncsv_data = 'a,b\\n1,\\n2,hello\\n'\ndf = pl.read_csv(io.StringIO(csv_data), missing_utf8_is_empty_string=True)\n",
+  "case_id": "901741d78a9502b4",
+  "extra_requires": [],
+  "new_version": "1.43.0",
+  "old_version": "1.42.1",
+  "package": "polars",
+  "released_at": "2026-07-21T04:29:06.680119Z",
+  "source": "pypi:polars==1.43.0",
+  "title": "Rename missing_utf8_is_empty_string to empty_string_is_null in read_csv"
+}

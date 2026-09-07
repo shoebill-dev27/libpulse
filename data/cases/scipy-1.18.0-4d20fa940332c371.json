@@ -1,0 +1,12 @@
+{
+  "after_snippet": "import numpy as np\nfrom scipy.stats.contingency import crosstab\nfrom scipy.sparse import sparray\n\na = np.array([1, 1, 2, 2])\nb = np.array([1, 2, 1, 2])\n_, sparse_counts = crosstab(a, b, sparse=True)\nassert isinstance(sparse_counts, sparray), f\"Expected sparray, got {type(sparse_counts)}\"",
+  "before_snippet": "import numpy as np\nfrom scipy.stats.contingency import crosstab\nfrom scipy.sparse import spmatrix\n\na = np.array([1, 1, 2, 2])\nb = np.array([1, 2, 1, 2])\n_, sparse_counts = crosstab(a, b, sparse=True)\nassert isinstance(sparse_counts, spmatrix), f\"Expected spmatrix, got {type(sparse_counts)}\"",
+  "case_id": "4d20fa940332c371",
+  "extra_requires": [],
+  "new_version": "1.18.0",
+  "old_version": "1.17.1",
+  "package": "scipy",
+  "released_at": "2026-06-19T14:59:45.203789Z",
+  "source": "pypi:scipy==1.18.0",
+  "title": "scipy.stats.contingency.crosstab sparse=True now returns sparse array instead of sparse matrix"
+}
