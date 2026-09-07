@@ -115,10 +115,18 @@ class VenvCache:
             except EnvSetupError as exc:
                 last_exc = exc
                 # uv wraps its error text, so normalize whitespace before
-                # matching. Only a requires-python conflict justifies trying
-                # a newer interpreter; any other failure is final.
+                # matching. Only an interpreter-fit problem justifies trying a
+                # newer interpreter; any other failure is final.
+                #
+                # "no usable wheels" belongs here: with --no-build, a package
+                # that ships no wheel for the current interpreter fails with
+                # that message rather than a requires-python one, and the
+                # newer interpreter usually does have a wheel. Missing it
+                # froze the corpus from 2026-06 to 2026-09 — every numpy/polars
+                # release came back UNVERIFIABLE without ever trying 3.12.
                 msg = " ".join(str(exc).split())
-                if "does not satisfy Python" not in msg and "requires Python" not in msg:
+                retryable = ("does not satisfy Python", "requires Python", "no usable wheels")
+                if not any(m in msg for m in retryable):
                     raise
         assert last_exc is not None
         raise last_exc

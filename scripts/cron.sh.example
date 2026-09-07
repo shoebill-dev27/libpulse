@@ -7,6 +7,12 @@
 #
 set -euo pipefail
 cd "$(dirname "$0")/.."
+# cron runs with PATH=/usr/bin:/bin only. uv lives in ~/.local/bin, so without
+# this every verification returns UNVERIFIABLE ("uv is required for environment
+# management") and the corpus silently stops growing. That is exactly what
+# happened between 2026-06 and 2026-09: 26 cases, 26 unverifiable, 0 noticed.
+export PATH="$HOME/.local/bin:$PATH"
+command -v uv >/dev/null || { echo "FATAL: uv not on PATH; verification would return UNVERIFIABLE for every case" >&2; exit 1; }
 set -a; [ -f .env ] && source .env; set +a
 case "${1:-cycle}" in
   cycle)
