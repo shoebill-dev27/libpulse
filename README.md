@@ -35,8 +35,35 @@ Requirements: Python ≥3.10, [uv](https://docs.astral.sh/uv/), network access t
 - `docs/` — PRD, MVP definition, ADRs, risks, operations, 12-month roadmap
 - `reports/` — cycle reports (machine-written)
 
+## Data
+
+The published corpus lives in `data/corpus/` (one file per package) and is
+mirrored as a Hugging Face dataset:
+
+**[shoebill-dev27/libpulse-breaking-changes](https://huggingface.co/datasets/shoebill-dev27/libpulse-breaking-changes)** — cc-by-4.0
+
+Current: **29 verified entries across 11 packages** (more-itertools, networkx,
+numpy, packaging, pandas, pillow, pytest, redis, scipy, typer, urllib3). Every
+entry passed the three executions above; entries that failed any of them are not
+published.
+
 ## Status
 
-MVP in progress. Harness milestone reached: a real migration (NumPy 2.0 `np.float_`
-removal) verified end-to-end through the unattended cycle. Next: release watcher,
-LLM analyzer, MCP server. See `TASKS.md`.
+The unattended loop runs daily: watch PyPI for new releases → generate candidate
+cases → verify by execution → export corpus → write a report. Release watcher,
+LLM analyzer, HF export, deprecation feed and license matrix are all in.
+Not yet built: the MCP server, and freshness-lag reporting (T13a). See `TASKS.md`.
+
+Caveat worth stating plainly: coverage is deliberately narrow (a curated package
+list) and the corpus grows only when a tracked package ships a real breaking
+change. This is a small, high-confidence dataset, not a comprehensive one.
+
+## License
+
+- **Corpus** (`data/corpus/`, and the Hugging Face dataset): **CC BY 4.0** — use it.
+- **Code**: no open-source license yet; all rights reserved for now. Read it,
+  file issues, but don't assume redistribution rights until a LICENSE lands.
+
+Also see `SECURITY_REVIEW.md` — this project executes generated code snippets
+locally in scrubbed, network-isolated, version-pinned environments. Read that
+before running the loop yourself.

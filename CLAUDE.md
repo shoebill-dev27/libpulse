@@ -2,9 +2,8 @@
 
 ## What this project is
 
-Execution-verified breaking-change/migration KB served to AI agents. Part of the
-revenue-portfolio (see ~/claude-dev/revenue-portfolio/ for strategy & decision logs).
-Pillar 1 of 3. Stability-first: the unattended loop is the deliverable, content rides it.
+Execution-verified breaking-change/migration KB served to AI agents.
+Stability-first: the unattended loop is the deliverable, content rides it.
 
 ## Hard rules
 
