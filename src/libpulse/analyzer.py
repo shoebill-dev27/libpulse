@@ -19,6 +19,7 @@ import json
 import os
 import re
 import sys
+import urllib.error
 import urllib.request
 from html.parser import HTMLParser
 from pathlib import Path
@@ -129,8 +130,22 @@ def _http_json(
 ) -> dict:
     data = json.dumps(payload).encode("utf-8") if payload is not None else None
     req = urllib.request.Request(url, data=data, headers=headers, method="POST" if data else "GET")
-    with urllib.request.urlopen(req, timeout=timeout) as resp:  # noqa: S310 (https url)
-        return json.loads(resp.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:  # noqa: S310 (https url)
+            return json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        # The body carries the only actionable part. Bare HTTPError stringifies
+        # to "HTTP Error 400: Bad Request", which is what the cycle logged every
+        # night from 2026-07-23 while the real message was "credit balance is
+        # too low" — 7 weeks of zero candidates with the reason one layer down.
+        body = ""
+        try:
+            body = exc.read().decode("utf-8", "replace")[:400]
+        except Exception:  # noqa: BLE001 - a body we cannot read must not mask the HTTP error
+            pass
+        raise urllib.error.HTTPError(
+            exc.url, exc.code, f"{exc.reason}: {body}" if body else exc.reason, exc.headers, None
+        ) from exc
 
 
 def _github_repo_from_pypi(info: dict) -> str | None:
