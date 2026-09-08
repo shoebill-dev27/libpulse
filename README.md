@@ -42,10 +42,10 @@ mirrored as a Hugging Face dataset:
 
 **[shoebill-dev27/libpulse-breaking-changes](https://huggingface.co/datasets/shoebill-dev27/libpulse-breaking-changes)** — cc-by-4.0
 
-Current: **29 verified entries across 11 packages** (more-itertools, networkx,
-numpy, packaging, pandas, pillow, pytest, redis, scipy, typer, urllib3). Every
-entry passed the three executions above; entries that failed any of them are not
-published.
+As of 2026-09-08: **36 verified entries across 12 packages** (fastapi,
+more-itertools, networkx, numpy, packaging, pandas, pillow, pytest, redis, scipy,
+typer, urllib3). Every entry passed the three executions above; entries that
+failed any of them are not published.
 
 ## Status
 
