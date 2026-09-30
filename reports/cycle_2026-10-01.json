@@ -1,0 +1,33 @@
+{
+  "ran_at": 1790803021,
+  "duration_s": 72.1,
+  "releases_found": 6,
+  "cases_generated": 3,
+  "ingested": 153,
+  "verified_this_cycle": 0,
+  "outcomes": {
+    "32a033ab913f7d0e": "not_breaking",
+    "49abe3a274238ba9": "not_breaking",
+    "4b6fe82c9ab1b6ca": "not_breaking"
+  },
+  "corpus_files": [
+    "data/corpus/fastapi.json",
+    "data/corpus/more-itertools.json",
+    "data/corpus/networkx.json",
+    "data/corpus/numpy.json",
+    "data/corpus/packaging.json",
+    "data/corpus/pandas.json",
+    "data/corpus/pillow.json",
+    "data/corpus/pytest.json",
+    "data/corpus/redis.json",
+    "data/corpus/scipy.json",
+    "data/corpus/typer.json",
+    "data/corpus/urllib3.json"
+  ],
+  "totals": {
+    "broken_recipe": 2,
+    "not_breaking": 64,
+    "unverifiable": 51,
+    "verified": 36
+  }
+}
