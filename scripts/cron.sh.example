@@ -19,6 +19,18 @@ case "${1:-cycle}" in
     .venv/bin/libpulse cycle
     .venv/bin/libpulse prune-venvs --keep-days 30
     git add data/corpus reports && git commit -q -m "cron: cycle $(date +%F)" || true
+    # Publishing the dataset was left as a manual owner step, so it ran exactly
+    # once (2026-09-08). It cost nothing only because the corpus has not changed
+    # since; the next time it grows, a manual step is a step that does not run.
+    # Owner approved automating it 2026-10-02.
+    .venv/bin/libpulse export-hf >/dev/null
+    if [ -n "${HF_TOKEN:-}" ] && command -v hf >/dev/null; then
+      hf upload "${HF_DATASET:-shoebill-dev27/libpulse-breaking-changes}" dist/hf . \
+        --repo-type dataset --commit-message "cron: corpus $(date +%F)" \
+        || echo "WARN: hf upload failed; the published dataset is now stale" >&2
+    else
+      echo "WARN: HF_TOKEN unset or hf CLI missing; dataset NOT refreshed (OWNER_OPERATIONS 2)" >&2
+    fi
     ;;
   report)
     .venv/bin/libpulse report
